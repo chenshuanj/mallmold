@@ -16,7 +16,7 @@
 
 class paypal extends model
 {
-	private $env_url = 'https://api-3t.sandbox.paypal.com/nvp';
+	private $env_url = 'https://api-3t.paypal.com/nvp';
 	private $refund = true;
 	
 	private $api_username;

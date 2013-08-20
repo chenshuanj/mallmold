@@ -16,7 +16,7 @@
 
 class paypal extends model
 {
-	private $env_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+	private $env_url = 'https://www.paypal.com/cgi-bin/webscr';
 	private $data = array();
 	private $localpay = false;
 	private $repay = true;

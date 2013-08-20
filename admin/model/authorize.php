@@ -16,7 +16,7 @@
 
 class authorize extends model
 {
-	private $api_url= 'https://test.authorize.net/gateway/transact.dll';
+	private $api_url= 'https://secure.authorize.net/gateway/transact.dll';
 	private $api_id;
 	private $api_key;
 	private $refund = true;
