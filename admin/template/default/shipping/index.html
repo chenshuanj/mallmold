@@ -1,0 +1,38 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:country}</th>
+	<th>{L:shipment_name}</th>
+	<th>{L:base_fee}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['shipping_id']}</td>
+	<td class="pleft">{if $v['country_id']>0}{$country[$v['country_id']]}{else}{L:any_country}{/if}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$current_symbol}{$v['base_fee']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</a></td>
+	<td>
+	{if $v['country_id']>0}
+	<a href="{:url('shipping/region?shipping_id='.$v['shipping_id'])}">{L:set_region}</a> 
+	{/if}
+	<a href="{:url('shipping/edit?id='.$v['shipping_id'])}">{L:edit}</a> 
+	<a href="{:url('shipping/del?id='.$v['shipping_id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="7">
+	<div class="d_bottom"><a class="aborder" href="{:url('shipping/edit')}">{L:new_shipment}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

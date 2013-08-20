@@ -1,0 +1,32 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('attribute/index')}">{L:filter_attribute}</a>:{$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:title}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['av_id']}</td>
+	<td class="pleft">{$v['title']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>
+	<a href="{:url('attribute/addvalue?id='.$v['av_id'])}">{L:edit}</a> 
+	<a href="{:url('attribute/delvalue?id='.$v['av_id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="5">
+  <div class="d_bottom">
+  <a class="aborder" href="{:url('attribute/addvalue?attr_id='.$attr['attr_id'])}">{L:add_attributeval}</a> 
+  <input type="button" onclick="history.go(-1);" value="{L:back}">
+  </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

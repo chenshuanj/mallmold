@@ -1,0 +1,7 @@
+<div class="article">
+	<ul>
+	{foreach $tag_list as $v}
+		<li>> <a href="{:url($v['url'])}">{$v['title']}</a></li>
+	{/foreach}
+	</ul>
+</div>

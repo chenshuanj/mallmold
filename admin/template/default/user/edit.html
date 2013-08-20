@@ -1,0 +1,76 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('user/index')}">{L:customer}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('user/edit')}" >
+<input name="user_id" type="hidden" value="{$data['user_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:username}:</th>
+	<td class="tleft">
+		{$data['firstname']} {$data['lastname']}
+	</td>
+  </tr>
+  <tr>
+    <th>Email:</th>
+	<td class="tleft">{$data['email']}</td>
+  </tr>
+  <tr>
+    <th>{L:user_group}:</th>
+	<td class="tleft">
+		<select name="group_id ">
+			<option value="0">-{L:select}-</option>
+			{foreach $grouplist as $v}
+			<option value="{$v['group_id ']}" {if $v['group_id '] == $data['group_id ']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:password}:</th>
+	<td class="tleft"><input class="len2" name="password" type="password" value=""> {L:do not fill in will not modified}</td>
+  </tr>
+  <tr>
+    <th>{L:confirm_pasw}:</th>
+	<td class="tleft"><input class="len2" name="repassword" type="password" value=""></td>
+  </tr>
+  <tr>
+    <th>{L:integral}:</th>
+	<td class="tleft"><input class="len2" name="score" type="text" value="{$data['score']}"></td>
+  </tr>
+   <tr>
+    <th>{L:status}:</th>
+	<td class="tleft">
+		<label><input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:available}</label> 
+		<label><input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:lock}</label> 
+		&nbsp;&nbsp;&nbsp;&nbsp;({L:After locking the user can not login})
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" value="{L:back}" onclick="history.go(-1);">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

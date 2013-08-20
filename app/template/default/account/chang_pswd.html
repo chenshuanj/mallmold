@@ -1,0 +1,46 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="account">
+		<div class="fleft" id="left">
+			<h3>{L:My account}</h3>
+			<ul>
+			<li><a href="{:url('account/index')}" class="hover">{L:Account information}</a></li>
+			<li><a href="{:url('account/address')}">{L:My address}</a></li>
+			<li><a href="{:url('account/order')}">{L:My order}</a></li>
+			</ul>
+		</div>
+		<div class="fright chang_pswd" id="right">
+			<h3>{$html_title}</h3>
+			{if $have_change==1}
+			<p style="color:green">{L:Your password has been changed}</p>
+			{/if}
+			<form action="{:url('account/chang_pswd')}" method="post">
+			<table>
+				<tr>
+					<th>{L:Email}: </th>
+					<td>{$user['email']}</td>
+				</tr>
+				<tr>
+					<th>{L:Current password}:</th>
+					<td><input type="password" name="password"></td>
+				</tr>
+				<tr>
+					<th>{L:New password}:</th>
+					<td><input type="password" name="newpassword"></td>
+				</tr>
+				<tr>
+					<th>{L:Confirm password}: </th>
+					<td><input type="password" name="repassword"></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><input class="abutton" type="submit" name="submit" value="{L:Submit}"></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

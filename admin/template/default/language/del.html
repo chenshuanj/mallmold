@@ -1,0 +1,45 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{$title}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('language/del?id='.$language['id'])}" >
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:del_lang}:</th>
+	<td class="tleft">
+		{$language['name']}
+	</td>
+  </tr>
+  <tr>
+    <th></th>
+	<td class="tleft">
+		<h3 style="color:red">{L:will_del_alldataandfile_oflang, $language[name]},{L:confirm_delete}</h3>
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:sure_delete}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

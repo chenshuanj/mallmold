@@ -1,0 +1,46 @@
+<tr>
+	<th>Email:</th>
+	<td class="tleft">
+		<input class="len2" name="email" type="text" value="{$setting['email']}"> *
+	</td>
+</tr>
+<tr>
+	<th>Submit Type:</th>
+	<td class="tleft">
+		<input name="type" type="radio" value="1" {if $setting['type']==1} checked{/if}>Nomal 
+		<input name="type" type="radio" value="2" {if $setting['type']==2} checked{/if}>Encryption
+	</td>
+</tr>
+<tr>
+	<th>PayPal Cert Id:</th>
+	<td class="tleft">
+		<input class="len2" name="paypal_cert_id" type="text" value="{$setting['paypal_cert_id']}"> *
+	</td>
+</tr>
+<tr>
+	<th>PayPal Cert File:</th>
+	<td class="tleft">
+		<input class="len2" name="paypal_cert_file" type="file"> *<br/>
+		{$setting['paypal_cert_id']}
+	</td>
+</tr>
+<tr>
+	<th>Public Cert File:</th>
+	<td class="tleft">
+		<input class="len2" name="my_public_cert_file" type="file"> *<br/>
+		{$setting['my_public_cert_file']}
+	</td>
+</tr>
+<tr>
+	<th>Private Key File:</th>
+	<td class="tleft">
+		<input class="len2" name="my_private_key_file" type="file"> *<br/>
+		{$setting['my_private_key_file']}
+	</td>
+</tr>
+<tr>
+	<th>Private Key Password:</th>
+	<td class="tleft">
+		<input class="len2" name="my_private_key_pswd" type="text" value="{$setting['my_private_key_pswd']}"> *
+	</td>
+</tr>

@@ -1,0 +1,53 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > <a href="{:url('image/index')}">{L:img_list}</a> > {L:view}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('image/update')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:original_picture}:</th>
+	<td class="tleft">
+		<a href="{$data['dir']}" target="_blank"><img src="{$data['dir']}" width="60"/></a>
+	</td>
+  </tr>
+  {foreach $setting as $v}
+  <tr>
+    <th>{$v['name']}:</th>
+	<td class="tleft">
+		{if $v['image']}
+		<a href="{$v['image']}" target="_blank"><img src="{$v['image']}" width="60"/></a>
+		{else}
+		{L:none_img}
+		{/if}
+		&nbsp;&nbsp;&nbsp;&nbsp;<label><input name="plan_id[]" type="checkbox" value="{$v['id']}">{L:redraw}</label>
+	</td>
+  </tr>
+  {/foreach}
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

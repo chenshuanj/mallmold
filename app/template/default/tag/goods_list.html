@@ -1,0 +1,8 @@
+<div class="list">
+	<ul>
+	{foreach $tag_list as $v}
+		<li><a href="{:url($v['url'])}" title="{$v['title']}"><img src="{$v['image']['goods_img']}" width="180"/></a></li>
+	{/foreach}
+	</ul>
+</div>
+		

@@ -1,0 +1,136 @@
+<?php
+/*
+*	@pagesAction.php
+*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	http://www.mallmold.com/
+*	
+*	This program is free software; you can redistribute it and/or
+*	modify it under the terms of the GNU General Public License
+*	as published by the Free Software Foundation; either version 2
+*	of the License, or (at your option) any later version.
+*	More details please see: http://www.gnu.org/licenses/gpl.html
+*	
+*	If you want to get an unlimited version of the program or want to obtain
+*	additional services, please send an email to <service@mallmold.com>.
+*/
+
+require Action('common');
+
+class pagesAction extends commonAction
+{
+	public function index()
+	{
+		$this->view['list'] = $this->mdata('pages')->getlist();
+		$this->view['title'] = lang('pages');
+		$this->view('pages/index.html');
+	}
+	
+	public function edit()
+	{
+		if(!$_POST['submit']){
+			$id = intval($_GET['id']);
+			if($id){
+				$data = $this->mdata('pages')->where("id=$id")->get();
+				$this->view['data'] = $data;
+			}
+			
+			$this->editor_header();
+			$this->editor('content', $data['content'], 'content_txtkey_', $data['content_txtkey_'], 'article_desc');
+			$this->editor_uploadbutton('image', $data['image'], 'article_img');
+			
+			$this->view('pages/edit.html');
+		}else{
+			if(!$_POST['title']){
+				$this->error('title_null');
+			}
+			
+			$data = array(
+				'title_key_' => trim($_POST['title_key_']),
+				'title' => trim($_POST['title']),
+				'urlkey' => to_url(trim($_POST['urlkey'])),
+				'content_txtkey_' => trim($_POST['content_txtkey_']),
+				'content' => $_POST['content'],
+				'image' => trim($_POST['image'])
+			);
+			
+			if($_POST['id']){
+				$id = intval($_POST['id']);
+				$this->mdata('pages')->where("id=$id")->save($data);
+			}else{
+				$id = $this->mdata('pages')->add($data);
+			}
+			$this->model('urlkey')->set_page($id, $data['urlkey']);
+			$this->ok('edit_success', url('pages/index'));
+		}
+	}
+	
+	public function del()
+	{
+		$id = intval($_GET['id']);
+		if($id>0){
+			$this->mdata('pages')->where("id=$id")->delete();
+			$this->model('urlkey')->del_page($id);
+		}
+		$this->ok('delete_done', url('pages/index'));
+	}
+	
+	public function block()
+	{
+		$this->view['list'] = $this->mdata('block')->getlist();
+		$this->view['title'] = lang('block');
+		$this->view('pages/block.html');
+	}
+	
+	public function editblock()
+	{
+		if(!$_POST['submit']){
+			$id = intval($_GET['id']);
+			if($id){
+				$data = $this->mdata('block')->where("id=$id")->get();
+				$this->view['data'] = $data;
+			}
+			
+			$this->editor_header();
+			$this->editor('content', $data['content'], 'content_txtkey_', $data['content_txtkey_'], 'article_desc');
+			
+			$this->view('pages/editblock.html');
+		}else{
+			if(!$_POST['code']){
+				$this->error('sign_null');
+			}
+			
+			//check code
+			$code = trim($_POST['code']);
+			$row = $this->db->table('block')->where("code='$code'")->get();
+			if($row && $row['id'] != $_POST['id']){
+				$this->error('code_repeated');
+			}
+			
+			$data = array(
+				'content_txtkey_' => trim($_POST['content_txtkey_']),
+				'content' => trim($_POST['content']),
+				'code' => $code,
+			);
+			
+			if($_POST['id']){
+				$id = intval($_POST['id']);
+				$this->mdata('block')->where("id=$id")->save($data);
+			}else{
+				$this->mdata('block')->add($data);
+			}
+			
+			$this->ok('edit_success', url('pages/block'));
+		}
+	}
+	
+	public function delblock()
+	{
+		$id = intval($_GET['id']);
+		if($id>0){
+			$this->mdata('block')->where("id=$id")->delete();
+		}
+		$this->ok('delete_done', url('pages/block'));
+	}
+}
+
+?>

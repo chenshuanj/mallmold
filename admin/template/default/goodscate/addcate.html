@@ -1,0 +1,104 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('goodscate/index')}">{L:category}</a> > {$title}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:picinfo}</li>
+		<li style="border-top:none" onclick="m(2)">{L:seo_mata}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('goodscate/addcate')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:cate_name}:</th>
+	<td class="tleft">
+		<input name="name_key_" type="hidden" value="{$data['name_key_']}">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> 
+		{if $data['name_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['name_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:cate_description}:</th>
+	<td class="tleft">
+		{include editor/editor.html}
+	</td>
+  </tr>
+  <tr>
+    <th>Url Key:</th>
+	<td class="tleft"><input class="len2" name="urlkey" type="text" value="{$data['urlkey']}"></td>
+  </tr>
+  <tr>
+    <th>{L:father_cate}:</th>
+	<td class="tleft">
+		<select name="pid">
+			<option value="0">{L:root_cate}</option>
+			{foreach $catelist as $v}
+			<option value="{$v['id']}">{$v['name']}</option>
+				{if $v['childnum']>0}
+					{foreach $v['child'] as $val}
+						<option value="{$val['id']}">&nbsp;&nbsp;|-{$val['name']}</option>
+					{/foreach}
+				{/if}
+			{/foreach}
+		</select>
+  </tr>
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+  <tr>
+    <th valign="top" width="10%">{L:picture}:</th>
+	<td class="tleft">
+		{include editor/upload_button.html}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
+  <tr>
+    <th width="180" valign="top">{L:meta_keywords}:</th>
+	<td class="tleft">
+		<input name="meta_keywords_txtkey_" type="hidden" value="{$data['meta_keywords_txtkey_']}">
+		<textarea rows="4" cols="48" name="meta_keywords">{$data['meta_keywords']}</textarea>
+	</td>
+  </tr>
+  <tr>
+    <th width="180" valign="top">{L:meta_description}:</th>
+	<td class="tleft">
+		<input name="meta_description_txtkey_" type="hidden" value="{$data['meta_description_txtkey_']}">
+		<textarea rows="4" cols="48" name="meta_description">{$data['meta_description']}</textarea>
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

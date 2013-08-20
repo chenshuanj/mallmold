@@ -1,0 +1,474 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} <span>></span> {$title}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:product_set}</li>
+		<li style="border-top:none" onclick="m(2)">{L:buy_set}</li>
+		<li style="border-top:none" onclick="m(3)">{L:customer_set}</li>
+		<li style="border-top:none" onclick="m(4)">{L:visit_set}</li>
+		<li style="border-top:none" onclick="m(5)">{L:mail_set}</li>
+		<li style="border-top:none" onclick="m(6)">{L:notice_set}</li>
+		<li style="border-top:none" onclick="m(7)">{L:admin_set}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('setting/update')}" >
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th width="180">{L:web_name}:</th>
+	<td class="tleft">
+		<input name="sys[web_name_key_]" type="hidden" value="{$data['web_name_key_']}">
+		<input class="len2" name="sys[web_name]" type="text" value="{$data['web_name']}"> 
+		{if $data['web_name_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['web_name_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:default_host}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[default_host]" type="text" value="{$data['default_host']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:header_logo}:</th>
+	<td class="tleft">
+		{include editor/upload_button.html}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:bottom_logo}:</th>
+	<td class="tleft">
+		{include editor/upload_button.html}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:app_name}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[frontend]" type="text" value="{$data['frontend']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:default_tpl}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[default_tpl]" type="text" value="{$data['default_tpl']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:default_country}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[default_country]">
+			{foreach $country as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['default_country']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:default_timezone}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[default_timezone]" type="text" value="{$data['default_timezone']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:default_lang}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[default_lang]">
+			{foreach $language as $v}
+			<option value="{$v['code']}" {if $v['code']==$data['default_lang']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:default_cur}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[default_cur]">
+			{foreach $currency as $v}
+			<option value="{$v['code']}" {if $v['code']==$data['default_cur']} selected{/if}>{$v['name']} ({$v['code']})</option>
+			{/foreach}
+		</select><br/>
+		<span style="color:red">({L:need_update_prices_of_product_and_other})</span>
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+  <tr>
+    <th width="200">{L:weight_unit}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[weight_unit]" type="text" value="{$data['weight_unit']}">
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:default_goods_order}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[goods_order]">
+			<option value="sort_order" {if $data['goods_order']=='sort_order'} selected{/if}>{L:goods_sortorder}</option>
+			<option value="addtime" {if $data['goods_order']=='addtime'} selected{/if}>{L:addtime}</option>
+			<option value="soldnum" {if $data['goods_order']=='soldnum'} selected{/if}>{L:soldnum}</option>
+			<option value="goods_id" {if $data['goods_order']=='goods_id'} selected{/if}>{L:goods_id}</option>
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:show_unsale_goods}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[show_unsale]" {if $data['show_unsale']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[show_unsale]" {if $data['show_unsale']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:pre_sale}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[pre_sale]" {if $data['pre_sale']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[pre_sale]" {if $data['pre_sale']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:default_comment_accept}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[comment_accept]" {if $data['comment_accept']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[comment_accept]" {if $data['comment_accept']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:goods_index_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[goods_index_sid]">
+			{foreach $image_setting['goods_main_img'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['goods_index_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th width="120">{L:goods_list_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[goods_list_sid]">
+			{foreach $image_setting['goods_main_img'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['goods_list_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:goods_view_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[goods_view_sid]">
+			{foreach $image_setting['goods_main_img'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['goods_view_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:goods_imgs_big_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[goods_imgs_big_sid]">
+			{foreach $image_setting['goods_imgs'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['goods_imgs_big_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:goods_imgs_small_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[goods_imgs_small_sid]">
+			{foreach $image_setting['goods_imgs'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['goods_imgs_small_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
+  <tr>
+    <th width="220">{L:order_prefix}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[order_prefix]" type="text" value="{$data['order_prefix']}">
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:date_format}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[date_format]" type="text" value="{$data['date_format']}"> ({L:default}: Y-m-d H:i:s)
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:default_coupon_expire_day}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[coupon_expire_day]" type="text" value="{$data['coupon_expire_day']}"> ({L:0_is_unexpire})
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:visitor_order}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[visitor_order]" {if $data['visitor_order']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[visitor_order]" {if $data['visitor_order']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:user_order_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[user_order_notice]" {if $data['user_order_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[user_order_notice]" {if $data['user_order_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:user_pay_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[user_pay_notice]" {if $data['user_pay_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[user_pay_notice]" {if $data['user_pay_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:user_ship_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[user_ship_notice]" {if $data['user_ship_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[user_ship_notice]" {if $data['user_ship_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:user_refund_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[user_refund_notice]" {if $data['user_refund_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[user_refund_notice]" {if $data['user_refund_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_3" style="display:none">
+  <tr>
+    <th width="180">{L:use_agent_lang}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[use_agent_lang]" {if $data['use_agent_lang']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[use_agent_lang]" {if $data['use_agent_lang']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:user_register_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[user_register_notice]" {if $data['user_register_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[user_register_notice]" {if $data['user_register_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:user_default_group}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[user_default_group]">
+			{foreach $grouplist as $v}
+			<option value="{$v['group_id']}" {if $v['group_id']==$data['user_default_group']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:register_verify}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[register_verify]" {if $data['register_verify']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[register_verify]" {if $data['register_verify']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:login_verify}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[login_verify]" {if $data['login_verify']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[login_verify]" {if $data['login_verify']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+</table>
+
+
+<table width="100%" class="r_table" id="c_4" style="display:none">
+  <tr>
+    <th width="180" valign="top">{L:homepage} Meta-Keywords:</th>
+	<td class="tleft">
+		<input name="sys[meta_keywords_key_]" type="hidden" value="{$data['meta_keywords_key_']}">
+		<textarea rows="4" cols="48" name="sys[meta_keywords]">{$data['meta_keywords']}</textarea>
+		{if $data['meta_keywords_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['meta_keywords_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if}
+	</td>
+  </tr>
+  <tr>
+    <th width="180" valign="top">{L:homepage} Meta-Description:</th>
+	<td class="tleft">
+		<input name="sys[meta_description_txtkey_]" type="hidden" value="{$data['meta_description_txtkey_']}">
+		<textarea rows="4" cols="48" name="sys[meta_description]">{$data['meta_description']}</textarea>
+		{if $data['meta_description_txtkey_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_txtkey_&key='.$data['meta_description_txtkey_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if}
+	</td>
+  </tr>
+  <tr>
+    <th width="180" valign="top">{L:spider_code}:</th>
+	<td class="tleft">
+		<textarea rows="4" cols="48" name="sys[spider_code]">{$data['spider_code']}</textarea>
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_5" style="display:none">
+  <tr>
+    <th>{L:smtp_host}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[smtp_host]" type="text" value="{$data['smtp_host']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:smtp_port}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[smtp_port]" type="text" value="{$data['smtp_port']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:smtp_user}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[smtp_user]" type="text" value="{$data['smtp_user']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:smtp_pswd}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[smtp_pswd]" type="password" value="{$data['smtp_pswd']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:smtp_email}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[smtp_email]" type="text" value="{$data['smtp_email']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:email_log}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[email_log]" {if $data['email_log']==1} checked{/if}>{L:enable}</label>
+		<label><input type="radio" value="0" name="sys[email_log]" {if $data['email_log']==0} checked{/if}>{L:disable}</label>
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_6" style="display:none">
+  <tr>
+    <th>{L:admin_order_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[admin_order_notice]" {if $data['admin_order_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[admin_order_notice]" {if $data['admin_order_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:admin_order_notice_email}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[admin_order_notice_email]" type="text" value="{$data['admin_order_notice_email']}"> ({L:use,separate})
+	</td>
+  </tr>
+  <tr>
+    <th>{L:admin_error_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[admin_error_notice]" {if $data['admin_error_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[admin_error_notice]" {if $data['admin_error_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:admin_error_notice_email}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[admin_error_notice_email]" type="text" value="{$data['admin_error_notice_email']}"> ({L:use,separate})
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_7" style="display:none">
+  <tr>
+    <th width="30%">{L:admin_login_verify}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[admin_login_verify]" {if $data['admin_login_verify']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[admin_login_verify]" {if $data['admin_login_verify']==0} checked{/if}>{L:no}</label> 
+	</td>
+  </tr>
+  <tr>
+    <th>{L:data_cache}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[data_cache]" {if $data['data_cache']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[data_cache]" {if $data['data_cache']==0} checked{/if}>{L:no}</label> 
+	</td>
+  </tr>
+  <tr>
+    <th>{L:tpl_cache}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[tpl_cache]" {if $data['tpl_cache']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[tpl_cache]" {if $data['tpl_cache']==0} checked{/if}>{L:no}</label> 
+	</td>
+  </tr>
+  <tr>
+    <th>{L:dict_cache_type}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[dict_cache]">
+			<option value="" {if $data['dict_cache']==''} selected{/if}>{L:none_dict_cache}</option>
+			<option value="redis" {if $data['dict_cache']=='redis'} selected{/if}>Redis</option>
+			<option value="memcache" {if $data['dict_cache']=='memcache'} selected{/if}>Memcache</option>
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:redis_host}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[redis_host]" type="text" value="{$data['redis_host']}"> ({L:default}: 127.0.0.1)
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:redis_port}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[redis_port]" type="text" value="{$data['redis_port']}"> ({L:default}: 6379)
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:redis_pswd}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[redis_pswd]" type="text" value="{$data['redis_pswd']}">
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:memcache_host}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[memcache_host]" type="text" value="{$data['memcache_host']}"> ({L:default}: 127.0.0.1)
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:memcache_port}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[memcache_port]" type="text" value="{$data['memcache_port']}"> ({L:default}: 11211)
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

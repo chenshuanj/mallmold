@@ -1,0 +1,38 @@
+<script>
+	var loadeditor = 1;
+	KindEditor.ready(function(K) {
+		function creat_editor(){
+			K.create('#{$editor_name}', {
+				langType : "{$lang}",
+				themeType : "simple",
+				filterMode : false,
+				uploadJson : "{:url('upload/image?type='.$editor_imgtype.'&session_id='.$session_id)}",
+				fileManagerJson : "{:url('upload/select')}",
+				allowFileManager : true,
+				items : [
+					'source', 'fullscreen', '|',
+					'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'link', 'unlink', 'removeformat', 
+					'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'table',
+					'image', 'multiimage', 'flash', 'map', 'about']
+			});
+		}
+		creat_editor();
+		$('#ifload').click(function() {
+			if(loadeditor == 1){
+				$(this).val('Load editor');
+				K.remove('#{$editor_name}');
+				$('#{$editor_name}').css('visibility', 'visible');
+				loadeditor = 0;
+			}else{
+				$(this).val('Remove editor');
+				creat_editor();
+				loadeditor = 1;
+			}
+		});
+	});
+</script>
+{if $editor_namekey}
+<input name="{$editor_namekey}" type="hidden" value="{$editor_keyval}">
+{/if}
+<textarea id="{$editor_name}" name="{$editor_name}" style="width:{$editor_width}px;height:{$editor_height}px;visibility:hidden;">{$editor_value}</textarea>
+<div style="margin-top:2px;"><input type="button" id="ifload" value="Remove editor" /></div>

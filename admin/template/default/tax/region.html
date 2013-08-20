@@ -1,0 +1,27 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('tax/index')}">{L:taxset}</a>:{$data['name']} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:region_name}</th>
+	<th>{L:tax_region}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">{$region[$v['region_id']]}</td>
+	<td>{$v['tax']}</td>
+	<td>
+	<a href="{:url('tax/editregion?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('tax/delregion?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="3">
+	<div class="d_bottom"><a class="aborder" href="{:url('tax/editregion?tax_id='.$data['id'])}">{L:new_region}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

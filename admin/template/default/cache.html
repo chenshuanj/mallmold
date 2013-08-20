@@ -1,0 +1,28 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:cache_type}</th>
+	<th>{L:action}</th>
+  </tr>
+  <tr>
+	<td class="pleft">{L:data_cache}</td>
+	<td>
+	<a href="{:url('index/clear?type=data')}">{L:clear}</a> 
+	</td>
+  </tr>
+  <tr>
+	<td class="pleft">{L:tpl_cache}</td>
+	<td>
+	<a href="{:url('index/clear?type=tpl')}">{L:clear}</a> 
+	</td>
+  </tr>
+  <tr>
+  <td colspan="2">
+	<div class="d_bottom"><a class="aborder" href="{:url('index/clear?type=all')}">{L:clearall}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

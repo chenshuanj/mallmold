@@ -1,0 +1,53 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:name}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $catelist as $v}
+  <tr>
+    <td>{$v['id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>
+	<a href="{:url('goodscate/addcate?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('goodscate/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {if $v['childnum']>0}
+		{foreach $v['child'] as $val}
+		<tr>
+			<td>{$val['id']}</td>
+			<td class="pleft">&nbsp;&nbsp;&nbsp;&nbsp;|-{$val['name']}</td>
+			<td>{$val['sort_order']}</td>
+			<td>
+			<a href="{:url('goodscate/addcate?id='.$val['id'])}">{L:edit}</a> 
+			<a href="{:url('goodscate/del?id='.$val['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+			</td>
+		</tr>
+			{if $val['childnum']>0}
+				{foreach $val['child'] as $val2}
+					<tr>
+						<td>{$val2['id']}</td>
+						<td class="pleft">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-{$val2['name']}</td>
+						<td>{$val2['sort_order']}</td>
+						<td>
+						<a href="{:url('goodscate/addcate?id='.$val2['id'])}">{L:edit}</a> 
+						<a href="{:url('goodscate/del?id='.$val2['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+						</td>
+					</tr>
+				{/foreach}
+			{/if}
+		{/foreach}
+  {/if}
+  {/foreach}
+  <tr>
+  <td colspan="4"><div class="d_bottom"><a class="aborder" href="{:url('goodscate/addcate')}">{L:add_category}</a></div></td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

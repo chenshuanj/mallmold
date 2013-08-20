@@ -1,0 +1,44 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="account">
+		<div class="fleft" id="left">
+			<h3>{L:My account}</h3>
+			<ul>
+			<li><a href="{:url('account/index')}">{L:Account information}</a></li>
+			<li><a href="{:url('account/order')}" class="hover">{L:My order}</a></li>
+			<li><a href="{:url('account/address')}">{L:My address}</a></li>
+			</ul>
+		</div>
+		<div class="fright" id="right">
+			<h3>{$html_title}</h3>
+			<table width="100%" class="l_table">
+			<tr>
+				<th>{L:OrderID}</th>
+				<th>{L:Fullname}</th>
+				<th>{L:Money}</th>
+				<th>{L:Add time}</th>
+				<th>{L:Status}</th>
+				<th>{L:Operate}</th>
+			</tr>
+			{foreach $order_list as $v}
+			<tr>
+				<td>{$v['order_sn']}</td>
+				<td>{$v['address']['firstname']}&nbsp;{$v['address']['lastname']}</td>
+				<td>{$symbols[$v['currency']]}{$v['total_amount']}</td>
+				<td>{$v['time']}</td>
+				<td>{$order_status[$v['status']]}</td>
+				<td>
+				<a href="{:url('account/orderview?order_id='.$v['order_id'])}">{L:View}</a> 
+				{if $v['can_repay']==1}
+				<a href="{:url('order/pay?order_id='.$v['order_id'])}">{L:Pay}</a>
+				{/if}
+				</td>
+			</tr>
+			{/foreach}
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

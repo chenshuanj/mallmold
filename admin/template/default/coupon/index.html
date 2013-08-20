@@ -1,0 +1,35 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:number}</th>
+	<th>{L:money}</th>
+	<th>{L:addtime}</th>
+	<th>{L:send_status}</th>
+	<th>{L:use_status}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['code']}</td>
+	<td>{$v['money']}</td>
+	<td>{$v['time']}</td>
+	<td>{if $v['send'] !=0}{L:had_send}{else}{L:no_send}{/if}</td>
+	<td>{if $v['status'] !=0}{L:used}{else}{L:unused}{/if}</td>
+	<td>
+	<a href="{:url('coupon/edit?id='.$v['id'])}">{L:modify}</a> 
+	{if $v['status'] == 0}<a href="{:url('coupon/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>{/if} 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+	<div class="d_bottom">
+	<a class="aborder" href="{:url('coupon/edit')}">{L:addcoupon}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

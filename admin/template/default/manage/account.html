@@ -1,0 +1,31 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:username}</th>
+	<th>{L:status}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">{$v['name']}</td>
+	<td>{if $v['status'] !=0}{L:enable}{else}{L:disable}{/if}</td>
+	<td>
+	{if $v['name']==$my['name'] || $my['group_id']==0}<a href="{:url('manage/edit?id='.$v['id'])}">{L:edit}</a>{/if}
+	{if $my['group_id']==0 && $v['name']!=$my['name']}<a href="{:url('manage/del?id='.$v['id'])}">{L:delete}</a>{/if}
+	</td>
+  </tr>
+  {/foreach}
+  {if $my['group_id']==0}
+  <tr>
+  <td colspan="3">
+	<div class="d_bottom">
+	<a class="aborder" href="{:url('manage/edit')}">{L:addadministrator}</a> 
+	</div>
+  </td>
+  </tr>
+  {/if}
+</table>
+</div>
+{include comm_footer.html}

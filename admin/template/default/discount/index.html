@@ -1,0 +1,34 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:title}</th>
+	<th>{L:start_time}</th>
+	<th>{L:end_time}</th>
+	<th>{L:priority}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">{$v['title']}</td>
+	<td>{$v['starttime']}</td>
+	<td>{$v['endtime']}</td>
+	<td>{$v['priority']}</td>
+	<td>{if $v['status'] !=0}<b>{L:yes}</b>{else}{L:no}{/if}</a></td>
+	<td>
+	<a href="{:url('discount/set?id='.$v['id'])}">{L:set_conditions}</a> 
+	<a href="{:url('discount/edit?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('discount/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+	<div class="d_bottom"><a class="aborder" href="{:url('discount/edit')}">{L:addscheme}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

@@ -1,0 +1,88 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('payment/index')}">{L:payment}</a> > {L:setting}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+	function bind_country(id){
+		if(id == 0){
+			$('#country_id').attr('disabled', 'disabled');
+		}else{
+			$('#country_id').attr('disabled', '');
+		}
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:bind_country}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('payment/edit')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:description}:</th>
+	<td class="tleft">
+		{$data['description']}
+	</td>
+  </tr>
+  
+  {include $model}
+  
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+   <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+  <tr>
+    <th valign="top">{L:bind_country}:</th>
+	<td class="tleft">
+	<label><input name="bind" type="radio" value="0" onclick="bind_country(0);" {if $data['bind']==0} checked{/if}>{L:any_country}</label><br/>
+	<label><input name="bind" type="radio" value="1" onclick="bind_country(1);" {if $data['bind']==1} checked{/if}>{L:select_country}</label><br/>
+	<select multiple="multiple" id="country_id" class="len2" name="country_id[]" style="margin:4px 0 0 22px;">
+		{foreach $country_list as $v}
+		<option value="{$v['id']}" {if in_array($v['id'], $binds)} selected{/if}>{$v['name']}</option>
+		{/foreach}
+	</select>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		bind_country( {$data['bind']} );
+	});
+	</script>
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

@@ -1,0 +1,25 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:name}</th>
+	<th>{L:type}</th>
+	<th>{L:title}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $val}
+  <tr>
+	<td class="pleft">{$val['name']}</td>
+	<td>{$val['type']}</td>
+	<td class="pleft">{$val['title']}</td>
+	<td>
+	<a href="{:url('email/edit?name='.$val['name'])}">{L:edit}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

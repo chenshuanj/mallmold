@@ -1,0 +1,85 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('discount/index')}">{L:discount}</a>:{$data['title']} > {L:set_conditions}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('discount/addset')}" >
+<input name="discount_id" type="hidden" value="{$discount_id}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+  <td class="tleft" align="top">
+	{L:condition}: 
+	<select id="item" name="item">
+		<option value="0">-{L:please_select}-</option>
+		{foreach $items as $k=>$v}
+		<option value="{$k}">{$v}</option>
+		{/foreach}
+	</select>
+	
+	<select id="logic" name="logic">
+		<option value="0">-{L:please_select}-</option>
+		{foreach $logic as $k=>$v}
+		<option value="{$k}">{$v}</option>
+		{/foreach}
+	</select>
+	</td>
+	<td class="tleft">
+	<span id="item_val">
+	<input class="len2" name="item_val" type="text" value="">
+	</span> *
+  </td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#item').change(function(){
+		var item_id = $(this).val();
+		$.ajax({
+				url:"{:url('discount/ajax_logic_list')}&item_id=" + item_id,   
+				dataType:"html",
+				success:function(res)
+				{
+					$('#logic').html(res);
+					$('#item_val').html('<input class="len2" name="item_val" type="text" value="">');
+				}
+		});
+	});
+	$('#logic').change(function(){
+		var logic_id = $(this).val();
+		var item_id = $('#item').val();
+		$.ajax({
+				url:"{:url('discount/ajax_val_list')}&item_id=" + item_id + '&logic_id=' + encodeURIComponent(logic_id),   
+				dataType:"html",
+				success:function(res)
+				{
+					$('#item_val').html(res);
+				}
+		});
+	});
+});
+</script>
+</div>
+</div>
+{include comm_footer.html}

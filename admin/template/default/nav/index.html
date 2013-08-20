@@ -1,0 +1,33 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:title}</th>
+	<th>{L:type}</th>
+	<th>URL</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">{$v['title']}</td>
+	<td>{$types[$v['type']]}</td>
+	<td class="pleft">{$v['url']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('nav/edit?id='.$v['id'])}">{L:setting}</a> 
+	<a href="{:url('nav/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+	<div class="d_bottom"><a class="aborder" href="{:url('nav/edit')}">{L:addnav}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

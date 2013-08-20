@@ -1,0 +1,89 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('order/index')}">{L:order}</a> > {$title}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<div class="order">
+<h3>{$title} #{$order['order_sn']}</h3>
+<hr/>
+<form  method="post" action="{:url('order/ship')}" >
+<input name="order_id" type="hidden" value="{$order['order_id']}">
+<h4>{L:shipping_address}:</h4>
+	<div class="address_details">
+	{$order['address']['firstname']} {$order['address']['lastname']}<br/>
+	{$order['address']['phone']} <br/>
+	{$order['address']['address']} <br/>
+	{if $order['address']['address2']} {$order['address']['address2']}<br/>{/if}
+	{$order['address']['postcode']} {$order['address']['state']} {$order['address']['country']}
+</div>
+<h4>{L:goods}:</h4>
+	<style>
+	.l_table,.l_table tr, .l_table td{
+		border:1px solid #fff;
+		line-height:24px;
+	}
+	.l_table th{
+		border-top:1px solid #fff;
+		border-left:1px solid #fff;
+		border-right:1px solid #fff;
+	}
+	</style>
+		<table width="100%" class="l_table">
+			<tr>
+				<th>SKU</th>
+				<th>{L:product_name}</th>
+				<th>{L:options}</th>
+				<th>{L:quantity}</th>
+				<th>{L:ship_num}</th>
+			</tr>
+			{foreach $order['goods'] as $v}
+			<tr>
+				<td>{$v['goods_sku']}</td>
+				<td>{$v['goods_name']}</td>
+				<td>
+				{eval $options = json_decode($v['options'], true);}
+				{if $options}
+				{foreach $options as $op}
+				<div>{$op['name']}:{$op['value']}</div>
+				{/foreach}
+				{/if}
+				</td>
+				<td>{$v['quantity']}</td>
+				<td><input type="text" name="quantity[{$v['id']}]" size="8" value="{$v['quantity']}"></td>
+			</tr>
+			{/foreach}
+			<tr>
+				<td colspan="5">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align:right">{L:ship_sn}:</td>
+				<td><input type="text" name="ship_sn" value="" size="12"> *</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align:right"></td>
+				<td><br/><input type="submit" name="submit" value="{L:submit}"></td>
+			</tr>
+		</table>
+		<div style="text-align:right"><input type="button" onclick="history.go(-1);" value="{L:back}"></div>
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

@@ -1,0 +1,48 @@
+{if $slider_index}
+<div class="box" id="slide">
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var time = 7000;
+		var _n = 0;
+		var t = $('#sliderlist').find("li").size();
+		$('#sliderlist').find("li").each(function(i){
+			$(this).mouseover(function(){
+				clearInterval(d);
+				_n = i;
+				$('#sliderlist').find("li").removeClass('hover');
+				$(this).addClass('hover');
+				var src = $(this).find("img").attr('big');
+				$('#slidershow').attr('src', src);
+			});
+		}).eq(0).mouseover();
+		
+		function autodo(){
+			_n++;
+			_n = _n % t;
+			$('#sliderlist').find("li").removeClass('hover');
+			$('#sliderlist').find("li").eq(_n).addClass('hover');
+			var src = $('#sliderlist').find("li img").eq(_n).attr('big');
+			$('#slidershow').fadeOut(500, function(){
+					$('#slidershow').attr('src', src);
+					$('#slidershow').fadeIn(1000);
+			});
+		}
+		
+		var d = setInterval(autodo, time);
+		$('#sliderlist').hover(function (){
+			clearInterval(d);
+		},function (){
+			d = setInterval(autodo, time);
+		});
+	});
+	</script>
+	<div class="fleft slidershow"><img id="slidershow" src=""></div>
+	<div class="fright sliderlist">
+		<ul id="sliderlist">
+			{foreach $slider_index as $v}
+			<li><a href="javascript:;"><img src="{$v['src']['slider_index']}" big="{$v['src']['origin']}" alt="img" /></a></li>
+			{/foreach}
+		<ul>
+	</div>
+</div>
+{/if}

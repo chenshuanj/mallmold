@@ -1,0 +1,58 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('shipping/index')}">{L:shipping}</a> > {L:region_area} > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('shipping/editregion')}" >
+<input name="shipping_id" type="hidden" value="{$shipping_id}">
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:region_area}:</th>
+	<td class="tleft">
+	<select class="len2" name="region_id">
+		<option value="0">--{L:select}--</option>
+		{foreach $region_list as $v}
+		<option value="{$v['region_id']}"{if $v['region_id']==$data['region_id']} selected{/if}>{$v['name']}</option>
+		{/foreach}
+	</select>
+	*</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:base_fee}:</th>
+	<td class="tleft"><input class="len2" name="base_fee" type="text" value="{$data['base_fee']}"> *<br/>
+	<i>[{$main_cur}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:step_fee}:</th>
+	<td class="tleft"><input class="len2" name="step_fee" type="text" value="{$data['step_fee']}"><br/>
+	<i>[{$main_cur}]</i>
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

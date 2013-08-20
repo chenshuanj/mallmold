@@ -1,0 +1,70 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > <a href="{:url('email/log')}">{L:emaillog}</a> > {L:view}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:addressee}:</th>
+	<td class="tleft">
+		{$email['email']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:title}:</th>
+	<td class="tleft">
+		{$email['title']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:content}:</th>
+	<td class="tleft">
+		{$email['content']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:send_time}:</th>
+	<td class="tleft">
+		{$email['time']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:status}:</th>
+	<td class="tleft">
+		{if $email['status']==1}{L:success}{else}{L:failed}{/if}
+	</td>
+  </tr>
+  {if $email['status']==0}
+  <tr>
+    <th>{L:error_log}:</th>
+	<td class="tleft">
+		{$email['error']}
+	</td>
+  </tr>
+  {/if}
+</table>
+
+<div class="r_bottom">
+	{if $email['status']==0}<a href="{:url('email/resend?id='.$email['id'])}" class="aborder">{L:resend}</a> {/if}
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</div>
+</div>
+{include comm_footer.html}

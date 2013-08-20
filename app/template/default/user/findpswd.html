@@ -1,0 +1,15 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="login" style="padding:8px 8px;text-align:center">
+	{if !$message}
+		<form method="post" action="{:url('user/findpswd')}">
+		{L:Your Email}:	<input type="text" name="email" value="">
+		<input type="submit" class="abutton" name="submit" value="{L:Submit}">
+		</form>
+	{else}
+		{L:A temporary password has been sent to your mailbox}
+	{/if}
+	</div>
+</div>
+{include footer.html}

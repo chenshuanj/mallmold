@@ -1,0 +1,102 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > <a href="{:url('imagesetting/index')}">{L:imgscheme}</a> > {$title}</div>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('imagesetting/add')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:scheme_name}:</th>
+	<td class="tleft">
+		<input name="name_key_" type="hidden" value="{$data['name_key_']}">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> 
+		{if $data['name_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['name_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+  <tr>
+    <th>{L:sign}:</th>
+	<td class="tleft">
+		<input class="len2" name="sign" type="text" value="{$data['sign']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:effect_type}:</th>
+	<td class="tleft">
+		<select name="type">
+			<option value="0">-{L:please_select}-</option>
+			{foreach $types as $k=>$v}
+				{if $k != 'other'}
+				<option value="{$k}" {if $k == $data['type']} selected{/if}>{$v}</option>
+				{/if}
+			{/foreach}
+		</select> *
+  </tr>
+  <tr>
+  <th>{L:whether_thumbnails}:</th>
+	<td class="tleft">
+	<label><input name="thumbnails" type="radio" value="1" {if $data['thumbnails']==1} checked{/if}>{L:yes}</label> 
+	<label><input name="thumbnails" type="radio" value="0" {if $data['thumbnails']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:img_width}:</th>
+	<td class="tleft"><input class="len2" name="width" type="text" value="{$data['width']}"> </td>
+  </tr>
+  <tr>
+   <th>{L:img_height}:</th>
+	<td class="tleft"><input class="len2" name="height" type="text" value="{$data['height']}"> </td>
+  </tr>
+  <tr>
+  <th>{L:watermark}:</th>
+	<td class="tleft">
+	<label><input name="watermark" type="radio" value="1" {if $data['watermark']==1} checked{/if}>{L:yes}</label> 
+	<label><input name="watermark" type="radio" value="0" {if $data['watermark']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+  <th>{L:watermark_image}:</th>
+	<td class="tleft">
+		{include editor/upload_button.html}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:watermark_position}:</th>
+	<td class="tleft">
+		<select name="watermark_pos">
+			<option value="1" {if $data['watermark_pos']==1} selected{/if}>{L:top_left}</option>
+			<option value="2" {if $data['watermark_pos']==2} selected{/if}>{L:top_right}</option>
+			<option value="3" {if $data['watermark_pos']==3} selected{/if}>{L:middle_center}</option>
+			<option value="4" {if $data['watermark_pos']==4} selected{/if}>{L:bottom_left}</option>
+			<option value="5" {if $data['watermark_pos']==5} selected{/if}>{L:bottom_right}</option>
+		</select>
+  </tr>
+  <tr>
+   <th>{L:transparency}:</th>
+	<td class="tleft"><input class="len2" name="watermark_alpha" type="text" value="{$data['watermark_alpha']}"> *
+	({L:number_of_1-100})
+	</td>
+  </tr>
+  <tr>
+  <th>{L:enable}:</th>
+	<td class="tleft">
+	<label><input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes}</label> 
+	<label><input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

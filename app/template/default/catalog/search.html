@@ -1,0 +1,54 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="fleft" id="left">
+		{foreach $attributes as $v}
+			{if $v['can_filter']==1}
+			<h3>{$v['name']}</h3>
+			<ul>
+				{foreach $v['values'] as $val}
+				<li>
+				<a rel="nofollow" href="{:url('catalog/search?'.$v['base_args'].'&attr_'.$val['attr_id'].'='.$val['av_id'])}"{if $attr_args[$val['attr_id']]==$val['av_id']} class="hover"{/if}>
+				{$val['title']}
+				</a>
+				{if $attr_args[$val['attr_id']]==$val['av_id']}
+				<a rel="nofollow" class="del_s" href="{:url('catalog/search?'.$v['base_args'])}">×</a>
+				{/if}
+				</li>
+				{/foreach}
+			</ul>
+			{/if}
+		{/foreach}
+		
+		<h3>Category</h3>
+		<ul>
+		{foreach $catelist as $v}
+		<li><a href="{:url('catalog/index?id='.$v['id'])}">{$v['name']}</a></li>
+		{/foreach}
+		</ul>
+	</div>
+	<div class="fright" id="right">
+		<h3>{L:Search}: {$html_title}</h3>
+		<div class="page_top">{include pager.html}</div>
+		<div class="list">
+			{foreach $list as $v}
+			<div class="goods">
+				<div class="fleft img">
+				<a href="{:url('goods/index?goods_id='.$v['goods_id'])}"><img src="{$v['image'][$img_sign]}"/></a>
+				</div>
+				<div class="fright detail">
+				<p class="name"><a href="{:url($v['url'])}">{$v['title']}</a></p>
+				<p>{L:Origin price}: <del>{$v['price_origin']}</del></p>
+				<p>{L:Special price}: {$v['price']}</p>
+				<p>{$v['brief']}</p>
+				<p><a class="abutton" href="{:url('goods/index?goods_id='.$v['goods_id'])}">{L:Show details}</a></p>
+				</div>
+				<div class="clear"></div>
+			</div>
+			{/foreach}
+		</div>
+		<div class="page_bottom">{include pager.html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{include footer.html}

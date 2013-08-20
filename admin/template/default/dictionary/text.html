@@ -1,0 +1,76 @@
+{include comm_header.html}
+<div class="main">
+<style>
+.title ul{
+	margin: 0 0;
+	margin-top:4px;
+	padding: 0 0;
+}
+.title ul li{
+	float: left;
+	height:20px;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	padding: 2px 6px;
+	font-weight:normal;
+}
+.title ul .space{
+	width: 4px;
+	padding: 2px 1px;
+	border:none;
+	border-bottom: 1px solid #ccc;
+}
+.title ul li a{
+	text-decoration: underline;
+}
+</style>
+<div class="title">
+<ul>
+	<li class="space"></li>
+	<li><a href="{:url('dictionary/index')}">{L:str_dictionary}</a></li>
+	<li class="space"></li>
+	<li>{L:text_dictionary}</li>
+	<li class="space"></li>
+	<div class="clear"></div>
+</ul>
+</div>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="{$colspan}">
+  <div class="d_bottom" style="text-align:right">
+	<form method="post" action="{:url('dictionary/text')}" >
+	<select name="code">
+		{foreach $language as $k=>$v}
+		<option value="{$v['code']}"{if $v['code']==$code} selected{/if}>{$v['name']}</option>
+		{/foreach}
+	</select>: 
+	<input name="keyword" type="text" value="{$keyword}"> 
+	<input type="submit" value="{L:search}">
+	</form>
+  </div>
+  </td>
+  </tr>
+  <tr>
+    <th>{L:dictionary_key}</th>
+	{foreach $language as $l}
+	<th>{$l['name']}</th>
+	{/foreach}
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['text_key']}</td>
+	{foreach $language as $k=>$l}
+	<td class="pleft">{$v[$k]}</td>
+	{/foreach}
+	<td>
+	<a href="{:url('dictionary/textedit?code='.$code.'&id='.$v['id'])}">{L:edit}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  </tr>
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

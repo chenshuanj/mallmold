@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="{$current_lang}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{$html_title}</title>
+	<meta name="description" content="{$meta_description}" />
+	<meta name="keywords" content="{$meta_keywords}" />
+	<link rel="stylesheet" href="{TPL_PATH}css/style.css">
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+	{include $headers}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#select_lang').change(function(){
+				var code = $(this).val();
+				window.location = '{$current_url_lang}' + code;
+			});
+			$('#select_cur').change(function(){
+				var code = $(this).val();
+				window.location = '{$current_url_cur}' + code;
+			});
+			$('#catalogs').hover(function(){
+				var list = $(this).children().eq(1);
+				list.show();
+				list.find('li').hover(function(){
+					if($(this).find('ul').length>0){
+						$(this).children().eq(1).show();
+					}
+				},function(){
+					if($(this).find('ul').length>0){
+						$(this).children().eq(1).hide();
+					}
+				});
+			},function(){
+				$(this).children().eq(1).hide();
+			});
+		});
+		function savepage(){
+			var title = document.title;
+			var url = location.href;
+			if(window.sidebar){
+				window.sidebar.addPanel(title, url, "");
+			}else if(document.all){
+				window.external.AddFavorite(url, title);
+			}
+		}
+	</script>
+</head>
+<body>
+<div id="header">
+	<div class="top">
+		<div class="box">
+			<div class="fleft">
+			<select id="select_lang">
+				{foreach $languages as $v}
+				<option value="{$v['code']}" {if $v['code']==$current_lang} selected{/if}>{$v['name']}</option>
+				{/foreach}
+			</select> 
+			<select id="select_cur">
+				{foreach $currencies as $v}
+				<option value="{$v['code']}" {if $v['code']==$current_cur} selected{/if}>{$v['code']}</option>
+				{/foreach}
+			</select>
+			</div>
+			<div class="fright">
+			{foreach $top_nav as $v}
+			<a href="{$v['url']}">{$v['title']}</a> | 
+			{/foreach}
+			<a href="javascript:savepage();">{L:Add to Wishlist}</a></div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="fleft logo"><a href="/"><img src="{$web_logo}"></a></div>
+		<div class="fleft status">
+		{if $is_login}
+		welcome,<b>{$user_name}</b> <a href="{:url('user/Logout')}">{L:Logout}</a><br/>
+		<a href="{:url('account/index')}">{L:My account}</a>
+		{else}
+		<a href="{:url('user/login')}">{L:Login}</a> | <a href="{:url('user/register')}">{L:Register}</a>
+		{/if} 
+		| <a href="{:url('cart/index')}">{L:Cart}({$cart_num})</a>
+		</div>
+		<div class="fright tel">{$top_tel}</div>
+		<div class="clear"></div>
+	</div>
+	<div class="box nav">
+		{if $is_home==1}
+		<div class="fleft">
+			<div id="catalogs">
+				<a href="#">{L:Categories}</a>
+				<ul style="display:none;">
+				{foreach $catalogs as $v}
+					<li {if $v['childnum']>0} class="c_m"{/if}>
+					<a href="{:url($v['url'])}">{$v['name']}</a>
+					{if $v['childnum']>0}
+						<ul style="display:none;">
+						{foreach $v['child'] as $val}
+						<li {if $val['childnum']>0} class="c_m"{/if}>
+							<a href="{:url($val['url'])}">{$val['name']}</a>
+							{if $val['childnum']>0}
+							<ul style="display:none;">
+								{foreach $val['child'] as $val2}
+								<li>
+									<a href="{:url($val2['url'])}">{$val2['name']}</a>
+								</li>
+								{/foreach}
+							</ul>
+							{/if}
+						</li>
+						{/foreach}
+						</ul>
+					{/if}
+					</li>
+				{/foreach}
+				</ul>
+			</div>
+		</div>
+		{/if}
+		<div class="fleft menu">
+			{if $is_home==0}
+			<a href="/">{L:Home}</a>
+			{/if}
+			{foreach $main_nav as $v}
+			<a href="{$v['url']}">{$v['title']}</a>
+			{/foreach}
+		</div>
+		<div class="fright search">
+		<form method="post" action="{:url('catalog/search')}">
+		<input type="text" id="search_keyword" name="keyword" value="{$keyword}"><input type="submit" class="btn_search" value="">
+		</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

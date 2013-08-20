@@ -1,0 +1,39 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:customer} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="6">
+  <div class="d_bottom" style="text-align:right">
+	<form method="post" action="{:url('user/index')}" >
+	Email: <input name="email" type="text" value="{$email}"> 
+	<input type="submit" value="{L:search}">
+	</form>
+  </div>
+  </td>
+  </tr>
+  <tr>
+    <th>ID</th>
+	<th>{L:username}</th>
+	<th>Email</th>
+	<th>{L:regtime}</th>
+	<th>{L:status}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $val}
+  <tr>
+	<td>{$val['user_id']}</td>
+	<td>{$val['firstname']} {$val['lastname']}</td>
+	<td>{$val['email']}</td>
+	<td>{$val['reg_time']}</td>
+	<td>{if $val['status']==1}{L:available}{else}{L:lock}{/if}</td>
+	<td>
+	<a href="{:url('user/show?user_id='.$val['user_id'])}">{L:view}</a> 
+	<a href="{:url('user/edit?user_id='.$val['user_id'])}">{L:edit}</a> 
+	<a href="{:url('user/del?user_id='.$val['user_id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a></td>
+  </tr>
+  {/foreach}
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

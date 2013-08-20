@@ -1,0 +1,24 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="account">
+		<div class="fleft" id="left">
+			<h3>{L:My account}</h3>
+			<ul>
+			<li><a href="{:url('account/index')}" class="hover">{L:Account information}</a></li>
+			<li><a href="{:url('account/order')}">{L:My order}</a></li>
+			<li><a href="{:url('account/address')}">{L:My address}</a></li>
+			</ul>
+		</div>
+		<div class="fright" id="right">
+			<h3>{$user['firstname']} {$user['lastname']}</h3>
+			<p>{L:Email}: {$user['email']}</p>
+			{if $group}
+			<p>{L:User group}: {$group['name']}</p>
+			{/if}
+			<p><a href="{:url('account/chang_pswd')}">{L:Change password}</a></p>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

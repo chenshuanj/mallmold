@@ -1,0 +1,120 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('attribute/extend')}">{L:extend_attribute}</a> > {$title}</div>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('attribute/addextend')}" >
+<input name="id" type="hidden" value="{$data['extend_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:attribute_name}:</th>
+	<td class="tleft">
+		<input name="name_key_" type="hidden" value="{$data['name_key_']}">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> 
+		{if $data['name_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['name_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+  <tr>
+    <th>{L:type}:</th>
+	<td class="tleft">
+		<select name="type" id="type"{if $data['type']}  disabled="disabled"{/if}>
+			{foreach $type as $k=>$v}
+			<option value="{$k}"{if $k==$data['type']} selected{/if}>{$v}</option>
+			{/foreach}
+		</select>
+		{if $data['type']}
+			<input name="type" type="hidden" value="{$data['type']}">
+		{/if}
+	</td>
+  </tr>
+  
+  <tr id="values" {if $data['type'] !=2 && $data['type'] != 3} style="display:none;"{/if}>
+    <th></th>
+	<td class="tleft">
+	{if $values}
+		{foreach $values as $k=>$v}
+			<div id="more_{$k}">
+			{L:value}:<input type="hidden" name="val_key_[{$v['id']}]" value="{$v['val_key_']}">
+					<input type="text" name="val[{$v['id']}]" class="len" value="{$v['val']}">
+					{if $v['val_key_']}
+					<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$v['val_key_'])}">
+					<img src="{TPL_PATH}images/t.png">
+					</a>
+					{/if} 
+			&nbsp;
+			{L:sortorder}:<input type="text" name="order[{$v['id']}]" class="len" value="{$v['sort_order']}">
+			&nbsp;&nbsp;<a href="javascript:delrow({$k})">×</a>
+			</div>
+		{/foreach}
+	{/if}
+	<div id="op_0" {if $values} style="display:none"{/if}>
+		{L:value}:<input name="val_key[]" type="hidden"><input class="len" name="val[]" type="text">
+		&nbsp;
+		{L:sortorder}:<input class="len" name="order[]" type="text">
+	</div>
+	<p id="add_0"><a class="aborder" href="javascript:addrow();">{L:add}</a></p>
+	
+	<script type="text/javascript">
+		var isIE = (document.all && window.ActiveXObject && !window.opera) ? true : false;
+		var rn = 1000;
+		function addrow(){
+			var oNew=document.createElement("div");
+			oNew.id = "more_" + rn;
+			var str = $('#op_0').html();
+			str += '&nbsp;&nbsp;<a href="javascript:delrow('+ rn +')">×</a>';
+			oNew.innerHTML  = str;
+			var obj = document.getElementById('add_0');
+			obj.parentNode.insertBefore(oNew, obj);
+			rn++;
+		}
+		function delrow(id){
+			var obj = document.getElementById("more_" + id);
+			if(!isIE){
+				obj.parentNode.removeChild(obj);
+			}else{
+				obj.removeNode(true);
+			}
+		}
+		$(document).ready(function(){
+			$('#type').change(function(){
+				var id = $(this).val();
+				if(id==2 || id==3){
+					$('#values').show();
+				}else{
+					$('#values').hide();
+				}
+			});
+		});
+	</script>
+	</td>
+  </tr>
+  
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+  <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<label><input name="status" type="radio" value="1" {if $data['status'] == 1}checked{/if}>{L:yes}</label>
+		<label><input name="status" type="radio" value="0" {if $data['status'] == 0}checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

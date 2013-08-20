@@ -1,0 +1,27 @@
+{include header.html}
+<div id="body">
+	{include slider/index.html}
+	<div class="box mtop">
+		<div class="title">New Goods</div>
+		<div class="list">
+			<ul>
+				{foreach $hot_goods as $k=>$v}
+				<li{if ($k+1)%5== 0} class="last"{/if}><a href="{:url('goods/index?goods_id='.$v['goods_id'])}" title="{$v['title']}"><img src="{$v['image'][$img_sign]}"/></a></li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="box mtop">
+		<div class="title">Hot Goods</div>
+		<div class="list">
+			<ul>
+				{foreach $new_goods as $k=>$v}
+				<li{if ($k+1)%5 == 0} class="last"{/if}><a href="{:url('goods/index?goods_id='.$v['goods_id'])}" title="{$v['title']}"><img src="{$v['image'][$img_sign]}"/></a></li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

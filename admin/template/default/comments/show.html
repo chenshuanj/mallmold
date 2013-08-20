@@ -1,0 +1,71 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('comments/index')}">{L:comments}</a> > {L:view}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('comments/update')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:product_name}:</th>
+	<td class="tleft">{$goods['title']}</td>
+  </tr>
+  <tr>
+    <th>SKU:</th>
+	<td class="tleft">{$goods['sku']}</td>
+  </tr>
+  <tr>
+    <th>{L:comment_user}:</th>
+	<td class="tleft">{$data['username']}</td>
+  </tr>
+  <tr>
+    <th>{L:comment_content}:</th>
+	<td class="tleft">{$data['content']}</td>
+  </tr>
+  <tr>
+    <th>{L:time}:</th>
+	<td class="tleft">{$data['time']}</td>
+  </tr>
+  {if $score}
+  <tr>
+    <th valign="top">{L:score}:</th>
+	<td class="tleft">
+		{foreach $score as $s}
+			<div>{$summary[$s['summary_id']]}: {$s['score']}</div>
+		{/foreach}
+	</td>
+  </tr>
+  {/if}
+   <tr>
+    <th>{L:visible}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

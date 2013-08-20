@@ -1,0 +1,45 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('user/group')}">{L:user_group}</a> > {L:edit}</div>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('user/editgroup')}" >
+<input name="group_id" type="hidden" value="{$data['group_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input name="name_key_" type="hidden" value="{$data['name_key_']}">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> 
+		{if $data['name_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['name_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+  <tr>
+    <th>{L:amount limit}:</th>
+	<td class="tleft"><input class="len2" name="spending" type="text" value="{$data['spending']}"></td>
+  </tr>
+   <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" value="{L:back}" onclick="history.go(-1);">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

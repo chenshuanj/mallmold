@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Mallmold {L:admin}</title>
+	<link rel="stylesheet" href="{TPL_PATH}images/style.css">
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+	{include $headers}
+	<script type="text/javascript">
+		var t_obj;
+		function logout(){
+			return confirm("Are you sure to logout?");
+		}
+		$(document).ready(function(){
+			$('#menu > li').bind('mouseover', function(){
+				$(this).find('div').show();
+			}).bind('mouseout', function(){
+				$(this).find('div').hide();
+			})
+			$('#select_lang').change(function(){
+				var code = $(this).val();
+				window.location = '{$current_url_lang}' + code;
+			});
+			
+			$('.t').click(function(e){
+				e.preventDefault();
+				var maskWidth = $(window).width();
+				var dialogLeft = (maskWidth/2) - ($('#t_box').width()/2);
+				var dialogTop = ($(window).height() - $('#t_box').height())/2 + $(document).scrollTop();
+				if(dialogTop < 0){
+					dialogTop = 2;
+				}
+				$('#t_box').css({top:dialogTop, left:dialogLeft}).show();
+				
+				$('#t_content').html('<img src="{TPL_PATH}images/loading.gif">');
+				
+				t_obj = $(this).prev();
+				var v = t_obj.val();
+				var href = $(this).attr('href');
+				$.ajax({
+					url:href,   
+					dataType:"html",
+					success:function(res)
+					{
+						$('#t_content').html(res);
+						$('#t_v_{$lang}').html(v);
+					}
+				});
+			});
+			$('#t_close').click(function(){
+				$('#t_box').hide();
+			});
+		});
+	</script>
+</head>
+<body>
+{if $error_num>0}
+<div class="error">
+	<a href="{:url('report/index')}">{$error_msg} {L:error_num, $error_num} ({L:click_view})</a>
+</div>
+{/if}
+<div class="content">
+	<div id="t_box">
+		<div class="t_top"><a href="javascript:" id="t_close"><img src="{TPL_PATH}images/close.png"></a></div>
+		<div id="t_content"></div>
+	</div>
+	<div class="top">
+		<div class="state">
+			<div class="logo"><img title="Copyright &copy;2013 Mallmold Ecommerce(HK) Limited. All Rights Reserved" src="{TPL_PATH}images/logo.png"/></div>
+			<div class="user">{L:welcome}, <b>{$username}</b> <a href="{:url('admin/logout')}" onclick="return logout();">{L:logout}</a></div>
+			<div class="clear"></div>
+		</div>
+		<div class="memubox">
+			<ul id="menu">
+				<li><a href="javascript:;">{L:home}</a>
+					<div>
+					<a href="{:url('index/index')}">{L:welcome_page}</a>
+					<a href="{:url('batch/index')}">{L:batch_action}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:product}</a>
+					<div>
+					<a href="{:url('goods/index')}">{L:product_list}</a>
+					<a href="{:url('goods/add')}">{L:add_product}</a>
+					<a href="{:url('goodscate/index')}">{L:category}</a>
+					<a href="{:url('comments/index')}">{L:comments}</a>
+					<a href="{:url('attribute/index')}">{L:attribute}</a>
+					<a href="{:url('option/index')}">{L:option}</a>
+					<a href="{:url('summary/index')}">{L:summary}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:sale}</a>
+					<div>
+					<a href="{:url('order/index')}">{L:order}</a>
+					<a href="{:url('paylist/index')}">{L:paylist}</a>
+					<a href="{:url('ship/index')}">{L:shiplist}</a>
+					<a href="{:url('tax/index')}">{L:taxset}</a>
+					<a href="{:url('shipping/index')}">{L:shipping}</a>
+					<a href="{:url('payment/index')}">{L:payment}</a>
+					<a href="{:url('discount/index')}">{L:discount}</a>
+					<a href="{:url('coupon/index')}">{L:coupon}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:customer}</a>
+					<div>
+					<a href="{:url('user/index')}">{L:userlist}</a>
+					<a href="{:url('user/group')}">{L:usergroup}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:article}</a>
+					<div>
+					<a href="{:url('article/index')}">{L:articlelist}</a>
+					<a href="{:url('article/edit')}">{L:addarticle}</a>
+					<a href="{:url('article/cate')}">{L:articlecate}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:module}</a>
+					<div>
+					<a href="{:url('slider/index')}">{L:slider}</a>
+					<a href="{:url('imagesetting/index')}">{L:imgscheme}</a>
+					<a href="{:url('image/index')}">{L:imagelist}</a>
+					<a href="{:url('dictionary/index')}">{L:dictionary}</a>
+					<a href="{:url('pages/index')}">{L:pages}</a>
+					<a href="{:url('pages/block')}">{L:block}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:system}</a>
+					<div>
+					<a href="{:url('setting/index')}">{L:basesetting}</a>
+					<a href="{:url('language/index')}">{L:language}</a>
+					<a href="{:url('currency/index')}">{L:currency}</a>
+					<a href="{:url('host/index')}">{L:hostlist}</a>
+					<a href="{:url('nav/index')}">{L:nav}</a>
+					<a href="{:url('area/index')}">{L:area}</a>
+					<a href="{:url('email/index')}">{L:emailtpl}</a>
+					<a href="{:url('email/log')}">{L:emaillog}</a>
+					<a href="{:url('index/cache')}">{L:clearcache}</a>
+					<a href="{:url('manage/account')}">{L:account}</a>
+					<a href="{:url('router/index')}">{L:router}</a>
+					<a href="{:url('report/index')}">{L:sysreport}</a>
+					<a href="{:url('report/pay')}">{L:payreport}</a>
+					</div>
+				</li>
+				<li class="lang">
+				{L:select_lang}: <select id="select_lang">
+					{foreach $select_lang as $v}
+					<option value="{$v['code']}" {if $v['code']==$lang} selected{/if}>{$v['name']}</option>
+					{/foreach}
+				</select>
+				</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,61 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > <a href="{:url('manage/account')}">{L:account}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('manage/update')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:username}:</th>
+	<td class="tleft">
+		{if $data['name']}
+			{$data['name']}
+		{else}
+			<input class="len2" name="name" type="text" value="">
+		{/if}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:password2}:</th>
+	<td class="tleft"><input class="len2" name="password" type="password" value=""> *</td>
+  </tr>
+  <tr>
+    <th>{L:confirm_pasw}:</th>
+	<td class="tleft"><input class="len2" name="repassword" type="password" value=""> *</td>
+  </tr>
+  {if $my['group_id']==0 && $data['name']!=$my['name']}
+   <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+  {/if}
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

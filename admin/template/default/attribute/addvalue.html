@@ -1,0 +1,39 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('attribute/index')}">{L:filter_attribute}</a>:{$title}</div>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('attribute/addvalue')}" >
+<input name="attr_id" type="hidden" value="{$attr_id}">
+<input name="id" type="hidden" value="{$data['av_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:attribute_title}:</th>
+	<td class="tleft">
+		<input name="title_key_" type="hidden" value="{$data['title_key_']}">
+		<input class="len2" name="title" type="text" value="{$data['title']}"> 
+		{if $data['title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

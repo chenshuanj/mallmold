@@ -1,0 +1,42 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="8">
+  <div class="d_bottom" style="text-align:right">
+	<form method="post" action="{:url('goods/index')}" >
+	SKU: <input name="sku" type="text" value="{$sku}"> 
+	<input type="submit" value="{L:search}">
+	</form>
+  </div>
+  </td>
+  </tr>
+  <tr>
+    <th>ID</th>
+	<th>SKU</th>
+	<th>{L:product_name}</th>
+	<th>{L:special_price}</th>
+	<th>{L:stock}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $val}
+  <tr>
+	<td>{$val['goods_id']}</td>
+	<td>{$val['sku']}</td>
+	<td class="pleft">{$val['title']}</td>
+	<td>{$current_symbol}{$val['price']}</td>
+	<td>{$val['stock']}</td>
+	<td>{$val['sort_order']}</td>
+	<td>{if $val['status']==1}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('goods/add?goods_id='.$val['goods_id'])}">{L:edit}</a> 
+	<a href="{:url('goods/del?goods_id='.$val['goods_id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a></td>
+  </tr>
+  {/foreach}
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

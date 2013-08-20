@@ -1,0 +1,191 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('order/index')}">{L:order}</a> > {L:view}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:buyer_info}</li>
+	</ul>
+</div>
+<div class="m_right order">
+	<div id="c_0">
+		<h3>{$title} #{$order['order_sn']} ({$order_status[$order['status']]})</h3>
+		<div style="text-align:right">
+			{if $order['status']==3}
+			<a href="{:url('order/ship?order_id='.$order['order_id'])}" class="aborder">{L:ship}</a> 
+			<a href="{:url('order/refund?order_id='.$order['order_id'])}" class="aborder">{L:refund}</a> 
+			{/if}
+			<a href="{:url('order/print_order?order_id='.$order['order_id'])}" target="_blank" class="aborder">{L:print}</a> 
+			<a href="{:url('order/index')}" class="aborder">{L:back}</a>
+		</div>
+		<hr/>
+		<table width="100%">
+			<tr>
+				<th width="20%">{L:order_sn}:</th><td>{$order['order_sn']}</td>
+				<th width="20%">{L:order_time}:</th><td>{$order['time']}</td>
+			</tr>
+			<tr>
+				<th>{L:goods_amount}:</th><td>{$order['symbol']}{$order['goods_amount']}</td>
+				<th>{L:tax_fee}:</th><td>{$order['symbol']}{$order['tax_fee']}</td>
+			</tr>
+			<tr>
+				<th>{L:shipping_fee}:</th><td>{$order['symbol']}{$order['shipping_fee']}</td>
+				<th>{L:total_amount}:</th><td>{$order['symbol']}{$order['total_amount']}</td>
+			</tr>
+			<tr>
+				<th>{L:shipping_method}:</th><td>{$order['shipping_method']}</td>
+				<th>{L:pament_method}:</th><td>{$order['pament_method']}</td>
+			</tr>
+		</table>
+		<h4></h4>
+		<table width="100%" class="l_table">
+			<tr>
+				<th>SKU</th>
+				<th>{L:product_name}</th>
+				<th>{L:options}</th>
+				<th>{L:quantity}</th>
+				<th>{L:subtotal}</th>
+				<th>{L:ship_num}</th>
+			</tr>
+			{foreach $order['goods'] as $v}
+			<tr>
+				<td>{$v['goods_sku']}</td>
+				<td>{$v['goods_name']}</td>
+				<td>
+				{eval $options = json_decode($v['options'], true);}
+				{if $options}
+				{foreach $options as $op}
+				<div>{$op['name']}:{$op['value']}</div>
+				{/foreach}
+				{/if}
+				</td>
+				<td>{$v['quantity']}</td>
+				<td>{$order['symbol']}{$v['subtotal']}</td>
+				<td>{$v['shipping']}</td>
+			</tr>
+			{/foreach}
+		</table>
+		<h4>{L:shipping_address}:</h4>
+		<div class="address_details">
+				{$order['address']['firstname']} {$order['address']['lastname']}<br/>
+				{$order['address']['phone']}<br/>
+				{$order['address']['address']} <br/>
+				{if $order['address']['address2']} {$order['address']['address2']}<br/>{/if}
+				{$order['address']['postcode']} {$order['address']['state']} {$order['address']['country']}
+		</div>
+		<h4>{L:billing_address}:</h4>
+		<div class="address_details">
+				{$order['billing_address']['firstname']} {$order['billing_address']['lastname']}<br/>
+				{$order['billing_address']['phone']}<br/>
+				{$order['billing_address']['address']} <br/>
+				{if $order['billing_address']['address2']} {$order['billing_address']['address2']}<br/>{/if}
+				{$order['billing_address']['postcode']} {$order['billing_address']['state']} {$order['billing_address']['country']}
+		</div>
+		<hr/>
+		<h4>{L:action}:</h4>
+		<table width="100%" class="l_table">
+			<tr>
+				<th>{L:time}</th>
+				<th>{L:status}</th>
+				<th>{L:remark}</th>
+				<th>{L:notice_customer}</th>
+			</tr>
+			{foreach $order['status_list'] as $v}
+			<tr>
+				<td>{$v['time']}</td>
+				<td>{$order_status[$v['status']]}</td>
+				<td>{$v['remark']}</td>
+				<td>{if $v['notice']==1}{L:yes}{else}{L:no}{/if}</td>
+			</tr>
+			{/foreach}
+		</table>
+		<h4></h4>
+		<table width="100%">
+			<form  method="post" action="{:url('order/edit')}" >
+			<input name="order_id" type="hidden" value="{$order['order_id']}">
+			<tr>
+				<th>{L:status}:</th>
+				<td>
+				<select name="status">
+					{foreach $edit_status as $k=>$v}
+						<option value="{$k}"{if $k==$order['status']} selected{/if}>{$v}</option>
+					{/foreach}
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">{L:remark}:</th>
+				<td>
+				<textarea name="remark" cols="48" rows="4"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+				<label><input type="checkbox" name="notice" value="1">{L:notice_customer}</label>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+				<input type="submit" name="submit" value="{L:submit}">
+				</td>
+			</tr>
+			</form>
+		</table>
+	</div>
+	
+	<table width="100%" class="r_table" id="c_1" style="display:none">
+	  {if $order['user_id']>0}
+	  <tr>
+		<th width="10%">Email:</th>
+		<td class="tleft">
+			{$buyer['email']}
+		</td>
+	  </tr>
+	  <tr>
+		<th width="10%">{L:fullname}:</th>
+		<td class="tleft">
+			{$buyer['firstname']} {$buyer['lastname']}
+		</td>
+	  </tr>
+	  <tr>
+		<th width="10%">{L:user_group}:</th>
+		<td class="tleft">
+			{$buyer['group']}
+		</td>
+	  </tr>
+	  <tr>
+		<th width="10%">{L:reg_time}:</th>
+		<td class="tleft">
+			{$buyer['time']}
+		</td>
+	  </tr>
+	  {else}
+	  <tr>
+		<th width="10%">Email:</th>
+		<td class="tleft">
+			{$order['email']}
+		</td>
+	  </tr>
+	  {/if}
+	</table>
+	
+	<h4></h4>
+	<div style="text-align:right"><input type="button" onclick="history.go(-1);" value="{L:back}"></div>
+</div>
+</div>
+{include comm_footer.html}

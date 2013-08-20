@@ -1,0 +1,111 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > {$title}</div>
+<script type="text/javascript">
+	function changelist(){
+		var type = $('#type').val();
+		window.location = "{:url('image/index?type=')}" + type;
+	}
+	function realdo(){
+		return confirm('{L:really_perform}');
+	}
+</script>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="5">
+	<div class="r_top">
+	<form method="post" action="{:url('image/batch')}" >
+	{L:select_type}:
+	<select id="type" name="type" onchange="changelist()">
+		<option value="0">-{L:all}-</option>
+		{foreach $types as $k=>$v}
+		<option value="{$k}" {if $k == $type} selected{/if}>{$v}</option>
+		{/foreach}
+	</select> 
+	{if $type && $type != 'other'}
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	{L:Batch_operations_on_selected_type}:
+	{L:select_scheme}
+	<select name="plan_id">
+	{foreach $setting as $k=>$v}
+		<option value="{$v['id']}">{$v['name']}</option>
+	{/foreach}
+	</select>
+	{L:execute}
+	<select id="dotype" name="do">
+		<option value="1">{L:redraw}</option>
+		<option value="2">{L:del_img}</option>
+	</select>
+	&nbsp;<input type="submit" value="{L:submit}" name="submit" onclick="return realdo();">
+	{/if}
+	</form>
+	</div>
+  </td>
+  </tr>
+  <tr>
+    <th>{L:select}</th>
+	<th>{L:image}</th>
+	<th>{L:type}</th>
+	<th>{L:upload_time}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td><input class="image_id" name="image_id[]" type="checkbox" value="{$v['id']}"></td>
+	<td><a href="{$v['dir']}" target="_blank"><img src="{$v['dir']}" width="60"/></a></td>
+	<td>{$types[$v['type']]}</td>
+	<td>{$v['time']}</td>
+	<td>
+	<a href="{:url('image/edit?id='.$v['id'])}">{L:view}</a> 
+	<a href="{:url('image/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="3" style="border-right:1px solid #fff">
+  <div class="d_bottom" style="text-align:left">
+	<form method="post" action="{:url('image/index')}" >
+	<input type="button" id="selectall" value="{L:selectall}"> 
+	<input type="button" id="unselect" value="{L:unselect}">&nbsp;&nbsp;
+	<input name="type" type="hidden" value="{$type}">
+	<input name="keyword" type="text" value="{$keyword}">
+	<input type="submit" value="{L:search}">
+	</form>
+	</div>
+  </td>
+  <td colspan="2" style="text-align:right">
+	{if $type && $type != 'other'}
+	<form method="post" action="{:url('image/batch')}">
+	<input name="type" type="hidden" value="{$type}">
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	{L:Batch_operations_on_selected_img}:
+	{L:select_scheme}
+	<select name="plan_id">
+	{foreach $setting as $k=>$v}
+		<option value="{$v['id']}">{$v['name']}</option>
+	{/foreach}
+	</select>
+	{L:execute}
+	<select name="do">
+		<option value="1">{L:redraw}</option>
+		<option value="2">{L:del_img}</option>
+	</select>
+	&nbsp;<input type="submit" value="{L:submit}" name="submit" onclick="return realdo();">
+	</form>
+	{/if}
+  </td>
+  </tr>
+</table>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#selectall').click(function(){
+		$('.image_id').attr('checked', 'checked');
+	});
+	$('#unselect').click(function(){
+		$('.image_id').attr('checked', '');
+	});
+});
+</script>
+{include pager.html}
+</div>
+{include comm_footer.html}

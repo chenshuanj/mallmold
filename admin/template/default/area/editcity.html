@@ -1,0 +1,47 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > <a href="{:url('area/index')}">{L:country_list}</a> > {L:region_list} >  {L:city_list} > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('area/editcity?region_id='.$region_id)}" >
+<input name="city_id" type="hidden" value="{$data['city_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:postcode}:</th>
+	<td class="tleft"><input class="len2" name="postcode" type="text" value="{$data['postcode']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

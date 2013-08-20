@@ -1,0 +1,28 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:name}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td><a href="{:url('summary/set?change=status&id='.$v['id'])}" title="{L:click_to_edit}">{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</a></td>
+	<td>
+	<a href="{:url('summary/add?id='.$v['id'])}">{L:modify}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="4">
+	<div class="d_bottom"><a class="aborder" href="{:url('summary/add')}">{L:addsummary}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

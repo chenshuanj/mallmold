@@ -1,0 +1,36 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > <a href="{:url('slider/index')}">{L:slider}</a>:{$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:image}</th>
+	<th>{L:title}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['id']}</td>
+	<td><img src="{$v['src']}" width="60"></td>
+	<td>{$v['title']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status']==1}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('slider/addimage?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('slider/delimage?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+  <div class="d_bottom">
+  <a class="aborder" href="{:url('slider/addimage?slider_id='.$slider_id)}">{L:addimage}</a> 
+  <a class="aborder" href="{:url('slider/index')}">{L:back}</a>
+  </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

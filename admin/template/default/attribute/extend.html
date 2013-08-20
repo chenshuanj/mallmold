@@ -1,0 +1,65 @@
+{include comm_header.html}
+<div class="main">
+<style>
+.title ul{
+	margin: 0 0;
+	margin-top:4px;
+	padding: 0 0;
+}
+.title ul li{
+	float: left;
+	height:20px;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	padding: 2px 6px;
+	font-weight:normal
+}
+.title ul .space{
+	width: 4px;
+	padding: 2px 1px;
+	border:none;
+	border-bottom: 1px solid #ccc;
+}
+.title ul li a{
+	text-decoration: underline;
+}
+</style>
+<div class="title">
+<ul>
+	<li class="space"></li>
+	<li><a href="{:url('attribute/index')}">{L:filter_attribute}</a></li>
+	<li class="space"></li>
+	<li>{L:extend_attribute}</li>
+	<li class="space"></li>
+	<div class="clear"></div>
+</ul>
+</div>
+<div class="title"></div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:name}</th>
+	<th>{L:type}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['extend_id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$type[$v['type']]}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('attribute/addextend?id='.$v['extend_id'])}">{L:edit}</a> 
+	<a href="{:url('attribute/delextend?id='.$v['extend_id'])}" onclick="return confirm('{L:attributeval_will_del},{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6"><div class="d_bottom"><a class="aborder" href="{:url('attribute/addextend')}">{L:addattribute}</a></div></td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

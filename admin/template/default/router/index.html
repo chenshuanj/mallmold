@@ -1,0 +1,197 @@
+{include comm_header.html}
+<div class="main">
+<style>
+.title ul{
+	margin: 0 0;
+	margin-top:4px;
+	padding: 0 0;
+}
+.title ul li{
+	float: left;
+	height:20px;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	padding: 2px 6px;
+	font-weight:normal
+}
+.title ul .space{
+	width: 4px;
+	padding: 2px 1px;
+	border:none;
+	border-bottom: 1px solid #ccc;
+}
+.title ul li a{
+	text-decoration: underline;
+}
+.tleft span{
+	display:inline-block;
+	width: 60px;
+}
+.disabled{
+	background:#eee;
+}
+</style>
+<div class="title">
+<ul>
+	<li class="space"></li>
+	{if $type=='frontend'}
+	<li>{L:frontend_router}</li>
+	<li class="space"></li>
+	<li><a href="{:url('router/backend')}">{L:backend_router}</a></li>
+	{else}
+	<li><a href="{:url('router/index')}">{L:frontend_router}</a></li>
+	<li class="space"></li>
+	<li>{L:backend_router}</li>
+	{/if}
+	<li class="space"></li>
+	<div class="clear"></div>
+</ul>
+</div>
+<div class="m_right" style="width:100%">
+	{if $warning==1}
+	<form method="post" action="{:url('router/update?type='.$type)}" >
+	<table width="100%" class="r_table">
+		  <tr>
+			<th>{L:url_type}:</th>
+			<td class="tleft">
+				<select name="type">
+					<option value="0"{if $data['type']==0} selected{/if}>{L:normal}</option>
+					<option value="1"{if $data['type']==1} selected{/if}>{L:static}</option>
+					<option value="2"{if $data['type']==2} selected{/if}>{L:rewrite}</option>
+				</select>
+			</td>
+		  </tr>
+		  <tr class="btop">
+			<th valign="top">*/*:</th>
+			<td class="tleft">
+				<div>
+					<input name="check[default][scheme]" type="checkbox" value="1" checked onclick="return false">
+					<span>scheme: </span>
+					<input class="len2" name="scheme[default]" type="text" value="{$data['default']['scheme']}">
+					(http or https)
+				</div>
+				<div>
+					<input name="check[default][host]" type="checkbox" value="1" checked onclick="return false">
+					<span>host: </span>
+					<input class="len2" name="host[default]" type="text" value="{$data['default']['host']}">
+					(exp: www.mallmold.com)
+				</div>
+				<div>
+					<input name="check[default][query]" type="checkbox" value="1" checked onclick="return false">
+					<span>query: </span>
+					<input class="len2" name="query[default]" type="text" value="{$data['default']['query']}">
+					(exp: page_id=1&lang=en)
+				</div>
+				<div>
+					<input name="check[default][rewrite]" type="checkbox" value="1" checked onclick="return false">
+					<span>rewrite: </span>
+					<input class="len2" name="rewrite[default]" type="text" value="{$data['default']['rewrite']}">
+					(exp: page/index)
+				</div>
+			</td>
+			<td class="tleft"></td>
+		  </tr>
+		  {foreach $data['router'] as $k=>$v}
+		  <tr class="btop" id="r_{$k}">
+			<th valign="top">
+				<input name="key[{$k}]" type="hidden" value="{$v['key']}">
+				{$v['key']}:
+			</th>
+			<td class="tleft">
+				{foreach $data['default'] as $key=>$val}
+				<div>
+					<label>
+					<input class="ifcheck" name="check[{$k}][{$key}]" type="checkbox" value="1"{if isset($v['router'][$key])} checked {/if}>
+					<span>{$key}: </span>
+					</label>
+					<input class="len2{if !isset($v['router'][$key])} disabled{/if}" name="{$key}[{$k}]" type="text" value="{$v['router'][$key]}">
+				</div>
+				{/foreach}
+			</td>
+			<td class="tleft"><a class="aborder" href="javascript:delrow('{$k}');">{L:delete}</a></td>
+		  </tr>
+		  {/foreach}
+		  
+		  <tr class="btop" id="add">
+			<td colspan="3"><a class="aborder" href="javascript:addrow();">{L:add}</a></td>
+		  </tr>
+	</table>
+	<div class="r_bottom">
+		<input type="submit" name="submit" value="{L:submit}"> 
+		<input type="button" onclick="history.go(-1);" value="{L:back}">
+	</div>
+	</form>
+	<script type="text/javascript">
+	var isIE = (document.all && window.ActiveXObject && !window.opera) ? true : false;
+	var rn = 1000;
+	function delrow(id){
+		var obj = document.getElementById("r_" + id);
+		if(!isIE){
+			obj.parentNode.removeChild(obj);
+		}else{
+			obj.removeNode(true);
+		}
+	}
+	function addrow(){
+		var oNew=document.createElement("tr");
+		oNew.id = "r_" + rn;
+		oNew.className = "btop";
+		var str = '<th valign="top"><input name="key['+ rn +']" type="text" size="8" value="">:</th>';
+		str += '	<td class="tleft">';
+		str += '		<div>';
+		str += '			<label>';
+		str += '			<input class="ifcheck" name="check['+ rn +'][scheme]" type="checkbox" value="1" checked>';
+		str += '			<span>scheme: </span>';
+		str += '			</label>';
+		str += '			<input class="len2" name="scheme['+ rn +']" type="text" value="">';
+		str += '		</div>';
+		str += '		<div>';
+		str += '			<label>';
+		str += '			<input class="ifcheck" name="check['+ rn +'][host]" type="checkbox" value="1" checked>';
+		str += '			<span>host: </span>';
+		str += '			</label>';
+		str += '			<input class="len2" name="host['+ rn +']" type="text" value="">';
+		str += '		</div>';
+		str += '		<div>';
+		str += '			<label>';
+		str += '			<input class="ifcheck" name="check['+ rn +'][query]" type="checkbox" value="1" checked>';
+		str += '			<span>query: </span>';
+		str += '			</label>';
+		str += '			<input class="len2" name="query['+ rn +']" type="text" value="">';
+		str += '		</div>';
+		str += '		<div>';
+		str += '			<label>';
+		str += '			<input class="ifcheck" name="check['+ rn +'][rewrite]" type="checkbox" value="1" checked>';
+		str += '			<span>rewrite: </span>';
+		str += '			</label>';
+		str += '			<input class="len2" name="rewrite['+ rn +']" type="text" value="">';
+		str += '		</div>';
+		str += '	</td>';
+		str += '<td class="tleft"><a class="aborder" href="javascript:delrow('+ rn +');">{L:delete}</a></td>';
+		oNew.innerHTML  = str;
+		var obj = document.getElementById('add');
+		obj.parentNode.insertBefore(oNew, obj);
+		rn++;
+	}
+	$(document).ready(function(){
+		$('.ifcheck').live('click', function(){
+			var toobj = $(this).parent().next();
+			if($(this).attr("checked")){
+				toobj.removeClass('disabled');
+			}else{
+				toobj.addClass('disabled');
+				toobj.val('');
+			}
+		});
+	});
+	</script>
+	{else}
+	<div class="d_bottom" style="padding:8px 0;">
+		{L:wrong_router_setting_will_cause_error_as_404},
+		<a class="aborder" href="{:url('router/'.($type=='frontend' ? 'index' : 'backend').'?warning=1')}">{L:understand_that_i_will_be_careful}</a>
+	</div>
+	{/if}
+</div>
+{include pager.html}
+</div>
+{include comm_footer.html}

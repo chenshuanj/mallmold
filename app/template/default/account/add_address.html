@@ -1,0 +1,173 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="account">
+		<div class="fleft" id="left">
+			<h3>{L:My account}</h3>
+			<ul>
+			<li><a href="{:url('account/index')}">{L:Account information}</a></li>
+			<li><a href="{:url('account/address')}" class="hover">{L:My address}</a></li>
+			<li><a href="{:url('account/order')}">{L:My order}</a></li>
+			</ul>
+		</div>
+		<div class="fright add_address" id="right">
+			<h3>{L:Edit address}</h3>
+			{if $have_save==1}
+			<p style="color:green">{L:Address has been saved!}</p>
+			{elseif $have_save== -1}
+			<p style="color:red">{L:Address save failed!}</p>
+			{/if}
+			<form action="{:url('account/add_address')}" method="post">
+			<table>
+				<tr>
+					<th colspan="2">{L:Shipping address}</th>
+				</tr>
+				<tr>
+					<th>{L:First Name}:</th><td><input type="text" name="firstname" value="{$address['firstname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Last Name}:</th><td><input type="text" name="lastname" value="{$address['lastname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Phone}:</th><td><input type="text" name="phone" value="{$address['phone']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Country}:</th><td>
+					<select name="country_id" id="country">
+						<option value="0">--{L:Select}--</option>
+						{foreach $country_list as $v}
+						<option value="{$v['id']}" {if $v['id']==$address['country_id']} selected{/if}>{$v['name']}</option>
+						{/foreach}
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<th>{L:Postcode}:</th><td><input type="text" name="postcode" value="{$address['postcode']}"></td>
+				</tr>
+				
+				<tr>
+					<th valign="top">{L:Address}:</th>
+					<td>
+					<input type="text" style="width:260px;" name="address" value="{$address['address']}"><br/>
+					<input type="text" style="width:260px;" name="address2" value="{$address['address2']}">
+					</td>
+				</tr>
+				<tr>
+					<th>{L:City/Town}:</th><td><input type="text" name="city" value="{$address['city']}"></td>
+				</tr>
+				<tr>
+					<th>{L:State/Province}:</th><td>
+					<select name="region_id" id="state">
+						{if $region_list}
+							{foreach $region_list as $v}
+							<option value="{$v['region_id']}" {if $v['region_id']==$address['region_id']} selected{/if}>{$v['name']}</option>
+							{/foreach}
+						{else}
+						<option value="0">-{L:Select country}-</option>
+						{/if}
+					</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th colspan="2"><br/>{L:Billing address}</th>
+				</tr>
+				<tr>
+					<th>{L:First Name}:</th><td><input type="text" name="bill_firstname" value="{$address['bill_firstname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Last Name}:</th><td><input type="text" name="bill_lastname" value="{$address['bill_lastname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Phone}:</th><td><input type="text" name="bill_phone" value="{$address['bill_phone']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Country}:</th><td>
+					<select name="bill_country_id" id="bill_country">
+						<option value="0">--{L:Select}--</option>
+						{foreach $country_list as $v}
+						<option value="{$v['id']}" {if $v['id']==$address['bill_country_id']} selected{/if}>{$v['name']}</option>
+						{/foreach}
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<th>{L:Postcode}:</th><td><input type="text" name="bill_postcode" value="{$address['bill_postcode']}"></td>
+				</tr>
+				
+				<tr>
+					<th valign="top">{L:Address}:</th>
+					<td>
+					<input type="text" style="width:260px;" name="bill_address" value="{$address['bill_address']}"><br/>
+					<input type="text" style="width:260px;" name="bill_address2" value="{$address['bill_address2']}">
+					</td>
+				</tr>
+				<tr>
+					<th>{L:City/Town}:</th><td><input type="text" name="bill_city" value="{$address['bill_city']}"></td>
+				</tr>
+				<tr>
+					<th>{L:State/Province}:</th><td>
+					<select name="bill_region_id" id="bill_state">
+						{if $region_list}
+							{foreach $bill_region_list as $v}
+							<option value="{$v['region_id']}" {if $v['region_id']==$address['bill_region_id']} selected{/if}>{$v['name']}</option>
+							{/foreach}
+						{else}
+						<option value="0">-{L:Select country}-</option>
+						{/if}
+					</select>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<th></th><td>
+					<input type="hidden" name="id" value="{$address['id']}">
+					<input class="abutton" type="submit" name="submit" value="{L:Save}">
+					</td>
+				</tr>
+			</table>
+			</form>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$('#country').change(function(){
+					var country_id = $(this).val();
+					$.ajax({
+							url:"{:url('account/ajax_region_list')}",   
+							type: 'POST',
+							data: {'country_id': country_id},
+							dataType:"html",
+							success:function(res)
+							{
+								if(res){
+									$('#state').html(res);
+								}else{
+									$('#state').html('<option value="0">-select-</option>');
+								}
+							}
+					});
+				});
+				$('#bill_country').change(function(){
+					var country_id = $(this).val();
+					$.ajax({
+							url:"{:url('account/ajax_region_list')}",   
+							type: 'POST',
+							data: {'country_id': country_id},   
+							dataType:"html",
+							success:function(res)
+							{
+								if(res){
+									$('#bill_state').html(res);
+								}else{
+									$('#bill_state').html('<option value="0">-select-</option>');
+								}
+							}
+					});
+				});
+			});
+			</script>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

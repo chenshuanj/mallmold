@@ -1,0 +1,90 @@
+{include comm_header.html}
+<div class="main">
+<style>
+h3{margin:4px 0 2px 0;}
+.pleft{padding-left:16px;}
+.pright{padding-left:16px;}
+.m_right .btop{line-height:18px;}
+</style>
+<div class="title"></div>
+	<div class="m_left" style="margin-top:8px;text-align:left;padding:4px 4px;height:440px;">
+		<table border="0" width="100%">
+			<tr>
+				<th width="55%">{L:server_time}:</th><td>{$data['time']}</td>
+			</tr>
+			<tr class="btop">
+				<th width="55%">{L:server_date}:</th><td>{$data['date']}</td>
+			</tr>
+			<tr class="btop">
+				<th>{L:new_orders}:</th><td>{$data['neworder']}</td>
+			</tr>
+			<tr class="btop">
+				<th>{L:new_customer}:</th><td>{$data['newuser']}</td>
+			</tr>
+			<tr class="btop">
+				<th>&nbsp;</th><td></td>
+			</tr>
+			<tr>
+				<th>{L:hot_keywords}:</th><td></td>
+			</tr>
+			{foreach $keywords as $v}
+			<tr class="btop">
+			<td colspan="2" class="pleft">{$v['keyword']} ({$v['search_num']})</td>
+			</tr>
+			{/foreach}
+			<tr class="btop">
+				<th>&nbsp;</th><td></td>
+			</tr>
+			<tr>
+				<th>{L:hot_attribute}:</th><td></td>
+			</tr>
+			{foreach $attribute as $v}
+			<tr class="btop">
+			<td colspan="2" class="pleft">{$v['name']} ({$v['click']})</td>
+			</tr>
+			{/foreach}
+			<tr class="btop">
+				<th></th><td></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="m_right" style="width:680px;border:none;text-align:left;padding:4px 4px">
+		<h3>{L:click} - Top 5</h3>
+		<table border="0" width="100%">
+			{foreach $clicklist as $v}
+			<tr class="btop">
+				<td class="pright">{$v['title']}</td><td width="6%">{$v['click']}</td>
+			</tr>
+			{/foreach}
+			<tr class="btop">
+				<th></th><td></td>
+			</tr>
+		</table>
+		<h3>{L:addtocart} - Top 5</h3>
+		<table border="0" width="100%">
+			{foreach $cartlist as $v}
+			<tr class="btop">
+				<td class="pright">{$v['title']}</td><td width="6%">{$v['cart']}</td>
+			</tr>
+			{/foreach}
+			<tr class="btop">
+				<th></th><td></td>
+			</tr>
+		</table>
+		<h3>{L:buy} - Top 5</h3>
+		<table border="0" width="100%">
+			{foreach $buylist as $v}
+			<tr class="btop">
+				<td class="pright">{$v['title']}</td><td width="6%">{$v['buy']}</td>
+			</tr>
+			{/foreach}
+			<tr class="btop">
+				<th></th><td></td>
+			</tr>
+		</table>
+	</div>
+	<div style="clear:both;"></div>
+</div>
+<div class="copyright">Copyright &copy;2013 Mallmold Ecommerce(HK) Limited. All Rights Reserved</div>
+{include comm_footer.html}

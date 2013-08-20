@@ -1,0 +1,53 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="6">
+  <div class="d_bottom" style="text-align:right">
+	<form method="post" action="{:url('batch/index')}" >
+	SKU: <input name="sku" type="text" value="{$sku}"> 
+	<input type="submit" value="{L:search}">
+	</form>
+  </div>
+  </td>
+  </tr>
+  <form  method="post" action="{:url('batch/update')}" >
+  <tr>
+	<th>SKU</th>
+	<th>{L:product_name}</th>
+	<th style="width:80px">{L:stock}</th>
+	<th style="width:80px">{L:if_onsale}</th>
+	<th style="width:80px">{L:sortorder}</th>
+	<th style="width:80px">{L:enable}</th>
+  </tr>
+  {foreach $list as $val}
+  <tr>
+	<td>{$val['sku']}</td>
+	<td style="text-align:left">{$val['title']}</td>
+	<td><input type="text" style="width:80px" name="stock[{$val['goods_id']}]" value="{$val['stock']}"></td>
+	<td>
+		<select style="width:80px" name="is_sale[{$val['goods_id']}]">
+			<option value="1">{L:yes}</option>
+			<option value="0"{if $val['is_sale']==0} selected{/if}>{L:no}</option>
+		</select>
+	</td>
+	<td><input type="text" style="width:80px" name="sort_order[{$val['goods_id']}]" value="{$val['sort_order']}"></td>
+	<td>
+		<select style="width:80px" name="status[{$val['goods_id']}]">
+			<option value="1">{L:yes}</option>
+			<option value="0"{if $val['status']==0} selected{/if}>{L:no}</option>
+		</select>
+  </tr>
+  {/foreach}
+  <td colspan="6">
+  <div class="d_bottom">
+	<input type="submit" name="submit" value="{L:submit}">
+	</div>
+  </td>
+  </tr>
+  </form>
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

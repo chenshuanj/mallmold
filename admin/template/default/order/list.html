@@ -1,0 +1,42 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="8">
+  <div class="d_bottom" style="text-align:right">
+	<form method="post" action="{:url('order/index')}" >
+	{L:order_sn}: <input name="order_sn" type="text" value="{$order_sn}"> 
+	<input type="submit" value="{L:search}">
+	</form>
+  </div>
+  </td>
+  </tr>
+  <tr>
+    <th>{L:order_sn}</th>
+	<th>{L:customer_name}</th>
+	<th>{L:billing_area}</th>
+	<th>{L:currency_type}</th>
+	<th>{L:money}</th>
+	<th>{L:order_time}</th>
+	<th>{L:status}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td>{$v['order_sn']}</td>
+	<td class="pleft">{$v['address']['firstname']}&nbsp;{$v['address']['lastname']}</td>
+	<td class="pleft">{$v['address']['country']},&nbsp;{$v['address']['state']}</td>
+	<td>{$v['currency']}</td>
+	<td>{$symbols[$v['currency']]}{$v['total_amount']}</td>
+	<td>{$v['time']}</td>
+	<td>{$order_status[$v['status']]}</td>
+	<td>
+		<a href="{:url('order/view_order?order_id='.$v['order_id'])}">{L:view}</a> 
+	</td>
+  </tr>
+  {/foreach}
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

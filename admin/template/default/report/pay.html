@@ -1,0 +1,29 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:time}</th>
+	<th>{L:order_sn}</th>
+	<th>{L:type}</th>
+	<th>{L:content}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td>{$v['time']}</td>
+	<td>{$v['order_id']}</td>
+	<td>{$v['method']}</td>
+	<td align="left" style="width:65%">{$v['error_msg']}</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="4">
+	<div class="d_bottom">
+	<a class="aborder" href="{:url('report/clearpay')}">{L:clearlog}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

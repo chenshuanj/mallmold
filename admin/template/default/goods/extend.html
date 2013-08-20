@@ -1,0 +1,26 @@
+{foreach $extendlist as $v}
+  <tr>
+    <th{if $v['type']==3} valign="top"{/if}>{$v['name']}:</th>
+	<td class="tleft">
+		{if $v['type']==1}
+		<input class="len2" name="extend[{$v['extend_id']}]" type="text" value="{$data['extend'][$v['extend_id']]}">
+		{elseif $v['type']==2}
+		<select name="extend[{$v['extend_id']}]" class="len2">
+			{foreach $v['values'] as $val}
+			<option value="{$val['id']}"{if $data['extend'][$v['extend_id']]==$val['id']} selected{/if}>{$val['val']}</option>
+			{/foreach}
+		</select>
+		{elseif $v['type']==3}
+		<select name="extend[{$v['extend_id']}][]" multiple="multiple" class="len2">
+			{eval $data['extend'][$v['extend_id']] = explode(',', $data['extend'][$v['extend_id']]);}
+			{foreach $v['values'] as $val}
+			<option value="{$val['id']}"{if in_array($val['id'], $data['extend'][$v['extend_id']])} selected{/if}>{$val['val']}</option>
+			{/foreach}
+		</select>
+		{else}
+		<input name="extend[{$v['extend_id']}]" type="radio" value="1" {if $data['extend'][$v['extend_id']]==1} checked{/if}>{L:yes} 
+		<input name="extend[{$v['extend_id']}]" type="radio" value="0" {if $data['extend'][$v['extend_id']]==0} checked{/if}>{L:no}
+		{/if}
+	</td>
+  </tr>
+{/foreach}

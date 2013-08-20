@@ -1,0 +1,37 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">
+{L:module} > {L:slider}
+</div>
+<div class="title"></div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:name}</th>
+	<th>{L:sign}</th>
+	<th>{L:imgscheme}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['slider_id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$v['sign']}</td>
+	<td>
+		{foreach $v['setting_id'] as $id}
+			{if $id==0}{L:original_picture}{else},{$setting[$id]}{/if}
+		{/foreach}
+	</td>
+	<td>
+	<a href="{:url('slider/image?id='.$v['slider_id'])}">{L:imagelist}</a> 
+	<a href="{:url('slider/add?id='.$v['slider_id'])}">{L:edit}</a> 
+	<a href="{:url('slider/del?id='.$v['slider_id'])}" onclick="return confirm('{L:Pictures will also remove},{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="5"><div class="d_bottom"><a class="aborder" href="{:url('slider/add')}">{L:addslider}</a></div></td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

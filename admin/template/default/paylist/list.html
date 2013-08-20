@@ -1,0 +1,28 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:type}</th>
+	<th>{L:order_sn}</th>
+	<th>{L:pament_method}</th>
+	<th>{L:Transaction ID}</th>
+	<th>{L:money}</th>
+	<th>{L:remark}</th>
+	<th>{L:time}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td>{if $v['type']==1}{L:Pay}{else}{L:Refund}{/if}</td>
+	<td>{$v['order_sn']}</td>
+	<td>{$v['model']}</td>
+	<td>{$v['track_id']}</td>
+	<td>{$symbols[$v['currency']]}{$v['money']}</td>
+	<td>{$v['remark']}</td>
+	<td>{$v['time']}</td>
+  </tr>
+  {/foreach}
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

@@ -1,0 +1,116 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="cart">
+	{if $list}
+		<table width="100%" >
+			<tr>
+				<th width="60%">{L:Goods name}</th>
+				<th width="12%">{L:Price}</th>
+				<th width="10%">{L:Quantity}</th>
+				<th width="10%">{L:Subtotal}</th>
+				<th>{L:Delete}</th>
+			</tr>
+			{foreach $list as $v}
+			<tr>
+				<td>
+					<div class="cart_img"><img src="{$v['goods']['image']}"></div>
+					<div class="cart_goods">
+						<div class="goods_title"><a href="{:url('goods/index?goods_id='.$v['goods_id'])}">{$v['goods']['title']}</a></div>
+						<div class="goods_option">
+						{if $v['options_name']}
+							{foreach $v['options_name'] as $option}
+							<p>{$option['name']}: {$option['value']}</p>
+							{/foreach}
+						{/if}
+						</div>
+					</div>
+				</td>
+				<td>{$current_symbol}{$v['goods']['price']}</td>
+				<td><input type="text" class="quantity" name="quantity[]" cart_id="{$v['id']}" value="{$v['quantity']}"></td>
+				<td>{$current_symbol}<span class="subtotal" id="subtotal_{$v['id']}">{$v['subtotal']}</span></td>
+				<td><a href="{:url('cart/delete?id='.$v['id'])}">{L:Delete}</a></td>
+			</tr>
+			{/foreach}
+		</table>
+		
+		{if !$checkout['coupon']}
+		<div class="addcoupon">
+			<form action="{:url('cart/addcoupon')}" method="post">
+			{L:Coupon code}:<input type="text" class="txt" name="coupon_code" value="">
+			<input type="submit" value="{L:Submit}">
+			</form>
+		</div>
+		{/if}
+		
+		<div class="total" id="total_discount"{if !$checkout['discount']} style="display:none"{/if}>
+			{L:Discount}: -{$current_symbol}<span id="discount">{$checkout['discount']}</span>
+		</div>
+		
+		{if $checkout['coupon']}
+		<div class="total">
+			{L:Coupon}: -{$current_symbol}<span id="discount">{$checkout['coupon']}</span>
+		</div>
+		{/if}
+		
+		<div class="total">{L:Total}: {$current_symbol}<span id="total">{$checkout['total']}</span></div>
+		<div class="cart_operate">
+			<a class="abutton fleft"  href="{:url('index/index')}">{L:Continue shopping}</a>
+			<a class="abutton fright" id="checkout" href="{:url('checkout/index')}">{L:Process to checkout}</a>
+			<div class="clear"></div>
+		</div>
+		<script type="text/javascript">
+		var on_update = 0;
+		$(document).ready(function(){
+			$('.quantity').change(function(){
+				var obj = $(this);
+				var cart_id = obj.attr('cart_id');
+				var quantity = obj.val();
+				var if_nan = /^\d+$/.test(quantity);
+				if(!if_nan || quantity<1){
+					quantity = 1;
+					obj.val(1);
+				}
+				
+				on_update = 1;
+				obj.addClass('update');
+				$.ajax({
+					url:"{:url('cart/ajax_update')}",
+					type: 'POST',
+					data:{id:cart_id,quantity:quantity},
+					dataType:"json",
+					success:function(res)
+					{
+						obj.removeClass('update');
+						on_update = 0;
+						if(res == 0){
+							alert('{L:Update failed}');
+							location.reload();
+						}else{
+							$('#subtotal_' + cart_id).html(res.goods_amount);
+							$('#total').html(res.total);
+							if(res.discount > 0){
+								$('#total_discount').show();
+								$('#discount').html(res.discount);
+							}else{
+								$('#total_discount').hide();
+							}
+						}
+					}
+				});
+			});
+			$('#checkout').click(function(e){
+				if(on_update == 1){
+					e.preventDefault();
+				}
+			});
+		});
+		</script>
+	{else}
+		<div>
+		{L:Shopping cart is empty}
+		</div>
+	{/if}
+	</div>
+</div>
+{include footer.html}

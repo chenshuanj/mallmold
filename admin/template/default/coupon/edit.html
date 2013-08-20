@@ -1,0 +1,71 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('coupon/index')}">{L:coupon}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('coupon/edit')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  {if $data['id']}
+  <tr>
+    <th>{L:number}:</th>
+	<td class="tleft">{$data['code']}<input name="sn" type="hidden" value="{$data['code']}"></td>
+  </tr>
+  {/if}
+  <tr>
+    <th>{L:money}:</th>
+	<td class="tleft"><input class="len2" name="money" type="text" value="{$data['money']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:to_email}:</th>
+	<td class="tleft"><input class="len2" name="sendto" type="text" value="{$data['sendto']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:expiretime}:</th>
+	<td class="tleft"><input class="len2" name="expiretime" type="text" value="{$data['expiretime']}"> ({L:format_as}: 2014-12-01 12:30:45)</td>
+  </tr>
+  <tr>
+    <th>{L:send}:</th>
+	<td class="tleft">
+		{if $data['send']==0}
+		<input name="send" type="radio" value="1">{L:yes} 
+		<input name="send" type="radio" value="0">{L:no}
+		{else}
+		{L:had_send}
+		{/if}
+	</td>
+  </tr>
+  {if $data['id']}
+   <tr>
+    <th>{L:use_status}:</th>
+	<td class="tleft">
+		{if $data['status']==1}{L:used}{else}{L:unused}{/if}
+	</td>
+  </tr>
+  {/if}
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

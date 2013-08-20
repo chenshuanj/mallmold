@@ -1,0 +1,37 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="account">
+		<div class="fleft" id="left">
+			<h3>{L:My account}</h3>
+			<ul>
+			<li><a href="{:url('account/index')}">{L:Account information}</a></li>
+			<li><a href="{:url('account/order')}">{L:My order}</a></li>
+			<li><a href="{:url('account/address')}" class="hover">{L:My address}</a></li>
+			</ul>
+		</div>
+		<div class="fright" id="right">
+			<h3>{L:My address}</h3>
+			{if $address_list}
+				{foreach $address_list as $v}
+					<div class="address_list">
+						<div class="address_details">
+						{$v['firstname']} {$v['lastname']}<br/>
+						{$v['phone']}<br/>
+						{$v['address']}<br/>
+						{if $v['address2']}{$v['address2']}<br/>{/if}
+						{$v['postcode']} {$v['state']} {$v['country']}
+						</div>
+						<div class="address_action">
+							<a href="{:url('account/add_address?id='.$v['id'])}">{L:Edit}</a>
+							<a href="{:url('account/del_address?id='.$v['id'])}" onclick="return confirm('{L:Are you sure want to delete?}')">{L:Delete}</a>
+						</div>
+					</div>
+				{/foreach}
+			{/if}
+			<a href="{:url('account/add_address')}">{L:New address}</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

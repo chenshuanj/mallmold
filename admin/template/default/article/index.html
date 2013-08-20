@@ -1,0 +1,35 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:title}</th>
+	<th>UrlKey</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $val}
+  <tr>
+	<td>{$val['article_id']}</td>
+	<td class="pleft">{$val['title']}</td>
+	<td class="pleft">{$val['urlkey']}</td>
+	<td>{$val['sort_order']}</td>
+	<td>{if $val['status']==1}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('article/edit?article_id='.$val['article_id'])}">{L:edit}</a> 
+	<a href="{:url('article/del?article_id='.$val['article_id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a></td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="7">
+  <div class="d_bottom">
+	<a class="aborder" href="{:url('article/edit')}">{L:addarticle}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

@@ -1,0 +1,52 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="login">
+		<div class="fleft login_left">
+			{L:No account yet?} <a href="{:url('user/register')}">{L:Go to register}</a>
+		</div>
+		<div class="fright login_box">
+			<div class="form">
+				<form method="post" action="{:url('user/dologin')}">
+				<input type="hidden" name="back_url" value="{$back_url}">
+				<table>
+					<tr>
+						<th>{L:Email}:</th>
+						<td><input type="text" name="email" value=""></td>
+					</tr>
+					<tr>
+						<th>{L:Password}:</th>
+						<td><input type="password" name="password" value=""></td>
+					</tr>
+					{if $login_verify==1}
+					<tr>
+						<th>{L:Captcha}:</th>
+						<td>
+							<input type="text" style="width:56px;" name="captcha" value="">
+							<a href="javascript:;"><img id="captcha" align="absmiddle" src="{:url('captcha/index')}"/></a>
+							<script type="text/javascript">
+							$(document).ready(function(){
+								$('#captcha').click(function(){
+									$(this).attr('src', "{:url('captcha/index?update=')}" + Math.random());
+								});
+							});
+							</script>
+						</td>
+					</tr>
+					{/if}
+					<tr>
+						<th></th>
+						<td><input type="submit" class="abutton" name="submit" value="{L:Login}"></td>
+					</tr>
+					<tr>
+						<th></th>
+						<td><a href="{:url('user/findpswd')}">{L:Forgot your password?}</a></td>
+					</tr>
+				</table>
+				</form>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

@@ -1,0 +1,102 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('user/index')}">{L:customer}</a> > {L:view}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:goods_order}</li>
+		<li style="border-top:none" onclick="m(2)">{L:user_address}</li>
+	</ul>
+</div>
+<div class="m_right">
+<table width="100%" class="r_table" id="c_0">
+	<tr>
+    <th width="20%" >{L:customer_id}:</th>
+	<td class="tleft">{$data['user_id']}</td>
+  </tr>
+  <tr>
+    <th>{L:customer_name}:</th>
+	<td class="tleft">{$data['firstname']} {$data['lastname']}</td>
+  </tr>
+  <tr>
+    <th>Email:</th>
+	<td class="tleft">{$data['email']}</td>
+  </tr>
+  <tr>
+    <th>{L:usergroup}:</th>
+	<td class="tleft">
+		{$data['group']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:integral}:</th>
+	<td class="tleft">{$data['score']}</td>
+  </tr>
+  <tr>
+    <th>{L:regtime}:</th>
+	<td class="tleft">{$data['time']}</td>
+  </tr>
+  <tr>
+    <th>{L:status}:</th>
+	<td class="tleft">{if $data['status']==1}{L:available}{else}{L:lock}{/if}</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+  <tr>
+     <td>{L:order_sn}</td>
+	 <td>{L:currency_type}</td>
+	 <td>{L:goods_amount}</td>
+	 <td>{L:time}</td>
+	 <td>{L:status}</td>
+  </tr>
+  {foreach $order as $v}
+  <tr class="btop">
+	<td>{$v['order_sn']}</td>
+	<td>{$v['currency']}</td>
+	<td>{$symbols[$v['currency']]}{$v['total_amount']}</td>
+	<td>{$v['time']}</td>
+	<td>{$order_status[$v['status']]}</td>
+  </tr>
+  {/foreach}
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
+  <tr>
+     <td>{L:fullname}</td>
+	 <td>{L:region_area}</td>
+	 <td>{L:shipping_address}</td>
+	 <td>{L:phone}</td>
+	 <td>{L:postcode}</td>
+  </tr>
+  {foreach $address as $v}
+  <tr class="btop">
+	<td>{$v['firstname']} {$v['lastname']}</td>
+	<td>{$v['country']} {$v['state']} {$v['city']}</td>
+	<td>{$v['address']} {$v['address2']}</td>
+	<td>{$v['phone']}</td>
+	<td>{$v['postcode']}</td>
+  </tr>
+  {/foreach}
+</table>
+
+<div class="r_bottom">
+	<input type="button" value="{L:back}" onclick="history.go(-1);">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

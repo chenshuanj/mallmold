@@ -1,0 +1,29 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:time}</th>
+	<th>{L:type}</th>
+	<th>{L:content}</th>
+	<th>{L:url}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr{if $v['status']==0} style="font-weight:bold;"{/if}>
+	<td>{$v['time']}</td>
+	<td>{$v['type']}</td>
+	<td align="left">{$v['message']}</td>
+	<td align="left">{$v['uri']}</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="4">
+	<div class="d_bottom">
+	<a class="aborder" href="{:url('report/clear')}">{L:clearlog}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

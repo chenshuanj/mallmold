@@ -1,0 +1,29 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:option_name}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['op_id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('option/add?id='.$v['op_id'])}">{L:edit}</a> 
+	<a href="{:url('option/del?id='.$v['op_id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="5"><div class="d_bottom"><a class="aborder" href="{:url('option/add')}">{L:addoption}</a></div></td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

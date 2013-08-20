@@ -1,0 +1,29 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:addressee}</th>
+	<th>{L:title}</th>
+	<th>{L:time}</th>
+	<th>{L:status}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td>{$v['email']}</td>
+	<td>{$v['title']}</td>
+	<td>{$v['time']}</td>
+	<td>{if $v['status']==1}{L:success}{else}{L:failed}{/if}</td>
+	<td>
+		{if $v['status']==0}
+		<a href="{:url('email/resend?id='.$v['id'])}">{L:resend}</a> 
+		{/if}
+		<a href="{:url('email/view_log?id='.$v['id'])}">{L:view}</a> 
+	</td>
+  </tr>
+  {/foreach}
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

@@ -1,0 +1,41 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:scheme_name}</th>
+	<th>{L:effect_type}</th>
+	<th>{L:sign}</th>
+	<th>{L:whether_thumbnails}</th>
+	<th>{L:img_width}</th>
+	<th>{L:img_height}</th>
+	<th>{L:watermark}</th>
+	<th>{L:if_default}</th>
+	<th>{L:status}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td>{$v['name']}</td>
+	<td>{$types[$v['type']]}</td>
+	<td>{$v['sign']}</td>
+	<td>{if $v['thumbnails']>0}{L:yes}{else}{L:no}{/if}</td>
+	<td>{$v['width']}</td>
+	<td>{$v['height']}</td>
+	<td>{if $v['watermark']>0}{L:yes}{else}{L:no}{/if}</td>
+	<td>{if $v['if_sys']>0}{L:yes}{else}{L:no}{/if}</td>
+	<td>{if $v['status']>0}{L:enable}{else}{L:disable}{/if}</td>
+	<td>
+	<a href="{:url('imagesetting/add?id='.$v['id'])}">{L:modify}</a>
+	{if $v['if_sys']==0}
+	<a href="{:url('imagesetting/del?id='.$v['id'])}" onclick="return confirm('{L:will_del_allimg_ofscheme},{L:confirm_delete}')">{L:delete}</a>
+	{/if}
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+	<td colspan="10"><div class="d_bottom"><a class="aborder" href="{:url('imagesetting/add')}">{L:addscheme}</a></div></td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

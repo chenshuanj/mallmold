@@ -1,0 +1,28 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:title}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $val}
+  <tr>
+	<td>{$val['id']}</td>
+	<td>{$val['title']}</td>
+	<td>
+	<a href="{:url('pages/edit?id='.$val['id'])}">{L:edit}</a> 
+	<a href="{:url('pages/del?id='.$val['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a></td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="7">
+  <div class="d_bottom">
+	<a class="aborder" href="{:url('pages/edit')}">{L:addpage}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

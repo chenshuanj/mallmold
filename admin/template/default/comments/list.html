@@ -1,0 +1,39 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+  <td colspan="6">
+  <div class="d_bottom" style="text-align:right">
+	<form method="post" action="{:url('comments/index')}" >
+	{L:content}: <input name="content" type="text" value="{$content}"> 
+	<input type="submit" value="{L:search}">
+	</form>
+  </div>
+  </td>
+  </tr>
+  <tr>
+    <th>{L:customer}</th>
+	<th>{L:comment_content}</th>
+	<th>{L:score}</th>
+	<th>{L:time}</th>
+	<th>{L:visible}</th>
+	<th>{L:time}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td>{$v['username']}</td>
+	<td style="text-align:left" width="45%">{$v['content']}</td>
+	<td>{$v['score']}</td>
+	<td>{$v['time']}</td>
+	<td>{if $v['status']==1}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+		<a href="{:url('comments/show?id='.$v['id'])}">{L:view}</a> 
+		<a href="{:url('comments/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+</table>
+{include pager.html}
+</div>
+{include comm_footer.html}

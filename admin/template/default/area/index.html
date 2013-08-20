@@ -1,0 +1,34 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:countrycode}</th>
+	<th>{L:name}</th>
+	<th>{L:phone_code}</th>
+	<th>{L:timezone}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['code']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$v['phone_code']}</td>
+	<td>{$v['time_zone']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('area/edit?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('area/region?id='.$v['id'])}">{L:region_admin}</a> 
+	<a href="{:url('area/del?id='.$v['id'])}">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+	<div class="d_bottom"><a class="aborder" href="{:url('area/edit')}">{L:addcountry}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

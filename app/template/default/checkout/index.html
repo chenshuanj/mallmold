@@ -1,0 +1,533 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="checkout">
+		<form id="checkout" action="{:url('checkout/place_order')}" method="post">
+		<div class="fleft shipping">
+			<div class="address" id="address_form">
+			<h3>{L:Shipping Address}</h3>
+			{if $address_list}
+				<table>
+				{foreach $address_list as $v}
+				<tr>
+					<th class="radio" valign="top">
+						<input type="radio" id="address_id_{$v['id']}" class="address_id radio" name="address_id" value="{$v['id']}" {if $address_tmp['address_id']==$v['id']}checked{/if}>
+					</th>
+					<td>
+						<div class="address_list">
+						<label for="address_id_{$v['id']}">
+							{$v['firstname']} {$v['lastname']}<br/>
+							{$v['phone']}<br/>
+							{$v['address']}<br/>
+							{if $v['address2']} {$v['address2']}<br/>{/if}
+							{$v['postcode']} {$v['state']} {$v['country']}
+						</label>
+						</div>
+					</td>
+				</tr>
+				{/foreach}
+				<tr>
+					<th class="radio" valign="top">
+						<input type="radio" id="address_id_0" class="address_id radio" name="address_id" value="0" {if $address_tmp && $address_tmp['address_id']==0}checked{/if}>
+					</th>
+					<td><label for="address_id_0">{L:New address}</label></td>
+				</tr>
+				</table>
+			{else}
+			<input type="hidden" id="address_id_0" class="address_id radio" name="address_id" value="0">
+			{/if}
+			<table id="new_address" {if (!$address_tmp && $address_list) || $address_tmp['address_id']>0} style="display:none"{/if}>
+				<tr>
+					<th>{L:First Name}:</th><td><input type="text" id="firstname" name="firstname" value="{$address_tmp['firstname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Last Name}:</th><td><input type="text" id="lastname" name="lastname" value="{$address_tmp['lastname']}"></td>
+				</tr>
+				<tr{if $is_login} style="display:none"{/if}>
+					<th>{L:Email}:</th><td><input type="text" id="email" name="email" value="{$address_tmp['email']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Phone}:</th><td><input type="text" id="phone" name="phone" value="{$address_tmp['phone']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Country}:</th><td>
+					<select name="country_id" id="country_id">
+						<option value="0">-{L:Select country}-</option>
+						{foreach $country_list as $v}
+						<option value="{$v['id']}" {if $v['id']==$address_tmp['country_id']} selected{/if}>{$v['name']}</option>
+						{/foreach}
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<th>{L:Postcode}:</th><td><input type="text" id="postcode" name="postcode" value="{$address_tmp['postcode']}"></td>
+				</tr>
+				<tr>
+					<th valign="top">{L:Address}:</th>
+					<td>
+					<input type="text" id="address" name="address" value="{$address_tmp['address']}"><br/>
+					<input type="text" id="address2" name="address2" value="{$address_tmp['address2']}">
+					</td>
+				</tr>
+				<tr>
+					<th>{L:City/Town}:</th><td><input type="text" id="city" name="city" value="{$address_tmp['city']}"></td>
+				</tr>
+				<tr>
+					<th>{L:State/Province}:</th><td>
+					<select id="region_id" name="region_id">
+						<option value="0">-{L:Select}-</option>
+						{foreach $region_list as $v}
+						<option value="{$v['region_id']}" {if $v['region_id']==$address_tmp['region_id']} selected{/if}>{$v['name']}</option>
+						{/foreach}
+					</select>
+					</td>
+				</tr>
+				{if $is_login}
+				<tr>
+					<th></th><td>
+					<label><input class="checkbox" type="checkbox" id="saveaddress" name="saveaddress" value="1"> {L:Save this address}</label>
+					</td>
+				</tr>
+				{/if}
+				<tr>
+					<th></th><td>
+					<label><input class="checkbox" type="checkbox" id="billtosame" name="billtosame" value="1" {if !isset($address_tmp['billtosame']) || $address_tmp['billtosame']==1} checked{/if}> {L:Bill to the same address}</label>
+					</td>
+				</tr>
+				<tbody id="billtosame_html" {if !isset($address_tmp['billtosame']) || $address_tmp['billtosame']==1} style="display:none"{/if}>
+				<tr>
+					<td><h3>{L:Billing Address}</h3></td><td></td>
+				</tr>
+				<tr>
+					<th>{L:First Name}:</th><td><input type="text" id="bill_firstname" name="bill_firstname" value="{$address_tmp['bill_firstname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Last Name}:</th><td><input type="text" id="bill_lastname" name="bill_lastname" value="{$address_tmp['bill_lastname']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Phone}:</th><td><input type="text" id="bill_phone" name="bill_phone" value="{$address_tmp['bill_phone']}"></td>
+				</tr>
+				<tr>
+					<th>{L:Country}:</th><td>
+					<select name="bill_country_id" id="bill_country_id">
+						<option value="0">-{L:Select country}-</option>
+						{foreach $country_list as $v}
+						<option value="{$v['id']}" {if $v['id']==$address_tmp['bill_country_id']} selected{/if}>{$v['name']}</option>
+						{/foreach}
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<th>{L:Postcode}:</th><td><input type="text" id="bill_postcode" name="bill_postcode" value="{$address_tmp['bill_postcode']}"></td>
+				</tr>
+				<tr>
+					<th valign="top">{L:Address}:</th>
+					<td>
+					<input type="text" id="bill_address" name="bill_address" value="{$address_tmp['bill_address']}"><br/>
+					<input type="text" id="bill_address2" name="bill_address2" value="{$address_tmp['bill_address2']}">
+					</td>
+				</tr>
+				<tr>
+					<th>{L:City/Town}:</th><td><input type="text" id="bill_city" name="bill_city" value="{$address_tmp['bill_city']}"></td>
+				</tr>
+				<tr>
+					<th>{L:State/Province}:</th><td>
+					<select id="bill_region_id" name="bill_region_id">
+						<option value="0">-{L:Select}-</option>
+						{foreach $region_list as $v}
+						<option value="{$v['region_id']}" {if $v['region_id']==$address_tmp['bill_region_id']} selected{/if}>{$v['name']}</option>
+						{/foreach}
+					</select>
+					</td>
+				</tr>
+				</tbody>
+				
+				{if !$is_login}
+				<tr>
+					<th></th><td><br/>
+					<label><input class="checkbox" type="checkbox" id="newaccount" name="newaccount" value="1"> {L:Create an account}</label>
+					</td>
+				</tr>
+				<tfoot id="showaccount" style="display:none;">
+				<tr>
+					<th>{L:Password}: </th>
+					<td><input type="password" id="password" name="password" value=""></td>
+				</tr>
+				<tr>
+					<th>{L:Confirm password}: </th>
+					<td><input type="password" id="repassword" name="repassword" value=""></td>
+				</tr>
+				<tr>
+					<th></th><td>
+					<label><input class="checkbox" type="checkbox" id="saveaddress" name="saveaddress" value="1"> {L:Save this address}</label>
+					</td>
+				</tr>
+				</tfoot>
+				{/if}
+			</table>
+			</div>
+		</div>
+		<div class="fright pay">
+			<div class="shipping_method">
+				<h3>{L:Shipping method}</h3>
+				<div id="shipping_method">
+				{include checkout/shipping_method.html}
+				</div>
+			</div>
+			<div class="payment_method">
+				<h3>{L:Payment method}</h3>
+				<div id="payment_method">
+				{include checkout/payment_method.html}
+				</div>
+			</div>
+			<div class="pay_details" id="pay_details">
+				{include checkout/pay_details.html}
+			</div>
+		</div>
+		</form>
+		<div class="clear"></div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var address_id = {$address_id};
+				function makedata(country_id, region_id, shipping_id){
+					var payment_id = 0;
+					$('.payment_id').each(function(){
+						if($(this).attr("checked")){
+							payment_id = $(this).val();
+						}
+					});
+					return {
+						'address_id':address_id,
+						'email':$('#email').val(),
+						'country_id':country_id,
+						'region_id':region_id,
+						'firstname':$('#firstname').val(),
+						'lastname':$('#lastname').val(),
+						'city':$('#city').val(),
+						'address':$('#address').val(),
+						'address2':$('#address2').val(),
+						'phone':$('#phone').val(),
+						'postcode':$('#postcode').val(),
+						'billtosame':$('#billtosame').val(),
+						'bill_country_id':$('#bill_country_id').val(),
+						'bill_region_id':$('#bill_region_id').val(),
+						'bill_firstname':$('#bill_firstname').val(),
+						'bill_lastname':$('#bill_lastname').val(),
+						'bill_city':$('#bill_city').val(),
+						'bill_address':$('#bill_address').val(),
+						'bill_address2':$('#bill_address2').val(),
+						'bill_phone':$('#bill_phone').val(),
+						'bill_postcode':$('#bill_postcode').val(),
+						'shipping_id':shipping_id,
+						'payment_id':payment_id
+					};
+				}
+				function update_country(country_id){
+					var data = makedata(country_id, 0, 0);
+					$.ajax({
+						url:"{:url('checkout/ajax_update_country')}",   
+						type: 'POST',
+						data: data,
+						dataType:"json",
+						success:function(res){
+							if(res.region_html){
+								$('#region_id').html(res.region_html);
+							}else{
+								$('#region_id').html('<option value="0">-select-</option>');
+							}
+							$('#shipping_method').html(res.shipping_method);
+							$('#payment_method').html(res.payment_method);
+							$('#pay_details').html(res.pay_details);
+						}
+					});
+				}
+				function update_shipping(country_id, region_id, shipping_id){
+					var data = makedata(country_id, region_id, shipping_id);
+					$.ajax({
+						url:"{:url('checkout/ajax_update_shipping')}",   
+						type: 'POST',
+						data: data,
+						dataType:"json",
+						success:function(res){
+							$('#pay_details').html(res.pay_details);
+						}
+					});
+				}
+				function region_change(region_id){
+					var country_id = $('#country_id').val();
+					var shipping_id = 0;
+					$('.shipping_id').each(function(){
+						if($(this).attr("checked")){
+							shipping_id = $(this).val();
+						}
+					});
+					update_shipping(country_id, region_id, shipping_id);
+				}
+				$('.address_id').click(function(){
+					address_id = $(this).val();
+					var country_id = 0;
+					if(address_id == 0){
+						country_id = $('#country_id').val();
+						$('#new_address').show();
+					}else{
+						$('#new_address').hide();
+					}
+					update_country(country_id);
+				});
+				$('#country_id').change(function(){
+					var country_id = $(this).val();
+					update_country(country_id);
+				});
+				$('#region_id').change(function(){
+					var region_id = $('#region_id').val();
+					region_change(region_id);
+				});
+				$('.shipping_id').live('click', function(){
+					var country_id = 0;
+					var region_id = 0;
+					var shipping_id = $(this).val();
+					if(address_id == 0){
+						country_id = $('#country_id').val();
+						region_id = $('#region_id').val();
+					}
+					update_shipping(country_id, region_id, shipping_id);
+				});
+				
+				$('#postcode').change(function(){
+					if($('#region_id').val() >0 && $('#city').val() != ''){
+						return true;
+					}
+					var country_id = $('#country_id').val();
+					if(country_id == 0){
+						return false;
+					}
+					var postcode = $(this).val();
+					if(postcode == ''){
+						return false;
+					}
+					$.ajax({
+						url:"{:url('checkout/ajax_zipfindcity')}",   
+						type: 'POST',
+						data: {country_id:country_id, postcode:postcode},
+						dataType:"json",
+						success:function(res){
+							if(res.status == 1){
+								$('#city').val(res.city);
+								$("#region_id").val(res.region_id);
+								region_change(res.region_id);
+							}
+						}
+					});
+				});
+				$('#billtosame').click(function(){
+					if($(this).attr('checked')){
+						$('#billtosame_html').hide();
+					}else{
+						$('#billtosame_html').show();
+					}
+				});
+				$('#bill_country_id').change(function(){
+					var bill_country_id = $(this).val();
+					$.ajax({
+						url:"{:url('checkout/ajax_bill_country')}",   
+						type: 'POST',
+						data: {'bill_country_id':bill_country_id},
+						dataType:"json",
+						success:function(res){
+							if(res.region_html){
+								$('#bill_region_id').html(res.region_html);
+							}else{
+								$('#bill_region_id').html('<option value="0">-select-</option>');
+							}
+						}
+					});
+				});
+				$('#bill_postcode').change(function(){
+					if($('#bill_region_id').val() >0 && $('#bill_city').val() != ''){
+						return true;
+					}
+					var bill_country_id = $('#bill_country_id').val();
+					if(bill_country_id == 0){
+						return false;
+					}
+					var bill_postcode = $(this).val();
+					if(bill_postcode == ''){
+						return false;
+					}
+					$.ajax({
+						url:"{:url('checkout/ajax_zipfindcity')}",   
+						type: 'POST',
+						data: {'country_id':bill_country_id, 'postcode':bill_postcode},
+						dataType:"json",
+						success:function(res){
+							if(res.status == 1){
+								$('#bill_city').val(res.city);
+								$("#bill_region_id").val(res.region_id);
+							}
+						}
+					});
+				});
+				$('#newaccount').click(function(){
+					if($(this).attr('checked')){
+						$('#showaccount').show();
+					}else{
+						$('#showaccount').hide();
+					}
+				});
+				$('#place_order').live('click', function(e){
+					e.preventDefault();
+					var address_id = 0;
+					{if $address_list}
+					$('#address_form').find('input[name="address_id"]').each(function(){
+						if($(this).attr('checked')){
+							address_id = $(this).val();
+						}
+					});
+					{/if}
+					
+					var status = 1;
+					if(address_id == 0){
+						if($('#firstname').val() == ''){
+							$('#firstname').addClass('required');
+							status = 0;
+						}else{
+							$('#firstname').removeClass('required');
+						}
+						if($('#lastname').val() == ''){
+							$('#lastname').addClass('required');
+							status = 0;
+						}else{
+							$('#lastname').removeClass('required');
+						}
+						if($('#email').val() == ''){
+							$('#email').addClass('required');
+							status = 0;
+						}else{
+							$('#email').removeClass('required');
+						}
+						if($('#phone').val() == ''){
+							$('#phone').addClass('required');
+							status = 0;
+						}else{
+							$('#phone').removeClass('required');
+						}
+						if($('#country_id').val() == 0){
+							$('#country_id').addClass('required');
+							status = 0;
+						}else{
+							$('#country_id').removeClass('required');
+						}
+						if($('#postcode').val() == ''){
+							$('#postcode').addClass('required');
+							status = 0;
+						}else{
+							$('#postcode').removeClass('required');
+						}
+						if($('#address').val() == ''){
+							$('#address').addClass('required');
+							status = 0;
+						}else{
+							$('#address').removeClass('required');
+						}
+						if($('#city').val() == ''){
+							$('#city').addClass('required');
+							status = 0;
+						}else{
+							$('#city').removeClass('required');
+						}
+						if($('#region_id').val() == 0){
+							$('#region_id').addClass('required');
+							status = 0;
+						}else{
+							$('#region_id').removeClass('required');
+						}
+					}
+					if(!$('#billtosame').attr('checked')){
+						if($('#bill_firstname').val() == ''){
+							$('#bill_firstname').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_firstname').removeClass('required');
+						}
+						if($('#bill_lastname').val() == ''){
+							$('#bill_lastname').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_lastname').removeClass('required');
+						}
+						if($('#bill_phone').val() == ''){
+							$('#bill_phone').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_phone').removeClass('required');
+						}
+						if($('#bill_country_id').val() == 0){
+							$('#bill_country_id').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_country_id').removeClass('required');
+						}
+						if($('#bill_postcode').val() == ''){
+							$('#bill_postcode').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_postcode').removeClass('required');
+						}
+						if($('#bill_address').val() == ''){
+							$('#bill_address').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_address').removeClass('required');
+						}
+						if($('#bill_city').val() == ''){
+							$('#bill_city').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_city').removeClass('required');
+						}
+						if($('#bill_region_id').val() == 0){
+							$('#bill_region_id').addClass('required');
+							status = 0;
+						}else{
+							$('#bill_region_id').removeClass('required');
+						}
+					}
+					
+					var shipping_id = 0;
+					$('#shipping_method').find('input[name="shipping_id"]').each(function(){
+						if($(this).attr('checked')){
+							shipping_id = $(this).val();
+						}
+					});
+					if(shipping_id == 0){
+						$('#shipping_method').addClass('required');
+						status = 0;
+					}else{
+						$('#shipping_method').removeClass('required');
+					}
+					
+					var payment_id = 0;
+					$('#payment_method').find('input[name="payment_id"]').each(function(){
+						if($(this).attr('checked')){
+							payment_id = $(this).val();
+						}
+					});
+					if(payment_id == 0){
+						$('#payment_method').addClass('required');
+						status = 0;
+					}else{
+						$('#payment_method').removeClass('required');
+					}
+					
+					//check credit card
+					
+					
+					if(status == 1){
+						$('#checkout').submit();
+					}
+				});
+			});
+		</script>
+	</div>
+</div>
+{include footer.html}

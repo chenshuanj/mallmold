@@ -1,0 +1,156 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="fleft" id="left">
+		<h3>{L:Category}</h3>
+		<ul>
+		{foreach $catelist as $v}
+		<li><a href="{:url('catalog/index?id='.$v['id'])}">{$v['name']}</a></li>
+		{/foreach}
+		</ul>
+		{foreach $attributes as $v}
+			{if $v['can_filter']==1}
+			<h3>{$v['name']}</h3>
+			<ul>
+				{foreach $v['values'] as $val}
+				<li>
+				<a rel="nofollow" href="{:url('catalog/search?attr_'.$val['attr_id'].'='.$val['av_id'])}">
+				{$val['title']}
+				</a>
+				</li>
+				{/foreach}
+			</ul>
+			{/if}
+		{/foreach}
+	</div>
+	<div class="fright" id="right">
+		<div class="info">
+			<div class="fleft images">
+				<div class="main_img"><img id="big_img" src="{$goods['image'][$img_sign]}"/></div>
+				<div class="more_img">
+				{foreach $goods['img_more'] as $v}
+				<div class="slider">
+					<a href="javascript:;" big="{$v['image'][$show_sign_big]}">
+						<img src="{$v['image'][$show_sign]}"/>
+					</a>
+				</div>
+				{/foreach}
+				</div>
+				<script type="text/javascript">
+				$(document).ready(function(){
+					$('.slider a').hover(function(e){
+						var big_src = $(this).attr('big');
+						$('#big_img').attr('src', big_src);
+					});
+				});
+				</script>
+			</div>
+			<div class="fright detail">
+			<h1>{$goods['title']}</h1>
+			{if $goods['score']}
+			<div class="rating">{L:Score}: {$goods['score']}</div>
+			{/if}
+			<div class="extend">
+			{foreach $goods['attr'] as $v}
+				<div class="row">{$v['name']}: {$v['value']}</div>
+			{/foreach}
+			{foreach $goods['extend'] as $v}
+				<div class="row">{$v['name']}: {$v['value']}</div>
+			{/foreach}
+				<div class="clear"></div>
+			</div>
+			<div class="line"></div>
+			<div class="price">
+			{L:Origin price}: <del>{$current_symbol}{$goods['price_origin']}</del><br/>
+			{L:Special price}: <span>{$current_symbol}{$goods['price']}</span>
+			</div>
+			<div class="line"></div>
+			<form  method="post" action="{:url('cart/add')}">
+			<div class="option">
+			{foreach $goods['option'] as $v}
+			{$v['name']}: 
+			<select name="option[{$v['op_id']}]">
+				<option value="0">-{L:Select}-</option>
+				{foreach $v['option'] as $o}
+				<option value="{$o['id']}">{$o['name']} {if $o['price']>0}(+{$o['price']}){elseif $o['price']<0}({$o['price']}){/if}</option>
+				{/foreach}
+			</select>
+			{/foreach}
+			</div>
+			<div class="line"></div>
+			<div class="buy">
+			{L:Quantity}: <input type="text" name="quantity" value="1" size="4">
+			
+			<p>
+				<input type="hidden" name="goods_id" value="{$goods['goods_id']}">
+				<input class="abutton" type="submit" value="{L:Add to Cart}">
+			</p>
+			</div>
+			</form>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$('#tab li a').click(function(e){
+				e.preventDefault();
+				$('#tab li a').removeClass('hover');
+				$(this).addClass('hover');
+				var index = $('#tab').find('a').index($(this));
+				$('#content>div').hide().eq(index).show();
+			});
+		});
+		</script>
+		<div class="description">
+			<ul id="tab">
+				<li><a href="javascript:;" class="hover">{L:Description}</a></li>
+				<li><a href="javascript:;">{L:Reviews}</a></li>
+			</ul>
+			<div id="content">
+				<div>{$goods['description']}</div>
+				<div style="display:none;">
+					{if $comments}
+						{foreach $comments as $com}
+						<div class="review">
+						<p>{$com['content']}</p>
+						<p class="review_time">{$com['time']} by {$com['username']}</p>
+						</div>
+						{/foreach}
+					{/if}
+					
+					<div class="addcomment">
+					<form action="{:url('goods/comment?goods_id='.$goods['goods_id'])}" method="post">
+						<div class="fleft summary">
+						{foreach $summarys as $sum}
+						<div class="score">
+							<span class="summary_name">{$sum['name']}: </span>
+							<label><input type="radio" value="1" name="score[{$sum['id']}]">1</label> 
+							<label><input type="radio" value="2" name="score[{$sum['id']}]">2</label> 
+							<label><input type="radio" value="3" name="score[{$sum['id']}]">3</label> 
+							<label><input type="radio" value="4" name="score[{$sum['id']}]">4</label> 
+							<label><input type="radio" value="5" name="score[{$sum['id']}]">5</label> 
+						</div>
+						{/foreach}
+						</div>
+						<div class="fright comment">
+							<table border=0>
+							<tr>
+							<td>{L:Username}: </td><td><input type="text" value="" name="username"></td>
+							</tr>
+							<tr>
+							<td valign="top">{L:Content}: </td><td><textarea name="content" rows="3" cols="20"></textarea></td>
+							</tr>
+							<tr>
+							<td></td><td><input type="submit" value="{L:Submit}"></td>
+							</tr>
+							</table>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{include footer.html}

@@ -1,0 +1,88 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('discount/index')}">{L:discount}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('discount/edit')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input name="title_key_" type="hidden" value="{$data['title_key_']}">
+		<input class="len2" name="title" type="text" value="{$data['title']}"> 
+		{if $data['title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+	*</td>
+  </tr>
+  <tr>
+    <th>{L:discount_type}:</th>
+	<td class="tleft">
+	<select name="type">
+		<option value="0">--{L:please_select}--</option>
+		{foreach $type as $k=>$v}
+		<option value="{$k}"{if $k==$data['type']} selected{/if}>{$v}</option>
+		{/foreach}
+	</select>
+	*</td>
+  </tr>
+  <tr>
+    <th>{L:value_or_amount}:</th>
+	<td class="tleft"><input class="len2" name="val" type="text" value="{$data['val']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:can_coupon}:</th>
+	<td class="tleft">
+		<label><input name="can_coupon" type="radio" value="1" {if $data['can_coupon']==1} checked{/if}>{L:yes}</label> 
+		<label><input name="can_coupon" type="radio" value="0" {if $data['can_coupon']==0} checked{/if}>{L:no}</label> 
+		&nbsp;&nbsp;&nbsp;&nbsp;({L:is_effective_when_using_coupon})
+	</td>
+  </tr>
+  <tr>
+    <th>{L:start_time}:</th>
+	<td class="tleft"><input class="len2" name="starttime" type="text" value="{$data['starttime']}"> ({L:format_as}: 2014-12-01 12:30:45)</td>
+  </tr>
+  <tr>
+    <th>{L:end_time}:</th>
+	<td class="tleft"><input class="len2" name="endtime" type="text" value="{$data['endtime']}"> ({L:format_as}: 2014-12-01 12:30:45)</td>
+  </tr>
+  <tr>
+    <th>{L:priority}:</th>
+	<td class="tleft"><input class="len2" name="priority" type="text" value="{$data['priority']}"> ({L:smaller_is_higher})</td>
+  </tr>
+   <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<label><input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes}</label> 
+		<label><input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

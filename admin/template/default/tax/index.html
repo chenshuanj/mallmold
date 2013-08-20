@@ -1,0 +1,32 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:country}</th>
+	<th>{L:name}</th>
+	<th>{L:defaut_tax}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">{$country[$v['country_id']]}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$v['defaut_tax']}</td>
+	<td>{if $v['status'] !=0}<b>{L:yes}</b>{else}{L:no}{/if}</a></td>
+	<td>
+	<a href="{:url('tax/region?tax_id='.$v['id'])}">{L:set_region}</a> 
+	<a href="{:url('tax/edit?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('tax/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="5">
+	<div class="d_bottom"><a class="aborder" href="{:url('tax/edit')}">{L:add_tax}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

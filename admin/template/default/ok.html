@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{$title}</title>
+	<link rel="stylesheet" href="{TPL_PATH}images/style.css">
+	<script type="text/javascript">
+	var gourl = '{$url}';
+	function gotourl(){
+		if(gourl){
+			window.location = gourl;
+		}
+	}
+	setTimeout('gotourl()', {$time}000);
+	</script>
+</head>
+<body>
+<div class="box center">
+<h1>Success</h1>
+<div style="text-align:center;padding-bottom:10px">
+{$msg}
+</div>
+</div>
+</body>
+</html>

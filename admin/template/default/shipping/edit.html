@@ -1,0 +1,86 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('shipping/index')}">{L:shipping}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('shipping/edit')}" >
+<input name="id" type="hidden" value="{$data['shipping_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:country}:</th>
+	<td class="tleft">
+	<select class="len2" name="country_id">
+		<option value="0">--{L:any_country}--</option>
+		{foreach $country_list as $v}
+		<option value="{$v['id']}"{if $v['id']==$data['country_id']} selected{/if}>{$v['name']}</option>
+		{/foreach}
+	</select>
+	*</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:base_weight}:</th>
+	<td class="tleft"><input class="len2" name="base_weight" type="text" value="{$data['base_weight']}"><br/>
+	<i>[{$weight_unit}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:base_fee}:</th>
+	<td class="tleft">
+		<input class="len2" name="base_fee" type="text" value="{$data['base_fee']}"> *<br/>
+		<i>[{$main_cur}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:step_weight}:</th>
+	<td class="tleft"><input class="len2" name="step_weight" type="text" value="{$data['step_weight']}"><br/>
+	<i>[{$weight_unit}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:step_fee}:</th>
+	<td class="tleft"><input class="len2" name="step_fee" type="text" value="{$data['step_fee']}"><br/>
+	<i>[{$main_cur}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+   <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

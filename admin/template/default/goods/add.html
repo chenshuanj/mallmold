@@ -1,0 +1,290 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('goods/index')}">{L:product_list}</a> > {$title}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:attribute}</li>
+		<li style="border-top:none" onclick="m(2)">{L:category}</li>
+		<li style="border-top:none" onclick="m(3)">{L:description}</li>
+		<li style="border-top:none" onclick="m(4)">{L:picinfo}</li>
+		<li style="border-top:none" onclick="m(5)">{L:price_option}</li>
+		<li style="border-top:none" onclick="m(6)">{L:seo_mata}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('goods/update')}" >
+<input name="goods_id" type="hidden" value="{$data['goods_id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:product_name}:</th>
+	<td class="tleft"><input name="title_key_" type="hidden" value="{$data['title_key_']}">
+	<input class="len2" name="title" type="text" value="{$data['title']}">
+	{if $data['title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+	{/if} 
+	 *
+	</td>
+  </tr>
+   <tr>
+    <th>SKU:</th>
+	<td class="tleft"><input class="len2" name="sku" type="text" value="{$data['sku']}"> *</td>
+  </tr>
+  <tr>
+    <th>Url Key:</th>
+	<td class="tleft"><input class="len2" name="urlkey" type="text" value="{$data['urlkey']}"></td>
+  </tr>
+  <tr>
+    <th valign="top">{L:special_price}:</th>
+	<td class="tleft">
+		<input class="len2" name="price" type="text" value="{$data['price']}"> *<br/>
+		<i>[{$main_cur}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:price}:</th>
+	<td class="tleft">
+		<input class="len2" name="price_origin" type="text" value="{$data['price_origin']}"><br/>
+		<i>[{$main_cur}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:weight}:</th>
+	<td class="tleft">
+		<input class="len2" name="weight" type="text" value="{$data['weight']}"><br/>
+		<i>[{$weight_unit}]</i>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:stock}:</th>
+	<td class="tleft"><input class="len2" name="stock" type="text" value="{$data['stock']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:if_onsale}:</th>
+	<td class="tleft">
+		<input name="is_sale" type="radio" value="1" {if $data['is_sale']==1} checked{/if}>{L:yes} 
+		<input name="is_sale" type="radio" value="0" {if $data['is_sale']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:sortorder}:</th>
+	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
+  </tr>
+  <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+  {include goods/extend.html}
+</table>
+
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+  <tr>
+	<th width="40">{L:select}</th>
+	<td colspan="2">
+	<script type="text/javascript">
+	function selectattr(id){
+		if($("#attr_" + id).attr("checked")){
+			$("#av_" + id).attr("disabled","");
+		}else{
+			$("#av_" + id).attr("disabled","disabled");
+		}
+	}
+	</script>
+	</td>
+  </tr>
+  {if $attrlist}
+		{foreach $attrlist as $attr}
+			{if $attr['values']}
+  <tr class="btop">
+    <th>
+		<input id="attr_{$attr['attr_id']}" name="attr[]" type="checkbox" value="{$attr['attr_id']}" {if $attr['at']==1} checked{/if} onchange="selectattr({$attr['attr_id']});">
+	</th>
+	<td class="tright" width="120">
+		{$attr['name']}:
+	</td>
+	<td class="tleft">
+		<select id="av_{$attr['attr_id']}" name="attr_value[{$attr['attr_id']}]" {if !$attr['at']} disabled="disabled"{/if}>
+			{foreach $attr['values'] as $v}
+			<option value="{$v['av_id']}" {if $attr['at']==1 && $v['av_id']==$attr_at[$attr['attr_id']]} selected{/if}>{$v['title']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+			{/if}
+		{/foreach}
+  {else}
+  <tr>
+	<td colspan="3">
+		{L:no_properties_available}
+	</td>
+  </tr>
+  {/if}
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:category}:</th>
+	<td class="tleft">
+	{foreach $catelist as $v}
+		<label><input name="cate_id[]" type="checkbox" value="{$v['id']}" {if in_array($v['id'], $cate_at)} checked{/if}>{$v['name']}</label><br/>
+		{if $v['childnum']>0}
+			{foreach $v['child'] as $val}
+				&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val['id']}" {if in_array($val['id'], $cate_at)} checked{/if}>{$val['name']}</label><br/>
+				{if $val['childnum']>0}
+					{foreach $val['child'] as $val2}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val2['id']}" {if in_array($val2['id'], $cate_at)} checked{/if}>{$val2['name']}</label><br/>
+					{/foreach}
+				{/if}
+			{/foreach}
+		{/if}
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_3" style="display:none">
+  <tr>
+    <th valign="top">{L:brief}:</th>
+	<td class="tleft">
+		<input name="brief_txtkey_" type="hidden" value="{$data['brief_txtkey_']}">
+		<textarea rows="4" cols="48" name="brief">{$data['brief']}</textarea>
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:detail}:</th>
+	<td class="tleft">
+		{include editor/editor.html}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_4" style="display:none">
+  <tr>
+    <th valign="top" width="10%">{L:product_img}:</th>
+	<td class="tleft">
+		{include editor/multiupload_button.html}
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:main_img}:</th>
+	<td class="tleft">
+		{include editor/upload_button.html}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_5" style="display:none">
+  {if $option}
+		{foreach $option as $op}
+  <tr>
+    <th valign="top">{$op['name']}:</th>
+	<td class="tleft">
+		{if $data['option'][$op['op_id']]}
+		{foreach $data['option'][$op['op_id']] as $k=>$v}
+			<div id="more_{$op['op_id']}_{$k}">
+			{L:option_label}:<input type="hidden" name="op_name_key[{$op['op_id']}][]" value="{$v['name_key_']}">
+					<input type="text" name="op_name[{$op['op_id']}][]" class="len" value="{$v['name']}">
+					{if $v['name_key_']}
+					<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$v['name_key_'])}">
+					<img src="{TPL_PATH}images/t.png">
+					</a>
+					{/if} 
+			&nbsp;
+			{L:price_changes}:<input type="text" name="op_price[{$op['op_id']}][]" class="len" value="{$v['price']}">
+			&nbsp;&nbsp;<a href="javascript:delrow('{$op['op_id']}_{$k}')">×</a>
+			</div>
+		{/foreach}
+		{/if}
+		<div id="op_{$op['op_id']}" {if $data['option'][$op['op_id']]} style="display:none"{/if}>
+			{L:option_label}:<input class="len" name="op_name[{$op['op_id']}][]" type="text">
+					<input name="op_name_key[{$op['op_id']}][]" type="hidden">
+			&nbsp;
+			{L:price_changes}:<input class="len" name="op_price[{$op['op_id']}][]" type="text">
+		</div>
+		<p id="add_{$op['op_id']}"><a class="aborder" href="javascript:addrow({$op['op_id']});">{L:add}</a></p>
+	</td>
+  </tr>
+		{/foreach}
+  <tr>
+    <th></th>
+	<td class="tleft">
+		({L:option_description})
+	</td>
+  </tr>
+  {else}
+  <tr>
+	<td colspan="2">
+		{L:no_properties_option}
+	</td>
+  </tr>
+  {/if}
+</table>
+{if $option}
+<script type="text/javascript">
+	var isIE = (document.all && window.ActiveXObject && !window.opera) ? true : false;
+	var rn = 1000;
+	function addrow(id){
+		var oNew=document.createElement("div");
+		oNew.id = "more_" + rn;
+		var str = $('#op_' + id).html();
+		str += '&nbsp;&nbsp;<a href="javascript:delrow('+ rn +')">×</a>';
+		oNew.innerHTML  = str;
+		var obj = document.getElementById('add_' + id);
+		obj.parentNode.insertBefore(oNew, obj);
+		rn++;
+	}
+	function delrow(id){
+		var obj = document.getElementById("more_" + id);
+		if(!isIE){
+			obj.parentNode.removeChild(obj);
+		}else{
+			obj.removeNode(true);
+		}
+	}
+</script>
+{/if}
+
+<table width="100%" class="r_table" id="c_6" style="display:none">
+  <tr>
+    <th width="180" valign="top">{L:meta_keywords}:</th>
+	<td class="tleft">
+		<input name="meta_keywords_txtkey_" type="hidden" value="{$data['meta_keywords_txtkey_']}">
+		<textarea rows="4" cols="48" name="meta_keywords">{$data['meta_keywords']}</textarea>
+	</td>
+  </tr>
+  <tr>
+    <th width="180" valign="top">{L:meta_description}:</th>
+	<td class="tleft">
+		<input name="meta_description_txtkey_" type="hidden" value="{$data['meta_description_txtkey_']}">
+		<textarea rows="4" cols="48" name="meta_description">{$data['meta_description']}</textarea>
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

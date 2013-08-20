@@ -1,0 +1,20 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="fleft" id="left">
+		<h3>{L:Category}</h3>
+		<ul>
+		{foreach $cates_list as $v}
+		<li><a href="{:url($v['url'])}">{$v['name']}</a></li>
+		{/foreach}
+		</ul>
+	</div>
+	<div class="fright" id="right">
+		<h3>{$article['title']}</h3>
+		<div class="article">
+			{$article['content']}
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{include footer.html}

@@ -1,0 +1,35 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('article/index')}">{L:article}</a> > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:name}</th>
+	<th>UrlKey</th>
+	<th>{L:sortorder}</th>
+	<th>{L:name}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['cate_id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td class="pleft">{$v['urlkey']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('article/editcate?cate_id='.$v['cate_id'])}">{L:edit}</a> 
+	<a href="{:url('article/delcate?cate_id='.$v['cate_id'])}">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+  <div class="d_bottom">
+	<a class="aborder" href="{:url('article/editcate')}">{L:add_category}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

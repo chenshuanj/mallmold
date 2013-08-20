@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{$title}</title>
+	<link rel="stylesheet" href="{TPL_PATH}images/style.css">
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#captcha').click(function(){
+			$(this).attr('src', "{:url('captcha/index?update=')}" + Math.random());
+		});
+	});
+	</script>
+</head>
+<body>
+<div class="box center">
+<h1>{L:welcome}</h1>
+<table width="336" height="131" border="0">
+  <form  method="post" action="{:url('admin/dologin')}" >
+  <tr valign="bottom">
+    <td height="48" align="right">{L:username}: </td>
+    <td width="200"> <input class="len" name="username" type="text" Maxlength="20"  value=""></td>
+  </tr>
+  <tr>
+    <td height="32" align="right">{L:password}: </td>
+    <td><input class="len" name="password" type="password" Maxlength="20" value=""></td>
+  </tr>
+  {if $admin_login_verify==1}
+  <tr>
+    <td align="right">{L:captcha}: </td>
+    <td>
+		<input class="len" style="width:50px;" name="captcha" type="text" Maxlength="6" value="">
+		<a href="javascript:;"><img id="captcha" align="absmiddle" src="{:url('captcha/index')}"/></a>
+	</td>
+  </tr>
+  {/if}
+  <tr>
+    <td height="56">&nbsp;</td>
+    <td><input style="margin-left:48px;" type="submit" value="{L:submit}"></td>
+  </tr>
+  </form>
+</table>
+</div>
+</body>
+</html>

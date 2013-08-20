@@ -1,0 +1,72 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > <a href="{:url('email/index')}">{L:emailtpl}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">general</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('email/edit')}" >
+<input name="name" type="hidden" value="{$data['name']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		{$data['name']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:type}:</th>
+	<td class="tleft">
+		{$data['type']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:file}:</th>
+	<td class="tleft">
+		{$data['path']}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:mail_title}:</th>
+	<td class="tleft">
+		<input name="title_key_" type="hidden" value="{$data['title_key_']}">
+		<input class="len2" name="title" type="text" value="{$data['title']}">
+		{if $data['title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*
+	</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:mail_tpl}:</th>
+	<td class="tleft">
+		{include editor/editor.html}
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

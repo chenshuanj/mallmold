@@ -1,0 +1,24 @@
+<div id="footer" class="mtop2">
+	<div class="box footline helplist">
+		{$foot_article}
+		<div class="clear"></div>
+	</div>
+	<div class="box">
+		<div class="fleft">
+			<div class="footnav">
+			<a href="{:url('index/index')}">{L:Home}</a>
+			{foreach $bottom_nav as $v}
+			| <a href="{$v['url']}">{$v['title']}</a>
+			{/foreach}
+			</div>
+			<div class="copyright">
+			{$copyright}
+			<br/>
+			Powered by <a href="http://www.mallmold.com/">Mallmold</a>.
+			</div>
+		</div>
+		<div class="fright footlogo"><img src="{$bottom_logo}"></div>
+	</div>
+</div>
+</body>
+</html>

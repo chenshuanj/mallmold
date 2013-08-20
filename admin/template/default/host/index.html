@@ -1,0 +1,35 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:system} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>{L:host}</th>
+	<th>{L:template}</th>
+	<th>{L:bind_country}</th>
+	<th>{L:bind_language}</th>
+	<th>{L:bind_currency}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['host']}</td>
+	<td class="pleft">{$v['template']}</td>
+	<td>{$countrys[$v['bind_country']]}</td>
+	<td>{$v['bind_language']}</td>
+	<td>{$v['bind_currency']}</td>
+	<td>
+	<a href="{:url('host/edit?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('host/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="6">
+	<div class="d_bottom">
+	<a class="aborder" href="{:url('host/edit')}">{L:addhost}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

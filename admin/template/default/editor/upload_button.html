@@ -1,0 +1,31 @@
+{eval static $upload_k=0;}
+<script>
+	KindEditor.ready(function(K) {
+		var button_editor_{$upload_k} = K.editor({
+			langType : "{$lang}",
+			allowFileManager : true,
+			fileManagerJson : "{:url('upload/select')}",
+			uploadJson : "{:url('upload/image?type='.$editor_button_imgtype[$upload_k].'&setting_id='.$image_setting_id[$upload_k])}",
+		});
+		K('#image_{$upload_k}').click(function() {
+			button_editor_{$upload_k}.loadPlugin('image', function() {
+				button_editor_{$upload_k}.plugin.imageDialog({
+					imageUrl : K('#url_{$editor_button_name[$upload_k]}').val(),
+					clickFn : function(url) {
+						K('#url_{$editor_button_name[$upload_k]}').val(url);
+						$('#showimg_button_{$upload_k}').html('<img src="' + url + '" height="80">');
+						button_editor_{$upload_k}.hideDialog();
+					}
+				});
+			});
+		});
+	});
+</script>
+<div id="showimg_button_{$upload_k}">
+{if $editor_button_value}
+<img src="{$editor_button_value[$upload_k]}" height="80">
+{/if}
+</div>
+<input type="hidden" id="url_{$editor_button_name[$upload_k]}" name="{$editor_button_name[$upload_k]}" value="{$editor_button_value[$upload_k]}"/> 
+<input type="button" id="image_{$upload_k}" value="{L:select_img}" />
+{eval $upload_k++;}

@@ -1,0 +1,30 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:sale} > <a href="{:url('discount/index')}">{L:discount}</a>:{$data['title']} > {L:condition}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:condition}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">
+	<b>{$items[$v['item']]}</b>
+			&nbsp;&nbsp;
+	<i>{$logic[$v['logic']]}</i>
+			&nbsp;&nbsp;
+	<b>{$v['item_val']}</b>
+	</td>
+	<td>
+	<a href="{:url('discount/delset?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="2">
+	<div class="d_bottom"><a class="aborder" href="{:url('discount/addset?discount_id='.$data['id'])}">{L:addcondition}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}
