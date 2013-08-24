@@ -1,31 +1,6 @@
--- phpMyAdmin SQL Dump
--- version 3.2.1
--- http://www.phpmyadmin.net
---
--- 主机: 127.0.0.1
--- 生成日期: 2013 年 08 月 19 日 20:14
--- 服务器版本: 5.0.22
--- PHP 版本: 5.2.6
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- 数据库: `mallmold`
---
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_admin`
---
-
-CREATE TABLE IF NOT EXISTS `mm_admin` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}admin` (
   `id` tinyint(2) NOT NULL auto_increment,
   `group_id` int(2) NOT NULL,
   `name` varchar(16) NOT NULL,
@@ -33,22 +8,9 @@ CREATE TABLE IF NOT EXISTS `mm_admin` (
   `salt` char(2) default NULL,
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2;
 
---
--- 转存表中的数据 `mm_admin`
---
-
-INSERT INTO `mm_admin` (`id`, `group_id`, `name`, `pswd`, `salt`, `status`) VALUES
-(1, 0, 'admin', 'ade7bb74ab8f2353e0e11de378addad0', 'ny', 1);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_article`
---
-
-CREATE TABLE IF NOT EXISTS `mm_article` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}article` (
   `article_id` int(10) NOT NULL auto_increment,
   `cate_id` int(4) NOT NULL,
   `title_key_` varchar(10) NOT NULL,
@@ -61,18 +23,7 @@ CREATE TABLE IF NOT EXISTS `mm_article` (
   KEY `cate_id` (`cate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_article`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_article_cate`
---
-
-CREATE TABLE IF NOT EXISTS `mm_article_cate` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}article_cate` (
   `cate_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `urlkey` varchar(32) NOT NULL,
@@ -82,18 +33,7 @@ CREATE TABLE IF NOT EXISTS `mm_article_cate` (
   PRIMARY KEY  (`cate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_article_cate`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_attribute`
---
-
-CREATE TABLE IF NOT EXISTS `mm_attribute` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}attribute` (
   `attr_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `can_filter` tinyint(1) NOT NULL default '1',
@@ -103,18 +43,7 @@ CREATE TABLE IF NOT EXISTS `mm_attribute` (
   PRIMARY KEY  (`attr_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_attribute`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_attribute_value`
---
-
-CREATE TABLE IF NOT EXISTS `mm_attribute_value` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}attribute_value` (
   `av_id` int(8) NOT NULL auto_increment,
   `attr_id` int(4) NOT NULL,
   `title_key_` varchar(10) NOT NULL,
@@ -122,36 +51,14 @@ CREATE TABLE IF NOT EXISTS `mm_attribute_value` (
   PRIMARY KEY  (`av_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_attribute_value`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_block`
---
-
-CREATE TABLE IF NOT EXISTS `mm_block` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}block` (
   `id` int(4) NOT NULL auto_increment,
   `code` varchar(32) NOT NULL,
   `content_txtkey_` varchar(10) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_block`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_cart`
---
-
-CREATE TABLE IF NOT EXISTS `mm_cart` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}cart` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` int(10) NOT NULL default '0',
   `session_id` char(32) default NULL,
@@ -165,18 +72,7 @@ CREATE TABLE IF NOT EXISTS `mm_cart` (
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_cart`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_checkout`
---
-
-CREATE TABLE IF NOT EXISTS `mm_checkout` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}checkout` (
   `id` int(10) NOT NULL auto_increment,
   `address_id` int(10) NOT NULL default '0',
   `session_id` varchar(32) NOT NULL,
@@ -207,18 +103,7 @@ CREATE TABLE IF NOT EXISTS `mm_checkout` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_checkout`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_comments`
---
-
-CREATE TABLE IF NOT EXISTS `mm_comments` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}comments` (
   `id` int(10) NOT NULL auto_increment,
   `goods_id` int(10) NOT NULL,
   `username` varchar(32) NOT NULL,
@@ -230,36 +115,14 @@ CREATE TABLE IF NOT EXISTS `mm_comments` (
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_comments`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_comments_summary`
---
-
-CREATE TABLE IF NOT EXISTS `mm_comments_summary` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}comments_summary` (
   `comments_id` int(10) NOT NULL,
   `summary_id` int(2) NOT NULL,
   `score` int(11) NOT NULL,
   KEY `comments_id` (`comments_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_comments_summary`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_country`
---
-
-CREATE TABLE IF NOT EXISTS `mm_country` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}country` (
   `id` int(4) NOT NULL auto_increment,
   `code` char(2) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -269,20 +132,10 @@ CREATE TABLE IF NOT EXISTS `mm_country` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_country`
---
-
-INSERT INTO `mm_country` (`id`, `code`, `name`, `phone_code`, `time_zone`, `status`) VALUES
+INSERT INTO `{PREFIX}country` (`id`, `code`, `name`, `phone_code`, `time_zone`, `status`) VALUES
 (1, 'US', 'United States', '1', -8.0, 1);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_coupon`
---
-
-CREATE TABLE IF NOT EXISTS `mm_coupon` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}coupon` (
   `id` int(10) NOT NULL auto_increment,
   `code` char(12) NOT NULL,
   `money` decimal(6,2) NOT NULL,
@@ -297,18 +150,7 @@ CREATE TABLE IF NOT EXISTS `mm_coupon` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_coupon`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_currency`
---
-
-CREATE TABLE IF NOT EXISTS `mm_currency` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}currency` (
   `id` int(2) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `code` char(4) NOT NULL,
@@ -320,20 +162,10 @@ CREATE TABLE IF NOT EXISTS `mm_currency` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_currency`
---
-
-INSERT INTO `mm_currency` (`id`, `name_key_`, `code`, `rate`, `symbol`, `is_main`, `sort_order`, `status`) VALUES
+INSERT INTO `{PREFIX}currency` (`id`, `name_key_`, `code`, `rate`, `symbol`, `is_main`, `sort_order`, `status`) VALUES
 (1, 'k_1', 'USD', 1.0000, '$', 0, 1, 1);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_dict`
---
-
-CREATE TABLE IF NOT EXISTS `mm_dict` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}dict` (
   `id` int(10) NOT NULL auto_increment,
   `dict_key` char(10) NOT NULL,
   `dict_val_en` varchar(255) default NULL,
@@ -341,11 +173,7 @@ CREATE TABLE IF NOT EXISTS `mm_dict` (
   KEY `dict_key` (`dict_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='dictionary' AUTO_INCREMENT=22 ;
 
---
--- 转存表中的数据 `mm_dict`
---
-
-INSERT INTO `mm_dict` (`id`, `dict_key`, `dict_val_en`) VALUES
+INSERT INTO `{PREFIX}dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (1, 'k_1', 'U.S. dollar'),
 (2, 'k_2', 'Goods main image'),
 (3, 'k_3', 'Goods slider images'),
@@ -368,22 +196,12 @@ INSERT INTO `mm_dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (20, 'k_30', 'Successful payment, thank patrons'),
 (21, 'k_32', 'You order has been refunded');
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_dict_keys`
---
-
-CREATE TABLE IF NOT EXISTS `mm_dict_keys` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}dict_keys` (
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
---
--- 转存表中的数据 `mm_dict_keys`
---
-
-INSERT INTO `mm_dict_keys` (`id`) VALUES
+INSERT INTO `{PREFIX}dict_keys` (`id`) VALUES
 (1),
 (2),
 (3),
@@ -418,13 +236,7 @@ INSERT INTO `mm_dict_keys` (`id`) VALUES
 (32),
 (33);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_dict_text`
---
-
-CREATE TABLE IF NOT EXISTS `mm_dict_text` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text` (
   `id` int(10) NOT NULL auto_increment,
   `text_key` char(10) NOT NULL,
   `content` text NOT NULL,
@@ -432,18 +244,7 @@ CREATE TABLE IF NOT EXISTS `mm_dict_text` (
   KEY `test_key` (`text_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='text dictionary' AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_dict_text`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_dict_text_en`
---
-
-CREATE TABLE IF NOT EXISTS `mm_dict_text_en` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text_en` (
   `id` int(10) NOT NULL auto_increment,
   `text_key` char(10) NOT NULL,
   `content` text NOT NULL,
@@ -451,11 +252,7 @@ CREATE TABLE IF NOT EXISTS `mm_dict_text_en` (
   KEY `test_key` (`text_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
---
--- 转存表中的数据 `mm_dict_text_en`
---
-
-INSERT INTO `mm_dict_text_en` (`id`, `text_key`, `content`) VALUES
+INSERT INTO `{PREFIX}dict_text_en` (`id`, `text_key`, `content`) VALUES
 (1, 'k_11', 'Mallmold'),
 (2, 'k_13', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been shiped.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Shipping method: {$order[''shipping_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Payment method: {$order[''payment_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Shipping address:&nbsp; {$order[''shipping_address''][''firstname'']} {$order[''shipping_address''][''lastname'']} <br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''postcode'']} {$order[''shipping_address''][''address'']}{$order[''shipping_address''][''address2'']}<br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''city'']} {$order[''shipping_address''][''state'']} {$order[''shipping_address''][''country'']}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\n&nbsp;&nbsp; &nbsp;Order goods:<br />\r\n&nbsp;&nbsp; &nbsp;{foreach $order[''goods''] as $order}<br />\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{$goods[''goods_name'']} {$goods[''price'']} {$goods[''quantity'']} {$goods[''subtotal'']}<br />\r\n&nbsp;&nbsp; &nbsp;{/foreach}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
 (3, 'k_15', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been updated.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Shipping method: {$order[''shipping_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Payment method: {$order[''payment_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Shipping address:&nbsp; {$order[''shipping_address''][''firstname'']} {$order[''shipping_address''][''lastname'']} <br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''postcode'']} {$order[''shipping_address''][''address'']}{$order[''shipping_address''][''address2'']}<br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''city'']} {$order[''shipping_address''][''state'']} {$order[''shipping_address''][''country'']}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\n&nbsp;&nbsp; &nbsp;Order goods:<br />\r\n&nbsp;&nbsp; &nbsp;{foreach $order[''goods''] as $order}<br />\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{$goods[''goods_name'']} {$goods[''price'']} {$goods[''quantity'']} {$goods[''subtotal'']}<br />\r\n&nbsp;&nbsp; &nbsp;{/foreach}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
@@ -469,13 +266,7 @@ INSERT INTO `mm_dict_text_en` (`id`, `text_key`, `content`) VALUES
 (11, 'k_31', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been paid Successful.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Shipping method: {$order[''shipping_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Payment method: {$order[''payment_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Shipping address:&nbsp; {$order[''shipping_address''][''firstname'']} {$order[''shipping_address''][''lastname'']} <br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''postcode'']} {$order[''shipping_address''][''address'']}{$order[''shipping_address''][''address2'']}<br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''city'']} {$order[''shipping_address''][''state'']} {$order[''shipping_address''][''country'']}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\n&nbsp;&nbsp; &nbsp;Order goods:<br />\r\n&nbsp;&nbsp; &nbsp;{foreach $order[''goods''] as $order}<br />\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{$goods[''goods_name'']} {$goods[''price'']} {$goods[''quantity'']} {$goods[''subtotal'']}<br />\r\n&nbsp;&nbsp; &nbsp;{/foreach}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
 (12, 'k_33', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been refunded.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.');
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_discount`
---
-
-CREATE TABLE IF NOT EXISTS `mm_discount` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}discount` (
   `id` int(4) NOT NULL auto_increment,
   `title_key_` varchar(10) NOT NULL,
   `type` tinyint(1) NOT NULL default '1',
@@ -488,18 +279,7 @@ CREATE TABLE IF NOT EXISTS `mm_discount` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_discount`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_discount_set`
---
-
-CREATE TABLE IF NOT EXISTS `mm_discount_set` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}discount_set` (
   `id` int(8) NOT NULL auto_increment,
   `discount_id` int(4) NOT NULL,
   `item` varchar(16) NOT NULL,
@@ -508,18 +288,7 @@ CREATE TABLE IF NOT EXISTS `mm_discount_set` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_discount_set`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_email_log`
---
-
-CREATE TABLE IF NOT EXISTS `mm_email_log` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}email_log` (
   `id` int(10) NOT NULL auto_increment,
   `email` varchar(32) NOT NULL,
   `title` varchar(128) NOT NULL,
@@ -530,18 +299,7 @@ CREATE TABLE IF NOT EXISTS `mm_email_log` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_email_log`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_email_template`
---
-
-CREATE TABLE IF NOT EXISTS `mm_email_template` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}email_template` (
   `name` varchar(32) NOT NULL,
   `type` varchar(8) NOT NULL default 'backend',
   `path` varchar(64) NOT NULL,
@@ -550,11 +308,7 @@ CREATE TABLE IF NOT EXISTS `mm_email_template` (
   KEY `name` (`name`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_email_template`
---
-
-INSERT INTO `mm_email_template` (`name`, `type`, `path`, `title_key_`, `content_txtkey_`) VALUES
+INSERT INTO `{PREFIX}email_template` (`name`, `type`, `path`, `title_key_`, `content_txtkey_`) VALUES
 ('order_ship', 'backend', 'order_ship.html', 'k_12', 'k_13'),
 ('order_update', 'backend', 'order_update.html', 'k_14', 'k_15'),
 ('send_coupon', 'backend', 'coupon.html', 'k_16', 'k_17'),
@@ -567,13 +321,7 @@ INSERT INTO `mm_email_template` (`name`, `type`, `path`, `title_key_`, `content_
 ('order_pay', 'frontend', 'order_pay.html', 'k_30', 'k_31'),
 ('order_refund', 'backend', 'order_refund.html', 'k_32', 'k_33');
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_error_report`
---
-
-CREATE TABLE IF NOT EXISTS `mm_error_report` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}error_report` (
   `id` int(10) NOT NULL auto_increment,
   `type` varchar(16) NOT NULL,
   `message` varchar(255) NOT NULL,
@@ -583,18 +331,7 @@ CREATE TABLE IF NOT EXISTS `mm_error_report` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_error_report`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_extend`
---
-
-CREATE TABLE IF NOT EXISTS `mm_extend` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}extend` (
   `extend_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `type` tinyint(1) NOT NULL default '1',
@@ -603,18 +340,7 @@ CREATE TABLE IF NOT EXISTS `mm_extend` (
   PRIMARY KEY  (`extend_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_extend`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_extend_val`
---
-
-CREATE TABLE IF NOT EXISTS `mm_extend_val` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}extend_val` (
   `id` int(6) NOT NULL auto_increment,
   `extend_id` int(4) NOT NULL,
   `val_key_` varchar(10) NOT NULL,
@@ -623,18 +349,7 @@ CREATE TABLE IF NOT EXISTS `mm_extend_val` (
   KEY `extend_id` (`extend_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_extend_val`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods` (
   `goods_id` int(8) NOT NULL auto_increment,
   `title_key_` varchar(10) NOT NULL,
   `urlkey` varchar(255) default NULL,
@@ -657,36 +372,14 @@ CREATE TABLE IF NOT EXISTS `mm_goods` (
   PRIMARY KEY  (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_goods`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_attr`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_attr` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_attr` (
   `goods_id` int(8) NOT NULL,
   `attr_id` int(4) NOT NULL,
   `av_id` int(8) NOT NULL,
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_goods_attr`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_cate`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_cate` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_cate` (
   `id` int(4) NOT NULL auto_increment,
   `pid` int(4) NOT NULL default '0',
   `name_key_` varchar(10) NOT NULL,
@@ -699,71 +392,27 @@ CREATE TABLE IF NOT EXISTS `mm_goods_cate` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_goods_cate`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_cate_val`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_cate_val` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_cate_val` (
   `goods_id` int(8) NOT NULL,
   `cate_id` int(4) NOT NULL,
   KEY `goods_id` (`goods_id`,`cate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_goods_cate_val`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_extend`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_extend` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_extend` (
   `goods_id` int(8) NOT NULL,
   `extend_id` int(4) NOT NULL,
   `val` varchar(128) NOT NULL,
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_goods_extend`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_image`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_image` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_image` (
   `id` int(10) NOT NULL auto_increment,
   `goods_id` int(8) NOT NULL,
   `image` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_goods_image`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_option`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_option` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_option` (
   `id` int(8) NOT NULL auto_increment,
   `goods_id` int(8) NOT NULL,
   `op_id` int(8) NOT NULL,
@@ -775,18 +424,7 @@ CREATE TABLE IF NOT EXISTS `mm_goods_option` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_goods_option`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_goods_statistic`
---
-
-CREATE TABLE IF NOT EXISTS `mm_goods_statistic` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_statistic` (
   `goods_id` int(8) NOT NULL,
   `click` int(10) NOT NULL default '0',
   `cart` int(10) NOT NULL default '0',
@@ -796,18 +434,7 @@ CREATE TABLE IF NOT EXISTS `mm_goods_statistic` (
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_goods_statistic`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_host`
---
-
-CREATE TABLE IF NOT EXISTS `mm_host` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}host` (
   `id` int(4) NOT NULL auto_increment,
   `host` varchar(32) NOT NULL,
   `template` varchar(16) default NULL,
@@ -817,18 +444,7 @@ CREATE TABLE IF NOT EXISTS `mm_host` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_host`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_images`
---
-
-CREATE TABLE IF NOT EXISTS `mm_images` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}images` (
   `id` int(10) NOT NULL auto_increment,
   `type` varchar(16) NOT NULL,
   `dir` varchar(64) NOT NULL,
@@ -836,20 +452,10 @@ CREATE TABLE IF NOT EXISTS `mm_images` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_images`
---
-
-INSERT INTO `mm_images` (`id`, `type`, `dir`, `addtime`) VALUES
+INSERT INTO `{PREFIX}images` (`id`, `type`, `dir`, `addtime`) VALUES
 (1, 'other', '/upload/image/201308/17130509_58243.png', 1376744709);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_image_setting`
---
-
-CREATE TABLE IF NOT EXISTS `mm_image_setting` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}image_setting` (
   `id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `sign` varchar(16) NOT NULL,
@@ -867,11 +473,7 @@ CREATE TABLE IF NOT EXISTS `mm_image_setting` (
   KEY `type` (`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
---
--- 转存表中的数据 `mm_image_setting`
---
-
-INSERT INTO `mm_image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbnails`, `width`, `height`, `watermark`, `watermark_img`, `watermark_pos`, `watermark_alpha`, `if_sys`, `status`) VALUES
+INSERT INTO `{PREFIX}image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbnails`, `width`, `height`, `watermark`, `watermark_img`, `watermark_pos`, `watermark_alpha`, `if_sys`, `status`) VALUES
 (1, 'k_2', 'goods_img', 'goods_main_img', 1, 300, 320, 0, '', 1, 0, 1, 1),
 (2, 'k_3', 'goods_img_slider', 'goods_imgs', 1, 300, 320, 0, '', 1, 0, 1, 1),
 (3, 'k_4', 'goods_desc', 'goods_desc', 0, 0, 0, 0, '', 1, 0, 1, 1),
@@ -879,31 +481,14 @@ INSERT INTO `mm_image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbnails`,
 (5, 'k_6', 'article_img', 'article_img', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (6, 'k_7', 'article_desc', 'article_desc', 0, 0, 0, 0, '', 1, 0, 1, 1);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_keywords`
---
-
-CREATE TABLE IF NOT EXISTS `mm_keywords` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}keywords` (
   `id` int(10) NOT NULL auto_increment,
   `keyword` varchar(32) NOT NULL,
   `search_num` int(10) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_keywords`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_language`
---
-
-CREATE TABLE IF NOT EXISTS `mm_language` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}language` (
   `id` int(2) NOT NULL auto_increment,
   `code` varchar(8) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -911,31 +496,17 @@ CREATE TABLE IF NOT EXISTS `mm_language` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_language`
---
-
-INSERT INTO `mm_language` (`id`, `code`, `name`, `status`) VALUES
+INSERT INTO `{PREFIX}language` (`id`, `code`, `name`, `status`) VALUES
 (1, 'en', 'English', 1);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_language_code`
---
-
-CREATE TABLE IF NOT EXISTS `mm_language_code` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}language_code` (
   `id` int(4) NOT NULL auto_increment,
   `code` varchar(8) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
 
---
--- 转存表中的数据 `mm_language_code`
---
-
-INSERT INTO `mm_language_code` (`id`, `code`, `name`) VALUES
+INSERT INTO `{PREFIX}language_code` (`id`, `code`, `name`) VALUES
 (1, 'af', 'Afrikaans'),
 (2, 'ar', 'العربية'),
 (3, 'az', 'Azəri'),
@@ -1001,13 +572,7 @@ INSERT INTO `mm_language_code` (`id`, `code`, `name`) VALUES
 (79, 'zh_cn', '中文(简体)'),
 (80, 'zh_tw', '中文(繁体)');
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_nav`
---
-
-CREATE TABLE IF NOT EXISTS `mm_nav` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}nav` (
   `id` int(4) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '2',
   `title_key_` varchar(10) NOT NULL,
@@ -1017,18 +582,7 @@ CREATE TABLE IF NOT EXISTS `mm_nav` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_nav`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_option`
---
-
-CREATE TABLE IF NOT EXISTS `mm_option` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}option` (
   `op_id` int(8) NOT NULL auto_increment,
   `name_key_` varchar(10) default NULL,
   `sort_order` int(8) NOT NULL default '0',
@@ -1036,18 +590,7 @@ CREATE TABLE IF NOT EXISTS `mm_option` (
   PRIMARY KEY  (`op_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_option`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order` (
   `order_id` int(10) NOT NULL auto_increment,
   `order_sn` varchar(16) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -1070,18 +613,7 @@ CREATE TABLE IF NOT EXISTS `mm_order` (
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_order`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_billing_address`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_billing_address` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_billing_address` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `firstname` varchar(16) NOT NULL,
@@ -1096,18 +628,7 @@ CREATE TABLE IF NOT EXISTS `mm_order_billing_address` (
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_order_billing_address`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_goods`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_goods` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_goods` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL,
   `goods_id` int(10) NOT NULL,
@@ -1121,18 +642,7 @@ CREATE TABLE IF NOT EXISTS `mm_order_goods` (
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_order_goods`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_ship`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_ship` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_ship` (
   `id` int(10) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '1',
   `order_id` int(10) NOT NULL,
@@ -1142,18 +652,7 @@ CREATE TABLE IF NOT EXISTS `mm_order_ship` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_order_ship`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_shipping_address`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_shipping_address` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_shipping_address` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `firstname` varchar(16) NOT NULL,
@@ -1168,18 +667,7 @@ CREATE TABLE IF NOT EXISTS `mm_order_shipping_address` (
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_order_shipping_address`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_ship_goods`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_ship_goods` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_ship_goods` (
   `ship_id` int(10) NOT NULL,
   `goods_id` int(10) NOT NULL,
   `sku` varchar(32) default NULL,
@@ -1189,36 +677,15 @@ CREATE TABLE IF NOT EXISTS `mm_order_ship_goods` (
   KEY `ship_id` (`ship_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_order_ship_goods`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_sn`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_sn` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_sn` (
   `sn` int(8) NOT NULL default '1000000',
   KEY `sn` (`sn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_order_sn`
---
-
-INSERT INTO `mm_order_sn` (`sn`) VALUES
+INSERT INTO `{PREFIX}order_sn` (`sn`) VALUES
 (1000000);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_order_status`
---
-
-CREATE TABLE IF NOT EXISTS `mm_order_status` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}order_status` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL,
   `status` tinyint(1) NOT NULL,
@@ -1229,18 +696,7 @@ CREATE TABLE IF NOT EXISTS `mm_order_status` (
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_order_status`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_pages`
---
-
-CREATE TABLE IF NOT EXISTS `mm_pages` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}pages` (
   `id` int(4) NOT NULL auto_increment,
   `urlkey` varchar(64) NOT NULL,
   `title_key_` varchar(10) NOT NULL,
@@ -1249,18 +705,7 @@ CREATE TABLE IF NOT EXISTS `mm_pages` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_pages`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_payment`
---
-
-CREATE TABLE IF NOT EXISTS `mm_payment` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment` (
   `id` int(2) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
   `description` varchar(64) default NULL,
@@ -1271,21 +716,11 @@ CREATE TABLE IF NOT EXISTS `mm_payment` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- 转存表中的数据 `mm_payment`
---
-
-INSERT INTO `mm_payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES
+INSERT INTO `{PREFIX}payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES
 (1, 'Paypal', 'Paypal(Website Payments Standard)', 'paypal', 0, 0, 1),
 (2, 'Credit card', 'Authorize.net CIM', 'authorize', 0, 0, 1);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_payment_authorize`
---
-
-CREATE TABLE IF NOT EXISTS `mm_payment_authorize` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
   `id` tinyint(1) NOT NULL auto_increment,
   `type` enum('AIM','CIM') NOT NULL,
   `api_id` varchar(32) NOT NULL,
@@ -1293,37 +728,16 @@ CREATE TABLE IF NOT EXISTS `mm_payment_authorize` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_payment_authorize`
---
+INSERT INTO `{PREFIX}payment_authorize` (`id`, `type`, `api_id`, `api_key`) VALUES
+(1, 'AIM', '6nrM7QzAM6z', '2Z3kT2wmLW62dB6t');
 
-INSERT INTO `mm_payment_authorize` (`id`, `type`, `api_id`, `api_key`) VALUES
-(1, 'CIM', '6nrM7QzAM6z', '2Z3kT2wmLW62dB6t');
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_payment_bind`
---
-
-CREATE TABLE IF NOT EXISTS `mm_payment_bind` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_bind` (
   `payment_id` int(2) NOT NULL,
   `country_id` int(4) NOT NULL,
   KEY `country_id` (`country_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_payment_bind`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_payment_error`
---
-
-CREATE TABLE IF NOT EXISTS `mm_payment_error` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_error` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL default '0',
   `method` varchar(16) NOT NULL,
@@ -1332,18 +746,7 @@ CREATE TABLE IF NOT EXISTS `mm_payment_error` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_payment_error`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_payment_log`
---
-
-CREATE TABLE IF NOT EXISTS `mm_payment_log` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_log` (
   `id` int(10) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '1',
   `order_sn` varchar(16) NOT NULL,
@@ -1356,18 +759,7 @@ CREATE TABLE IF NOT EXISTS `mm_payment_log` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_payment_log`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_payment_paypal`
---
-
-CREATE TABLE IF NOT EXISTS `mm_payment_paypal` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal` (
   `id` tinyint(1) NOT NULL auto_increment,
   `email` varchar(32) NOT NULL,
   `type` tinyint(1) NOT NULL default '1',
@@ -1379,20 +771,10 @@ CREATE TABLE IF NOT EXISTS `mm_payment_paypal` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_payment_paypal`
---
-
-INSERT INTO `mm_payment_paypal` (`id`, `email`, `type`, `paypal_cert_id`, `paypal_cert_file`, `my_public_cert_file`, `my_private_key_file`, `my_private_key_pswd`) VALUES
+INSERT INTO `{PREFIX}payment_paypal` (`id`, `email`, `type`, `paypal_cert_id`, `paypal_cert_file`, `my_public_cert_file`, `my_private_key_file`, `my_private_key_pswd`) VALUES
 (1, 'chenshuanj-facilitator@gmail.com', 1, '', '', '', '', '');
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_region`
---
-
-CREATE TABLE IF NOT EXISTS `mm_region` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}region` (
   `region_id` int(8) NOT NULL auto_increment,
   `country_id` int(4) NOT NULL default '1',
   `code` char(2) default NULL,
@@ -1401,11 +783,7 @@ CREATE TABLE IF NOT EXISTS `mm_region` (
   PRIMARY KEY  (`region_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=67 ;
 
---
--- 转存表中的数据 `mm_region`
---
-
-INSERT INTO `mm_region` (`region_id`, `country_id`, `code`, `name`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region` (`region_id`, `country_id`, `code`, `name`, `sort_order`) VALUES
 (1, 1, 'AL', 'Alabama', 0),
 (2, 1, 'AK', 'Alaska', 0),
 (3, 1, 'AS', 'American Samoa', 0),
@@ -1479,7 +857,7 @@ INSERT INTO `mm_region` (`region_id`, `country_id`, `code`, `name`, `sort_order`
 -- 表的结构 `mm_region_city`
 --
 
-CREATE TABLE IF NOT EXISTS `mm_region_city` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}region_city` (
   `city_id` int(10) NOT NULL auto_increment,
   `region_id` int(8) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -1500,7 +878,7 @@ CREATE TABLE IF NOT EXISTS `mm_region_city` (
 -- 表的结构 `mm_region_city_us`
 --
 
-CREATE TABLE IF NOT EXISTS `mm_region_city_us` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}region_city_us` (
   `city_id` int(10) NOT NULL auto_increment,
   `region_id` int(8) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -1514,7 +892,7 @@ CREATE TABLE IF NOT EXISTS `mm_region_city_us` (
 -- 转存表中的数据 `mm_region_city_us`
 --
 
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (1, 1, 'Acmar', '35004', 0),
 (2, 1, 'Adamsville', '35005', 0),
 (3, 1, 'Adger', '35006', 0),
@@ -3056,7 +2434,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (1539, 4, 'Fredonia', '86052', 0),
 (1540, 4, 'Kaibeto', '86053', 0),
 (1541, 4, 'Shonto', '86054', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (1542, 4, 'Prescott', '86301', 0),
 (1543, 4, 'Prescott', '86302', 0),
 (1544, 4, 'Prescott', '86303', 0),
@@ -4512,7 +3890,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (2994, 12, 'San Diego', '92132', 0),
 (2995, 12, 'San Diego', '92134', 0),
 (2996, 12, 'Nas North Island', '92135', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (2997, 12, 'San Diego', '92136', 0),
 (2998, 12, 'San Diego', '92137', 0),
 (2999, 12, 'San Diego', '92138', 0),
@@ -5941,7 +5319,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (4422, 12, 'Tuolumne', '95379', 0),
 (4423, 12, 'Turlock', '95380', 0),
 (4424, 12, 'Turlock', '95381', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (4425, 12, 'Turlock', '95382', 0),
 (4426, 12, 'Twain Harte', '95383', 0),
 (4427, 12, 'Tracy', '95385', 0),
@@ -7383,7 +6761,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (5863, 14, 'Wallingford', '06495', 0),
 (5864, 14, 'Westbrook', '06498', 0),
 (5865, 14, 'New Haven', '06501', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (5866, 14, 'New Haven', '06502', 0),
 (5867, 14, 'New Haven', '06503', 0),
 (5868, 14, 'New Haven', '06504', 0),
@@ -8803,7 +8181,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (7282, 18, 'Moore Haven', '33471', 0),
 (7283, 18, 'Boynton Beach', '33472', 0),
 (7284, 18, 'Boynton Beach', '33473', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (7285, 18, 'Boynton Beach', '33474', 0),
 (7286, 18, 'Hobe Sound', '33475', 0),
 (7287, 18, 'Pahokee', '33476', 0),
@@ -10255,7 +9633,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (8733, 19, 'Norman Park', '31771', 0),
 (8734, 19, 'Oakfield', '31772', 0),
 (8735, 19, 'Ochlocknee', '31773', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (8736, 19, 'Ocilla', '31774', 0),
 (8737, 19, 'Omega', '31775', 0),
 (8738, 19, 'Moultrie', '31776', 0),
@@ -11717,7 +11095,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (10194, 23, 'Urbana', '61801', 0),
 (10195, 23, 'Urbana', '61802', 0),
 (10196, 23, 'Urbana', '61803', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (10197, 23, 'Allerton', '61810', 0),
 (10198, 23, 'Alvin', '61811', 0),
 (10199, 23, 'Armstrong', '61812', 0),
@@ -13121,7 +12499,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (11597, 24, 'Spencer', '47460', 0),
 (11598, 24, 'Springville', '47462', 0),
 (11599, 24, 'Stanford', '47463', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (11600, 24, 'Stinesville', '47464', 0),
 (11601, 24, 'Switz City', '47465', 0),
 (11602, 24, 'Tunnelton', '47467', 0),
@@ -14536,7 +13914,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (13011, 26, 'Mission Hills', '66208', 0),
 (13012, 26, 'Leawood', '66209', 0),
 (13013, 26, 'Lenexa', '66210', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (13014, 26, 'Leawood', '66211', 0),
 (13015, 26, 'Overland Park', '66212', 0),
 (13016, 26, 'Overland Park', '66213', 0),
@@ -15972,7 +15350,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (14446, 27, 'Crofton', '42217', 0),
 (14447, 27, 'Dunbar', '42219', 0),
 (14448, 27, 'Elkton', '42220', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (14449, 27, 'Fairview', '42221', 0),
 (14450, 27, 'Fort Campbell', '42223', 0),
 (14451, 27, 'Gracey', '42232', 0),
@@ -17372,7 +16750,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (15845, 31, 'Cheltenham', '20623', 0),
 (15846, 31, 'Clements', '20624', 0),
 (15847, 31, 'Cobb Island', '20625', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (15848, 31, 'Coltons Point', '20626', 0),
 (15849, 31, 'Compton', '20627', 0),
 (15850, 31, 'Dameron', '20628', 0),
@@ -18757,7 +18135,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (17229, 33, 'Dearborn Heights', '48127', 0),
 (17230, 33, 'Dearborn', '48128', 0),
 (17231, 33, 'Dexter', '48130', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (17232, 33, 'Dundee', '48131', 0),
 (17233, 33, 'Erie', '48133', 0),
 (17234, 33, 'Brownstown', '48134', 0),
@@ -20165,7 +19543,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (18636, 34, 'Adolph', '55701', 0),
 (18637, 34, 'Alborn', '55702', 0),
 (18638, 34, 'Angora', '55703', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (18639, 34, 'Askov', '55704', 0),
 (18640, 34, 'Aurora', '55705', 0),
 (18641, 34, 'Babbitt', '55706', 0),
@@ -21587,7 +20965,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (20057, 36, 'Palmyra', '63461', 0),
 (20058, 36, 'Perry', '63462', 0),
 (20059, 36, 'Philadelphia', '63463', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (20060, 36, 'Plevna', '63464', 0),
 (20061, 36, 'Revere', '63465', 0),
 (20062, 36, 'Saint Patrick', '63466', 0),
@@ -23004,7 +22382,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (21473, 38, 'Omaha', '68110', 0),
 (21474, 38, 'Omaha', '68111', 0),
 (21475, 38, 'Omaha', '68112', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (21476, 38, 'Omaha', '68113', 0),
 (21477, 38, 'Omaha', '68114', 0),
 (21478, 38, 'Omaha', '68116', 0),
@@ -24424,7 +23802,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (22892, 41, 'Succasunna', '07876', 0),
 (22893, 41, 'Swartswood', '07877', 0),
 (22894, 41, 'Mount Tabor', '07878', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (22895, 41, 'Tranquility', '07879', 0),
 (22896, 41, 'Vienna', '07880', 0),
 (22897, 41, 'Wallpack Center', '07881', 0),
@@ -25817,7 +25195,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (24284, 43, 'Great River', '11739', 0),
 (24285, 43, 'Greenlawn', '11740', 0),
 (24286, 43, 'Holbrook', '11741', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (24287, 43, 'Holtsville', '11742', 0),
 (24288, 43, 'Huntington', '11743', 0),
 (24289, 43, 'Dix Hills', '11746', 0),
@@ -27194,7 +26572,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (25660, 43, 'South Lima', '14558', 0),
 (25661, 43, 'Spencerport', '14559', 0),
 (25662, 43, 'Springwater', '14560', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (25663, 43, 'Stanley', '14561', 0),
 (25664, 43, 'Union Hill', '14563', 0),
 (25665, 43, 'Victor', '14564', 0),
@@ -28597,7 +27975,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (27062, 45, 'Lankin', '58250', 0),
 (27063, 45, 'Larimore', '58251', 0),
 (27064, 45, 'Kloten', '58254', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (27065, 45, 'Maida', '58255', 0),
 (27066, 45, 'Manvel', '58256', 0),
 (27067, 45, 'Mayville', '58257', 0),
@@ -30009,7 +29387,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (28473, 47, 'Farmersville', '45325', 0),
 (28474, 47, 'Fletcher', '45326', 0),
 (28475, 47, 'Germantown', '45327', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (28476, 47, 'Gettysburg', '45328', 0),
 (28477, 47, 'Gratis', '45330', 0),
 (28478, 47, 'Greenville', '45331', 0),
@@ -31445,7 +30823,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (29908, 49, 'Bonanza', '97623', 0),
 (29909, 49, 'Chiloquin', '97624', 0),
 (29910, 49, 'Dairy', '97625', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (29911, 49, 'Fort Klamath', '97626', 0),
 (29912, 49, 'Keno', '97627', 0),
 (29913, 49, 'Lakeview', '97630', 0),
@@ -32836,7 +32214,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (31298, 51, 'Narvon', '17555', 0),
 (31299, 51, 'New Holland', '17557', 0),
 (31300, 51, 'New Providence', '17560', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (31301, 51, 'Paradise', '17562', 0),
 (31302, 51, 'Peach Bottom', '17563', 0),
 (31303, 51, 'Penryn', '17564', 0),
@@ -34217,7 +33595,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (32678, 54, 'Charleston', '29405', 0),
 (32679, 54, 'Charleston', '29406', 0),
 (32680, 54, 'Charleston', '29407', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (32681, 54, 'Charleston', '29409', 0),
 (32682, 54, 'Charleston', '29410', 0),
 (32683, 54, 'Charleston', '29412', 0),
@@ -35626,7 +35004,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (34086, 56, 'Sardis', '38371', 0),
 (34087, 56, 'Savannah', '38372', 0),
 (34088, 56, 'Scotts Hill', '38374', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (34089, 56, 'Selmer', '38375', 0),
 (34090, 56, 'Shiloh', '38376', 0),
 (34091, 56, 'Silerton', '38377', 0),
@@ -37068,7 +36446,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (35527, 57, 'Van Vleck', '77482', 0),
 (35528, 57, 'Wadsworth', '77483', 0),
 (35529, 57, 'Waller', '77484', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (35530, 57, 'Wallis', '77485', 0),
 (35531, 57, 'West Columbia', '77486', 0),
 (35532, 57, 'Sugar Land', '77487', 0),
@@ -38489,7 +37867,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (36947, 58, 'Deweyville', '84309', 0),
 (36948, 58, 'Eden', '84310', 0),
 (36949, 58, 'Fielding', '84311', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (36950, 58, 'Garland', '84312', 0),
 (36951, 58, 'Grouse Creek', '84313', 0),
 (36952, 58, 'Honeyville', '84314', 0),
@@ -39874,7 +39252,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (38331, 61, 'Roanoke', '24015', 0),
 (38332, 61, 'Roanoke', '24016', 0),
 (38333, 61, 'Roanoke', '24017', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (38334, 61, 'Roanoke', '24018', 0),
 (38335, 61, 'Hollins', '24019', 0),
 (38336, 61, 'Roanoke', '24020', 0),
@@ -41300,7 +40678,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (39756, 63, 'Milton', '25541', 0),
 (39757, 63, 'Myra', '25544', 0),
 (39758, 63, 'Ona', '25545', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (39759, 63, 'Pecks Mill', '25547', 0),
 (39760, 63, 'Point Pleasant', '25550', 0),
 (39761, 63, 'Prichard', '25555', 0),
@@ -42714,7 +42092,7 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (41169, 65, 'Pine Bluffs', '82082', 0),
 (41170, 65, 'McFadden', '82083', 0),
 (41171, 65, 'Tie Siding', '82084', 0);
-INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (41172, 65, 'Mammoth', '82190', 0),
 (41173, 65, 'Slater', '82201', 0),
 (41174, 65, 'Chugwater', '82210', 0),
@@ -42883,23 +42261,13 @@ INSERT INTO `mm_region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `so
 (41337, 65, 'Alpine', '83128', 0),
 (41338, 65, 'Alta', '83414', 0);
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_setting`
---
-
-CREATE TABLE IF NOT EXISTS `mm_setting` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}setting` (
   `name` varchar(32) NOT NULL,
   `val` varchar(128) default NULL,
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `mm_setting`
---
-
-INSERT INTO `mm_setting` (`name`, `val`) VALUES
+INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('web_name_key_', 'k_9'),
 ('default_host', '127.0.01'),
 ('frontend', 'app'),
@@ -42956,13 +42324,7 @@ INSERT INTO `mm_setting` (`name`, `val`) VALUES
 ('web_logo', '/upload/image/201308/17130509_58243.png'),
 ('btm_logo', '/upload/image/201308/17130509_58243.png');
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_shipping`
---
-
-CREATE TABLE IF NOT EXISTS `mm_shipping` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}shipping` (
   `shipping_id` int(4) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
   `country_id` int(4) NOT NULL,
@@ -42975,18 +42337,7 @@ CREATE TABLE IF NOT EXISTS `mm_shipping` (
   PRIMARY KEY  (`shipping_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_shipping`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_shipping_set`
---
-
-CREATE TABLE IF NOT EXISTS `mm_shipping_set` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}shipping_set` (
   `id` int(8) NOT NULL auto_increment,
   `shipping_id` int(4) NOT NULL,
   `region_id` int(8) NOT NULL,
@@ -42995,18 +42346,7 @@ CREATE TABLE IF NOT EXISTS `mm_shipping_set` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_shipping_set`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_slider`
---
-
-CREATE TABLE IF NOT EXISTS `mm_slider` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}slider` (
   `slider_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `sign` varchar(32) NOT NULL,
@@ -43014,18 +42354,7 @@ CREATE TABLE IF NOT EXISTS `mm_slider` (
   PRIMARY KEY  (`slider_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_slider`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_slider_image`
---
-
-CREATE TABLE IF NOT EXISTS `mm_slider_image` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}slider_image` (
   `id` int(4) NOT NULL auto_increment,
   `slider_id` int(4) NOT NULL,
   `src` varchar(64) NOT NULL,
@@ -43036,36 +42365,14 @@ CREATE TABLE IF NOT EXISTS `mm_slider_image` (
   KEY `siler_id` (`slider_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_slider_image`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_summary`
---
-
-CREATE TABLE IF NOT EXISTS `mm_summary` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}summary` (
   `id` int(2) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_summary`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_tax`
---
-
-CREATE TABLE IF NOT EXISTS `mm_tax` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}tax` (
   `id` int(4) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
   `country_id` int(4) NOT NULL,
@@ -43074,18 +42381,7 @@ CREATE TABLE IF NOT EXISTS `mm_tax` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_tax`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_tax_set`
---
-
-CREATE TABLE IF NOT EXISTS `mm_tax_set` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}tax_set` (
   `id` int(8) NOT NULL auto_increment,
   `tax_id` int(4) NOT NULL,
   `region_id` int(8) NOT NULL,
@@ -43093,18 +42389,7 @@ CREATE TABLE IF NOT EXISTS `mm_tax_set` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_tax_set`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_urlkey`
---
-
-CREATE TABLE IF NOT EXISTS `mm_urlkey` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}urlkey` (
   `id` int(10) NOT NULL auto_increment,
   `model` varchar(16) NOT NULL,
   `item_id` int(10) NOT NULL,
@@ -43112,18 +42397,7 @@ CREATE TABLE IF NOT EXISTS `mm_urlkey` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_urlkey`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_user`
---
-
-CREATE TABLE IF NOT EXISTS `mm_user` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}user` (
   `user_id` int(10) NOT NULL auto_increment,
   `group_id` int(4) NOT NULL,
   `firstname` varchar(16) NOT NULL,
@@ -43140,18 +42414,7 @@ CREATE TABLE IF NOT EXISTS `mm_user` (
   KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_user`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_user_address`
---
-
-CREATE TABLE IF NOT EXISTS `mm_user_address` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}user_address` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` int(10) NOT NULL,
   `firstname` varchar(16) NOT NULL,
@@ -43177,18 +42440,7 @@ CREATE TABLE IF NOT EXISTS `mm_user_address` (
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `mm_user_address`
---
-
-
--- --------------------------------------------------------
-
---
--- 表的结构 `mm_user_group`
---
-
-CREATE TABLE IF NOT EXISTS `mm_user_group` (
+CREATE TABLE IF NOT EXISTS `{PREFIX}user_group` (
   `group_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `spending` float(10,2) NOT NULL default '0.00',
@@ -43196,9 +42448,5 @@ CREATE TABLE IF NOT EXISTS `mm_user_group` (
   PRIMARY KEY  (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- 转存表中的数据 `mm_user_group`
---
-
-INSERT INTO `mm_user_group` (`group_id`, `name_key_`, `spending`, `status`) VALUES
+INSERT INTO `{PREFIX}user_group` (`group_id`, `name_key_`, `spending`, `status`) VALUES
 (1, 'k_8', 0.00, 1);

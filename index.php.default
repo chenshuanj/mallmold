@@ -14,7 +14,7 @@
 *	additional services, please send an email to <service@mallmold.com>.
 */
 
-define('APP_NAME', 'install');
+define('APP_NAME', 'app');
 define('BASE_PATH', str_replace('\\','/',dirname(__FILE__)));
 require(BASE_PATH .'/framework/run.php');
 ?>

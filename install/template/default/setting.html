@@ -1,0 +1,56 @@
+{include header.html}
+<div id="body">
+	<div class="box mtop">
+		<div class="title">
+		<span>License</span> >> <span class="b">Setting</span> >> <span>Install</span>
+		</div>
+		<form  method="post" action="{:url('index/install')}">
+		<div class="content">
+		<table class="l_table" width="100%">
+			<tr>
+				<td colspan="2" class="tt">Database</td>
+			</tr>
+			<tr>
+				<th width="40%">Server Host:</th>
+				<td><input type="text" name="host" value="127.0.0.1"></td>
+			</tr>
+			<tr>
+				<th width="40%">Server Port:</th>
+				<td><input type="text" name="port" value="3306"></td>
+			</tr>
+			<tr>
+				<th width="40%">Database:</th>
+				<td><input type="text" name="dbname" value=""> *</td>
+			</tr>
+			<tr>
+				<th width="40%">Table Prefix:</th>
+				<td><input type="text" name="prefix" value="mm_"></td>
+			</tr>
+			<tr>
+				<th width="40%">User:</th>
+				<td><input type="text" name="user" value=""> *</td>
+			</tr>
+			<tr>
+				<th width="40%">Password:</th>
+				<td><input type="password" name="pswd" value=""> *</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="tt">Administrator</td>
+			</tr>
+			<tr>
+				<th width="40%">Username:</th>
+				<td><input type="text" name="admin" value="admin"> *</td>
+			</tr>
+			<tr>
+				<th width="40%">Password:</th>
+				<td><input type="password" name="password" value=""> *</td>
+			</tr>
+		</table>
+		</div>
+		<div class="continue">
+		<input type="submit" class="abutton" name="submit" value="Install">
+		</div>
+		</form>
+	</div>
+</div>
+{include footer.html}
