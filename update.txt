@@ -1,0 +1,6 @@
+==V1.0 Beta 3==
+Add payment test mode
+fix event language bug
+
+==V1.0 Beta 2==
+Add installation tool.

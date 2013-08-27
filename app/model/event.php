@@ -48,7 +48,8 @@ class event extends model
 	
 	private function push($do)
 	{
-		$path = url('event/index?do='.$do);
+		$lang = cookie('lang');
+		$path = url('event/index?lang='.$lang.'&do='.$do);
 		
 		$uri = parse_url($path);
 		$path = $uri['path'].($uri['query'] ? '?'.$uri['query'] : '');

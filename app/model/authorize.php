@@ -16,7 +16,9 @@
 
 class authorize extends model
 {
-	private $api_url= 'https://secure.authorize.net/gateway/transact.dll';
+	private $test_mode = 0;
+	private $api_url = 'https://secure.authorize.net/gateway/transact.dll';
+	private $api_url_test = 'https://test.authorize.net/gateway/transact.dll';
 	private $api_id;
 	private $api_key;
 	private $localpay = true;
@@ -39,8 +41,13 @@ class authorize extends model
 		parent::__construct();
 		
 		$setting = $this->db->table('payment_authorize')->get();
+		$this->test_mode = $setting['test_mode'];
 		$this->api_id = $setting['api_id'];
 		$this->api_key = $setting['api_key'];
+		
+		if($this->test_mode == 1){
+			$this->api_url = $this->api_url_test;
+		}
 	}
 	
 	public function can_localpay()

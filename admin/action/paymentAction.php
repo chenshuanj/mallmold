@@ -90,15 +90,14 @@ class paymentAction extends commonAction
 		}
 		
 		$setting = $this->db->table('payment_paypal')->get();
-		if($_POST['email']){
-			$setting['email'] = trim($_POST['email']);
-		}
-		if($_POST['type']){
-			$setting['type'] = intval($_POST['type']);
-		}
-		if($_POST['paypal_cert_id']){
-			$setting['paypal_cert_id'] = trim($_POST['paypal_cert_id']);
-		}
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['email'] = trim($_POST['email']);
+		$setting['user'] = trim($_POST['user']);
+		$setting['password'] = trim($_POST['password']);
+		$setting['signature'] = trim($_POST['signature']);
+		$setting['type'] = intval($_POST['type']);
+		$setting['paypal_cert_id'] = trim($_POST['paypal_cert_id']);
+		
 		if($_FILES['paypal_cert_file']['name']){
 			$file_name = $_FILES['paypal_cert_file']['name'];
 			$tmp_name = $_FILES['paypal_cert_file']['tmp_name'];
@@ -134,7 +133,11 @@ class paymentAction extends commonAction
 	
 	private function save_authorize()
 	{
-		
+		$setting = $this->db->table('payment_authorize')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['api_id'] = trim($_POST['api_id']);
+		$setting['api_key'] = trim($_POST['api_key']);
+		$this->db->table('payment_authorize')->update($setting);
 	}
 }
 

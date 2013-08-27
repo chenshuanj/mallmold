@@ -16,7 +16,9 @@
 
 class paypal extends model
 {
+	private $test_mode = 0;
 	private $env_url = 'https://api-3t.paypal.com/nvp';
+	private $env_url_test = 'https://api-3t.sandbox.paypal.com/nvp';
 	private $refund = true;
 	
 	private $api_username;
@@ -32,9 +34,14 @@ class paypal extends model
 		parent::__construct();
 		
 		$setting = $this->db->table('payment_paypal')->get();
-		$this->api_username = $setting['api_username'];
-		$this->api_password = $setting['api_password'];
-		$this->api_signature = $setting['api_signature'];
+		$this->test_mode = $setting['test_mode'];
+		$this->api_username = $setting['user'];
+		$this->api_password = $setting['password'];
+		$this->api_signature = $setting['signature'];
+		
+		if($this->test_mode == 1){
+			$this->env_url = $this->env_url_test;
+		}
 	}
 	
 	public function can_refund()

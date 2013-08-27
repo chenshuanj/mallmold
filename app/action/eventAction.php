@@ -33,6 +33,9 @@ class eventAction extends action
 			return null;
 		}
 		
+		$lang = trim($_GET['lang']);
+		cookie('lang', $lang);
+		
 		$setting = &$this->model('common')->setting();
 		switch($e['action']){
 			case 'report.email': //error report for manager

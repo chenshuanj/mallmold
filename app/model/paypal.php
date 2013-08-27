@@ -16,7 +16,9 @@
 
 class paypal extends model
 {
+	private $test_mode = 0;
 	private $env_url = 'https://www.paypal.com/cgi-bin/webscr';
+	private $env_url_test = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 	private $data = array();
 	private $localpay = false;
 	private $repay = true;
@@ -34,6 +36,7 @@ class paypal extends model
 		parent::__construct();
 		
 		$setting = $this->db->table('payment_paypal')->get();
+		$this->test_mode = $setting['test_mode'];
 		$this->email = $setting['email'];
 		$this->type = intval($setting['type']);
 		$this->my_public_cert_file = $setting['my_public_cert_file'];
@@ -41,6 +44,10 @@ class paypal extends model
 		$this->my_private_key_pswd = $setting['my_private_key_pswd'];
 		$this->paypal_cert_id = $setting['paypal_cert_id'];
 		$this->paypal_cert_file = $setting['paypal_cert_file'];
+		
+		if($this->test_mode == 1){
+			$this->env_url = $this->env_url_test;
+		}
 	}
 	
 	public function can_localpay()
