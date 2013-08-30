@@ -66,6 +66,7 @@ class commonAction extends action
 		unset($args['set_cur']);
 		unset($args['c']);
 		unset($args['a']);
+		unset($args[$_SERVER['REQUEST_URI']]);
 		$query = http_build_query($args);
 		$this->view['current_url_lang'] = url($url.'?'.($query ? $query.'&' : '').'set_lang=');
 		$this->view['current_url_cur'] = url($url.'?'.($query ? $query.'&' : '').'set_cur=');

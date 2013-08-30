@@ -164,7 +164,7 @@ class goods extends model
 	public function get_price_option($goods_id)
 	{
 		$options = array();
-		$goods_option = $this->model('mdata')->table('goods_option')->where("goods_id=$goods_id")->getlist();
+		$goods_option = $this->model('mdata')->table('goods_option')->where("goods_id=$goods_id")->order('sort_order asc')->getlist();
 		if($goods_option){
 			$options_list = $this->model('catalog')->get_options();
 			foreach($goods_option as $k=>$v){

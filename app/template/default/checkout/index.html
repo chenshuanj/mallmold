@@ -238,6 +238,9 @@
 							$('#shipping_method').html(res.shipping_method);
 							$('#payment_method').html(res.payment_method);
 							$('#pay_details').html(res.pay_details);
+						},
+						error:function(e, textStatus, errorThrown){
+							alert(textStatus);
 						}
 					});
 				}

@@ -61,23 +61,25 @@
 			</div>
 			<div class="line"></div>
 			<div class="price">
-			{L:Origin price}: <del>{$current_symbol}{$goods['price_origin']}</del><br/>
-			{L:Special price}: <span>{$current_symbol}{$goods['price']}</span>
+			{L:Origin price}: <del>{$current_symbol}<em id="price_origin">{$goods['price_origin']}</em></del><br/>
+			{L:Special price}: <span>{$current_symbol}<span id="price">{$goods['price']}</span></span>
 			</div>
 			<div class="line"></div>
 			<form  method="post" action="{:url('cart/add')}">
+			{if $goods['option']}
 			<div class="option">
 			{foreach $goods['option'] as $v}
 			{$v['name']}: 
-			<select name="option[{$v['op_id']}]">
-				<option value="0">-{L:Select}-</option>
+			<select class="option_id" name="option[{$v['op_id']}]">
+				<option value="0" price="0">-{L:Select}-</option>
 				{foreach $v['option'] as $o}
-				<option value="{$o['id']}">{$o['name']} {if $o['price']>0}(+{$o['price']}){elseif $o['price']<0}({$o['price']}){/if}</option>
+				<option price="{$o['price']}" value="{$o['id']}">{$o['name']} {if $o['price']>0}(+{$o['price']}){elseif $o['price']<0}({$o['price']}){/if}</option>
 				{/foreach}
 			</select>
 			{/foreach}
 			</div>
 			<div class="line"></div>
+			{/if}
 			<div class="buy">
 			{L:Quantity}: <input type="text" name="quantity" value="1" size="4">
 			
@@ -92,6 +94,18 @@
 		</div>
 		<script type="text/javascript">
 		$(document).ready(function(){
+			$('.option_id').change(function(){
+				var price_origin = {$goods['price_origin']};
+				var price = {$goods['price']};
+				var add = 0;
+				$('.option').find('select').each(function(){
+					add = parseFloat($(this).find("option:selected").attr('price'));
+					price_origin += add;
+					price += add;
+				});
+				$('#price_origin').html(price_origin);
+				$('#price').html(price);
+			});
 			$('#tab li a').click(function(e){
 				e.preventDefault();
 				$('#tab li a').removeClass('hover');

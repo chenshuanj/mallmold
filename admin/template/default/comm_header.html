@@ -12,11 +12,19 @@
 			return confirm("Are you sure to logout?");
 		}
 		$(document).ready(function(){
+			var b_name = navigator.appName;
+			if(b_name == 'Microsoft Internet Explorer'){
+				var b_version = navigator.appVersion.split("MSIE")[1].split(";")[0];
+				if(parseFloat(b_version) < 8){
+					$('#unsupport').show();
+				}
+			}
+			
 			$('#menu > li').bind('mouseover', function(){
 				$(this).find('div').show();
 			}).bind('mouseout', function(){
 				$(this).find('div').hide();
-			})
+			});
 			$('#select_lang').change(function(){
 				var code = $(this).val();
 				window.location = '{$current_url_lang}' + code;
@@ -54,6 +62,7 @@
 	</script>
 </head>
 <body>
+<div id="unsupport" class="error" style="display:none">{L:unsupport_browser}</div>
 {if $error_num>0}
 <div class="error">
 	<a href="{:url('report/index')}">{$error_msg} {L:error_num, $error_num} ({L:click_view})</a>

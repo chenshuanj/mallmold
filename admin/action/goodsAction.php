@@ -65,7 +65,7 @@ class goodsAction extends commonAction
 				}
 			}
 			
-			$optionlist = $this->mdata('goods_option')->where("goods_id=$goods_id")->getlist();
+			$optionlist = $this->mdata('goods_option')->where("goods_id=$goods_id")->order('sort_order asc')->getlist();
 			if($optionlist){
 				foreach($optionlist as $v){
 					$op_id = $v['op_id'];
@@ -266,6 +266,7 @@ class goodsAction extends commonAction
 		}
 		
 		//option
+		$op_name_id = $_POST['op_name_id'];
 		$op_name = $_POST['op_name'];
 		$op_name_key = $_POST['op_name_key'];
 		$op_price = $_POST['op_price'];
@@ -275,18 +276,29 @@ class goodsAction extends commonAction
 			if($optionlist){
 				foreach($optionlist as $v){
 					$op_id = $v['op_id'];
-					$name = $v['name'];
-					$option[$op_id][$name] = $v;
+					$oid = $v['id'];
+					$option[$op_id][$oid] = $v;
 				}
 			}
 			
 			foreach($op_name as $op_id=>$v){
+				$n = 1;
 				foreach($v as $k=>$name){
+					$oid = $op_name_id[$op_id][$k];
 					$name = trim($name);
 					if($name){
 						$price = floatval($op_price[$op_id][$k]);
 						$name_key = $op_name_key[$op_id][$k];
-						if(!$option[$op_id][$name]){
+						if($option[$op_id][$oid]){
+							$data = array(
+								'name_key_' => $name_key,
+								'name' => $name,
+								'price' => $price,
+								'sort_order' => $n
+							);
+							$this->mdata('goods_option')->where("id=$oid")->save($data);
+							unset($option[$op_id][$oid]);
+						}else{
 							$data = array(
 								'goods_id' => $goods_id,
 								'op_id' => $op_id,
@@ -294,19 +306,11 @@ class goodsAction extends commonAction
 								'name' => $name,
 								'image' => '',
 								'price' => $price,
-								'sort_order' => $k
+								'sort_order' => $n
 							);
 							$this->mdata('goods_option')->add($data);
-						}elseif($price != floatval($option[$op_id][$name]['price']) && $name_key == $option[$op_id][$name]['name_key_']){
-							$data = array(
-								'price' => $price,
-								'sort_order' => $k
-							);
-							$where = "goods_id=$goods_id and op_id=$op_id and name_key_='$name_key'";
-							$this->mdata('goods_option')->where($where)->save($data);
-						}else{
-							unset($option[$op_id][$name]);
 						}
+						$n++;
 					}
 				}
 			}
@@ -314,9 +318,8 @@ class goodsAction extends commonAction
 			if($option){
 				foreach($option as $op_id=>$val){
 					if($val){
-						foreach($val as $v){
-							$where = "goods_id=$goods_id and op_id=$op_id and name_key_='".$v['name_key_']."'";
-							$this->mdata('goods_option')->where($where)->delete();
+						foreach($val as $id=>$v){
+							$this->mdata('goods_option')->where("id=$id")->delete();
 						}
 					}
 				}

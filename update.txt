@@ -1,3 +1,7 @@
+==V1.0 Beta 4==
+Improved browser compatibility
+fix goods option bug
+
 ==V1.0 Beta 3==
 Add payment test mode
 fix event language bug

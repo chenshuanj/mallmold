@@ -239,7 +239,7 @@ class checkoutAction extends commonAction
 		//Validate payment data
 		$check = $this->model('payment')->validate($payment);
 		if(!$check){
-			$this->error(lang('Failed to validate: %s', $this->model('payment')->error_msg));
+			$this->error(lang('Failed to validate: '.$this->model('payment')->error_msg));
 			return;
 		}
 		
@@ -310,6 +310,7 @@ class checkoutAction extends commonAction
 			'pay_details' => $this->view('checkout/pay_details.html', 0),
 		);
 		
+		header('Content-type: text/html; charset=utf-8');
 		echo json_encode($return_data);
 	}
 	
@@ -333,7 +334,7 @@ class checkoutAction extends commonAction
 		$return_data = array(
 			'pay_details' => $this->view('checkout/pay_details.html', 0),
 		);
-		
+		header('Content-type: text/html; charset=utf-8');
 		echo json_encode($return_data);
 	}
 	
@@ -354,6 +355,7 @@ class checkoutAction extends commonAction
 				}
 			}
 		}
+		header('Content-type: text/html; charset=utf-8');
 		echo json_encode($return_data);
 	}
 	
@@ -364,7 +366,7 @@ class checkoutAction extends commonAction
 		$return_data = array(
 			'region_html' => $region_html,
 		);
-		
+		header('Content-type: text/html; charset=utf-8');
 		echo json_encode($return_data);
 	}
 }

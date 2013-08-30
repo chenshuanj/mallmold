@@ -206,10 +206,12 @@ class dictionaryAction extends commonAction
 		$key = $data['key'];
 		if($type && $key){
 			$this->model('dict')->set_vals($type, $key, $data);
-			echo 1;
+			$status = 1;
 		}else{
-			echo 0;
+			$status = 0;
 		}
+		header('Content-type: text/html; charset=utf-8');
+		echo $status;
 	}
 }
 ?>

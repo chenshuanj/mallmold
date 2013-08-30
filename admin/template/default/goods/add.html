@@ -202,6 +202,7 @@
 		{foreach $data['option'][$op['op_id']] as $k=>$v}
 			<div id="more_{$op['op_id']}_{$k}">
 			{L:option_label}:<input type="hidden" name="op_name_key[{$op['op_id']}][]" value="{$v['name_key_']}">
+					<input type="hidden" name="op_name_id[{$op['op_id']}][]" value="{$v['id']}">
 					<input type="text" name="op_name[{$op['op_id']}][]" class="len" value="{$v['name']}">
 					{if $v['name_key_']}
 					<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$v['name_key_'])}">
@@ -216,6 +217,7 @@
 		{/if}
 		<div id="op_{$op['op_id']}" {if $data['option'][$op['op_id']]} style="display:none"{/if}>
 			{L:option_label}:<input class="len" name="op_name[{$op['op_id']}][]" type="text">
+					<input type="hidden" name="op_name_id[{$op['op_id']}][]" value="0">
 					<input name="op_name_key[{$op['op_id']}][]" type="hidden">
 			&nbsp;
 			{L:price_changes}:<input class="len" name="op_price[{$op['op_id']}][]" type="text">
