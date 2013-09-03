@@ -726,6 +726,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}pages` (
   `title_key_` varchar(10) NOT NULL,
   `content_txtkey_` varchar(10) NOT NULL,
   `image` varchar(64) NOT NULL,
+  `sort_order` int(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -42320,7 +42321,7 @@ INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('meta_keywords_key_', 'k_10'),
 ('meta_description_txtkey_', 'k_11'),
 ('spider_code', 'Googlebot|msnbot|bing'),
-('smtp_host', 'smtp.sina.com'),
+('smtp_host', 'smtp.gmail.com'),
 ('smtp_port', '465'),
 ('smtp_user', 'yourusername'),
 ('smtp_pswd', 'yourpassword'),

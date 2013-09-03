@@ -1,10 +1,16 @@
+==V1.0 release==
+Fix email Templates language bug
+Update pages feature
+Update backend style
+Add auto-upgrade
+
 ==V1.0 Beta 4==
 Improved browser compatibility
 fix goods option bug
 
 ==V1.0 Beta 3==
 Add payment test mode
-fix event language bug
+Fix event language bug
 
 ==V1.0 Beta 2==
 Add installation tool.

@@ -31,6 +31,18 @@ class http
 		return $this->$fun($url, 'POST', $content);
 	}
 	
+	public function http_file_get($url, $timeout=5)
+    {
+		$opts = array(
+			'http'=>array(
+				'method' => 'GET',
+				'timeout' => $timeout,
+			)
+		);
+		$context = stream_context_create($opts);
+		return file_get_contents($url, false, $context);
+	}
+	
 	public function http_socket($url, $method='GET', $content='')
     {
 		$uri = parse_url($url);

@@ -1,5 +1,27 @@
 {include comm_header.html}
 <div class="main">
+<script type="text/javascript">
+$(document).ready(function(){
+	$.ajax({
+		url:"{:url('upgrade/ajax')}",   
+		dataType:"html",
+		success:function(res)
+		{
+			if(res != '0'){
+				$('#upgrade').html('You can update to Mallmold '+ res +' <a id="update" href="{:url('upgrade/index')}">Click to upgrade</a>.');
+			}
+		}
+	});
+	$('#update').live('click', function(e){
+		if(confirm('This will take several minutes, Are you sure to upgrade?')){
+			$('#upgrade').html('<img src="{TPL_PATH}images/loading.gif"> Updating... ');
+		}else{
+			e.preventDefault();
+			return;
+		}
+	});
+});
+</script>
 <style>
 h3{margin:4px 0 2px 0;}
 .pleft{padding-left:16px;}
@@ -86,5 +108,8 @@ h3{margin:4px 0 2px 0;}
 	</div>
 	<div style="clear:both;"></div>
 </div>
-<div class="copyright">Copyright &copy;2013 Mallmold Ecommerce(HK) Limited. All Rights Reserved</div>
+<div class="copyright">
+Mallmold {$version}<br/>
+Copyright &copy;2013 Mallmold Ecommerce(HK) Limited. All Rights Reserved
+</div>
 {include comm_footer.html}

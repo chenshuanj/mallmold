@@ -38,6 +38,13 @@ class indexAction extends commonAction
 		//keyword
 		$this->view['keywords'] = $this->db->table('keywords')->order("search_num desc")->limit(5)->getlist();
 		
+		//version
+		$file = BASE_PATH .'/'.APP_NAME.'/version.php';
+		if(file_exists($file)){
+			include($file);
+			$this->view['version'] = VERSION;
+		}
+		
 		$this->view['data'] = $data;
 		$this->view['title'] = 'welcome';
 		$this->view('index.html');

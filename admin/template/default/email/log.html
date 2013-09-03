@@ -11,8 +11,8 @@
   </tr>
   {foreach $list as $v}
   <tr>
-	<td>{$v['email']}</td>
-	<td>{$v['title']}</td>
+	<td class="pleft">{$v['email']}</td>
+	<td class="pleft">{$v['title']}</td>
 	<td>{$v['time']}</td>
 	<td>{if $v['status']==1}{L:success}{else}{L:failed}{/if}</td>
 	<td>

@@ -65,7 +65,9 @@ class notice extends model
 	
 	public function getmailtpl($name)
 	{
+		$lang = $this->model('dictionary')->current_lang;
 		$data = $this->model('mdata')->table('email_template')->where("type='frontend' and name='$name'")->get();
+		$data['path'] = $lang.'_'.$data['path'];
 		$file = BASE_PATH .'/'.APP_NAME.'/template/default/notice/'.$data['path'];
 		if(!file_exists($file)){
 			$this->load('lib/dir')->checkdir($file);

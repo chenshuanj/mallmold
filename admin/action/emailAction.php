@@ -56,12 +56,16 @@ class emailAction extends commonAction
 			$this->mdata('email_template')->where("name='$name'")->save($data);
 			
 			//delete template for update
-			$file = $this->db->table('email_template')->where("name='$name'")->getval('path');
-			$path = BASE_PATH .'/admin/template/default/notice/'.$file;
-			if(file_exists($path)){
-				unlink($path);
+			$row = $this->db->table('email_template')->where("name='$name'")->get();
+			$dir = ($row['type'] == 'backend' ? 'admin' : 'app');
+			$file = $row['path'];
+			$languages = &$this->model('common')->languages();
+			foreach($languages as $v){
+				$path = BASE_PATH .'/'.$dir.'/template/default/notice/'.$v['code'].'_'.$file;
+				if(file_exists($path)){
+					unlink($path);
+				}
 			}
-			
 			$this->ok('edit_success', url('email/index'));
 		}
 	}

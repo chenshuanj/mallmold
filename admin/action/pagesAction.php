@@ -50,6 +50,7 @@ class pagesAction extends commonAction
 				'urlkey' => to_url(trim($_POST['urlkey'])),
 				'content_txtkey_' => trim($_POST['content_txtkey_']),
 				'content' => $_POST['content'],
+				'sort_order' => intval($_POST['sort_order']),
 				'image' => trim($_POST['image'])
 			);
 			

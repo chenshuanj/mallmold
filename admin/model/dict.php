@@ -16,7 +16,7 @@
 
 class dict extends model
 {
-	protected $lang_code = '';
+	public $lang_code = '';
 	public $default_codes = array();
 	
 	public function __construct()

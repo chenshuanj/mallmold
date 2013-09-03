@@ -23,9 +23,9 @@
   {foreach $list as $val}
   <tr>
 	<td>{$val['user_id']}</td>
-	<td>{$val['firstname']} {$val['lastname']}</td>
-	<td>{$val['email']}</td>
-	<td>{$val['reg_time']}</td>
+	<td class="pleft">{$val['firstname']} {$val['lastname']}</td>
+	<td class="pleft">{$val['email']}</td>
+	<td class="pleft">{$val['reg_time']}</td>
 	<td>{if $val['status']==1}{L:available}{else}{L:lock}{/if}</td>
 	<td>
 	<a href="{:url('user/show?user_id='.$val['user_id'])}">{L:view}</a> 

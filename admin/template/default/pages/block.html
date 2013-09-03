@@ -10,7 +10,7 @@
   {foreach $list as $val}
   <tr>
 	<td>{$val['id']}</td>
-	<td>{$val['code']}</td>
+	<td class="pleft">{$val['code']}</td>
 	<td>
 	<a href="{:url('pages/editblock?id='.$val['id'])}">{L:edit}</a> 
 	<a href="{:url('pages/delblock?id='.$val['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a></td>

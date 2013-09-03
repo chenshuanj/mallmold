@@ -97,7 +97,8 @@ class couponAction extends commonAction
 		$data = $this->db->table('coupon')->where("id=$id")->get();
 		$this->view['coupon'] = $data;
 		
-		$mail = $this->model('notice')->getmailtpl('send_coupon');
+		$send_lang = $_POST['send_lang'] ? trim($_POST['send_lang']) : null;
+		$mail = $this->model('notice')->getmailtpl('send_coupon', $send_lang);
 		if(!$mail){
 			$this->error('cannot_find_emailtpl');
 			return false;

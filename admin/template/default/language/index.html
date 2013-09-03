@@ -10,7 +10,7 @@
   </tr>
   {foreach $list as $v}
   <tr>
-    <td>{$v['code']}</td>
+    <td class="pleft">{$v['code']}</td>
 	<td class="pleft">{$v['name']}</td>
 	<td><a href="{:url('language/set?change=status&id='.$v['id'])}" title="{L:click_to_edit}">{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</a></td>
 	<td>

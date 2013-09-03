@@ -294,7 +294,7 @@ class orderAction extends commonAction
 		$order = $this->model('order')->order_get($order_id);
 		$this->view['order'] = $order;
 		
-		$mail = $this->model('notice')->getmailtpl($type);
+		$mail = $this->model('notice')->getmailtpl($type, $order['language']);
 		if(!$mail){
 			$this->error('cannot_find_emailtpl');
 			return false;

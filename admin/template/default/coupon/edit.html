@@ -41,6 +41,16 @@
     <th>{L:expiretime}:</th>
 	<td class="tleft"><input class="len2" name="expiretime" type="text" value="{$data['expiretime']}"> ({L:format_as}: 2014-12-01 12:30:45)</td>
   </tr>
+   <tr>
+    <th>{L:select_lang}:</th>
+	<td class="tleft">
+	<select name="send_lang">
+		{foreach $select_lang as $v}
+		<option value="{$v['code']}" {if $v['code']==$lang} selected{/if}>{$v['name']}</option>
+		{/foreach}
+	</select>
+	</td>
+  </tr>
   <tr>
     <th>{L:send}:</th>
 	<td class="tleft">
