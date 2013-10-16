@@ -18,9 +18,6 @@ require Action('common');
 
 class upgradeAction extends commonAction
 {
-	private $server = 'http://www.mallmold.com/upgrade/';
-	private $versions = array();
-	
 	public function index()
 	{
 		if($this->check() == 0){
@@ -71,7 +68,6 @@ class upgradeAction extends commonAction
 	
 	private function check()
 	{
-		
 		$versions = $this->model('upgrade')->get_update();
 		if(!$versions){
 			return 0;

@@ -31,6 +31,7 @@ class upgrade extends model
 		include_once($file);
 		$this->local_version = UPDATE;
 		$url = $this->server.'upgrade.php?type=version&version='.$this->local_version;
+		$url .= '&host='.$_SERVER['HTTP_HOST'];
 		$str = $this->load('lib/http')->http_file_get($url);
 		if(!$str || $str == 'Error'){
 			return 0;

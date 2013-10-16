@@ -45,8 +45,7 @@ class statistic extends model
 		}
 		
 		if($action == 'buy'){
-			$sold_num = $this->db->table('goods')->where("goods_id='$goods_id'")->getval('sold_num');
-			$this->db->table('goods')->where("goods_id='$goods_id'")->update(array('sold_num'=> $sold_num + $number));
+			$this->db->table('goods')->where("goods_id='$goods_id'")->addnum('sold_num', $number);
 		}
 		
 		return true;
@@ -58,8 +57,7 @@ class statistic extends model
 			return false;
 		}
 		
-		$click = $this->db->table('attribute')->where("attr_id=$attr_id")->getval('click');
-		return $this->db->table('attribute')->where("attr_id=$attr_id")->update(array('click'=> ++$click));
+		return $this->db->table('attribute')->where("attr_id=$attr_id")->addnum('click', 1);
 	}
 }
 ?>

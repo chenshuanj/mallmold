@@ -23,6 +23,7 @@ class cartAction extends commonAction
 		$this->view['list'] = $this->model('cart')->getlist();
 		$this->view['checkout'] = $this->model('checkout')->count_cart_total();
 		$this->view['html_title'] = lang('Cart');
+		$this->view['map'] = array(array('title' => lang('Cart')));
 		$this->view('cart/index.html');
 	}
 	

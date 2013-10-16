@@ -84,6 +84,7 @@ class checkoutAction extends commonAction
 		$this->view['checkout'] = $this->model('checkout')->count_cart_total($country_id, $region_id, $shipping_id);
 		
 		$this->view['html_title'] = lang('Checkout');
+		$this->view['map'] = array(array('title' => lang('Checkout')));
 		$this->view('checkout/index.html');
 	}
 	
@@ -230,17 +231,21 @@ class checkoutAction extends commonAction
 		}
 		
 		//check payment
-		$payment = $this->model('payment')->get_payment($payment_id, $country_id);
-		if(!$payment){
-			$this->error('Payment is invalid');
-			return;
-		}
-		
-		//Validate payment data
-		$check = $this->model('payment')->validate($payment);
-		if(!$check){
-			$this->error(lang('Failed to validate: '.$this->model('payment')->error_msg));
-			return;
+		if($payment_id != -1){
+			$payment = $this->model('payment')->get_payment($payment_id, $country_id);
+			if(!$payment){
+				$this->error('Payment is invalid');
+				return;
+			}
+			
+			//Validate payment data
+			$check = $this->model('payment')->validate($payment);
+			if(!$check){
+				$this->error(lang('Failed to validate: '.$this->model('payment')->error_msg));
+				return;
+			}
+		}else{
+			$payment = array('id' => -1);
 		}
 		
 		$order_data = array(

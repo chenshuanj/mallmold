@@ -65,7 +65,7 @@
 			{L:Special price}: <span>{$current_symbol}<span id="price">{$goods['price']}</span></span>
 			</div>
 			<div class="line"></div>
-			<form  method="post" action="{:url('cart/add')}">
+			<form id="cart_form" method="post" action="{:url('cart/add')}">
 			{if $goods['option']}
 			<div class="option">
 			{foreach $goods['option'] as $v}
@@ -85,7 +85,7 @@
 			
 			<p>
 				<input type="hidden" name="goods_id" value="{$goods['goods_id']}">
-				<input class="abutton" type="submit" value="{L:Add to Cart}">
+				<input class="abutton" id="addtocart" type="submit" value="{L:Add to Cart}">
 			</p>
 			</div>
 			</form>
@@ -105,6 +105,20 @@
 				});
 				$('#price_origin').html(price_origin);
 				$('#price').html(price);
+			});
+			$('#addtocart').click(function(e){
+				e.preventDefault();
+				var check = 1;
+				$('.option').find('select').each(function(){
+					s = parseInt($(this).find("option:selected").attr('value'));
+					if(s == 0){
+						check = 0;
+						$(this).addClass('required');
+					}
+				});
+				if(check == 1){
+					$('#cart_form').submit();
+				}
 			});
 			$('#tab li a').click(function(e){
 				e.preventDefault();

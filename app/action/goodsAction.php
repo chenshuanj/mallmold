@@ -47,9 +47,14 @@ class goodsAction extends commonAction
 		$this->view['goods'] = $goods;
 		$this->view['catelist'] = $this->model('catalog')->get_catelist(0);
 		$this->view['attributes'] = $this->model('catalog')->get_attributes();
-		$this->view['html_title'] = $goods['title'];
+		$this->view['html_title'] = $goods['meta_title'] ? $goods['meta_title'] : $goods['title'];
 		$this->view['meta_description'] = $goods['meta_description'];
 		$this->view['meta_keywords'] = $goods['meta_keywords'];
+		
+		$map = $this->model('catalog')->goods_map($goods_id);
+		$map[] = array('title'=>$goods['title']);
+		$this->view['map'] = $map;
+		
 		$this->view('goods/view.html');
 	}
 	

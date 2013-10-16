@@ -37,6 +37,7 @@ class userAction extends commonAction
 		$this->view['login_verify'] = $this->setting['login_verify'];
 		$this->view['back_url'] = $back_url;
 		$this->view['html_title'] = lang('Login');
+		$this->view['map'] = array(array('title' => lang('Login')));
 		$this->view('user/login.html');
 	}
 	
@@ -59,6 +60,7 @@ class userAction extends commonAction
 		$this->view['register_verify'] = $this->setting['register_verify'];
 		$this->view['back_url'] = $back_url;
 		$this->view['html_title'] = lang('Register');
+		$this->view['map'] = array(array('title' => lang('Register')));
 		$this->view('user/register.html');
 	}
 	
@@ -208,6 +210,7 @@ class userAction extends commonAction
 		
 		$this->view['message'] = $message;
 		$this->view['html_title'] = lang('Find password');
+		$this->view['map'] = array(array('title' => lang('Find password')));
 		$this->view('user/findpswd.html');
 	}
 	

@@ -78,5 +78,10 @@ class article extends model
 		}
 		return $article;
 	}
+	
+	public function article_map($article_id)
+	{
+		
+	}
 }
 ?>

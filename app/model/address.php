@@ -58,7 +58,6 @@ class address extends model
 		);
 		foreach($address as $k=>$v){
 			if(!in_array($k, array('lastname','address2', 'bill_lastname', 'bill_address2')) && !$v){
-				echo $k;
 				return false;
 			}
 		}

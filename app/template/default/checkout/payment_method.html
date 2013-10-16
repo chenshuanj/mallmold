@@ -1,14 +1,22 @@
-{if $payment_list}
-	{foreach $payment_list as $v}
+{if $checkout['total']>0}
+	{if $payment_list}
+		{foreach $payment_list as $v}
+		<div class="payment">
+			<label>
+				<input type="radio" class="payment_id" name="payment_id" value="{$v['id']}" {if $address_tmp['payment_id']==$v['id']}checked{/if}>{$v['name']}
+			</label>
+			<div class="payment_option" id="payment_option_{$v['id']}">
+				{include 'checkout/payment/'.$v['model'].'.html'}
+			</div>
+		</div>
+		{/foreach}
+	{else}
+		{L:None payment method}
+	{/if}
+{else}
 	<div class="payment">
 		<label>
-			<input type="radio" class="payment_id" name="payment_id" value="{$v['id']}" {if $address_tmp['payment_id']==$v['id']}checked{/if}>{$v['name']}
+		<input type="radio" class="payment_id" name="payment_id" value="-1" checked>{L:Do not need pay}
 		</label>
-		<div class="payment_option" id="payment_option_{$v['id']}">
-			{include 'checkout/payment/'.$v['model'].'.html'}
-		</div>
 	</div>
-	{/foreach}
-{else}
-	{L:None payment method}
 {/if}

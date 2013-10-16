@@ -25,7 +25,6 @@ return array (
   'Incorrect password authentication' => 'Incorrect password authentication',
   'Please select a shipping method' => 'Please select a shipping method',
   'Please select a payment method' => 'Please select a payment method',
-  'Payment is invalid' => 'Payment is invalid',
   'Failed to validate: %s' => 'Failed to validate: %s',
   'Failed to create order' => 'Failed to create order',
   'Username can only consist of letters, numbers, spaces or single quotes composition' => 'Username can only consist of letters, numbers, spaces or single quotes composition',
@@ -95,6 +94,7 @@ return array (
   'Total' => 'Total',
   'Shipping method' => 'Shipping method',
   'Payment method' => 'Payment method',
+  'Do not need pay' => 'Do not need pay',
   'Shipping address' => 'Shipping address',
   'Goods' => 'Goods',
   'Goods name' => 'Goods name',
@@ -143,5 +143,6 @@ return array (
   'Your Email' => 'Your Email',
   'Can not find the email' => 'Can not find the email',
   'A temporary password has been sent to your mailbox' => 'A temporary password has been sent to your mailbox',
+  'Find password' => 'Find password',
 )
 ?>

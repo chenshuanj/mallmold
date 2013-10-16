@@ -189,7 +189,12 @@ class order extends model
 		$order['time'] = $this->model('common')->date_format($order['addtime']);
 		$order['symbol'] = $this->db->table('currency')->where("code='$code'")->getval('symbol');
 		$order['shipping_method'] = $this->db->table('shipping')->where("shipping_id=".$order['shipping_id'])->getval('name');
-		$order['payment_method'] = $this->db->table('payment')->where("id=".$order['payment_id'])->getval('name');
+		
+		if($order['payment_id'] > 0){
+			$order['payment_method'] = $this->db->table('payment')->where("id=".$order['payment_id'])->getval('name');
+		}else{
+			$order['payment_method'] = lang('Do not need pay');
+		}
 		
 		$shipping_address = $this->db->table('order_shipping_address')->where("order_id=$order_id")->get();
 		$shipping_address['country'] = $this->db->table('country')->where("id=".$shipping_address['country_id'])->getval('name');

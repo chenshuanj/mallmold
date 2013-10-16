@@ -40,7 +40,20 @@ class attributeAction extends commonAction
 				$this->error('name_null');
 			}
 			
+			$code = strtolower(trim($_POST['code']));
+			if(!$code){
+				$this->error('code_null');
+			}else{
+				$check_id = $this->db->table('attribute')->where("code='$code'")->getval('attr_id');
+				if($check_id){
+					if(!$_POST['id'] || ($_POST['id']>0 && $_POST['id'] != $check_id)){
+						$this->error('code_repeated');
+					}
+				}
+			}
+			
 			$data = array(
+				'code' => $code,
 				'name_key_' => trim($_POST['name_key_']),
 				'name' => trim($_POST['name']),
 				'can_filter' => intval($_POST['can_filter']),
@@ -154,7 +167,20 @@ class attributeAction extends commonAction
 				$this->error('name_null');
 			}
 			
+			$code = strtolower(trim($_POST['code']));
+			if(!$code){
+				$this->error('code_null');
+			}else{
+				$check_id = $this->db->table('extend')->where("code='$code'")->getval('extend_id');
+				if($check_id){
+					if(!$_POST['id'] || ($_POST['id']>0 && $_POST['id'] != $check_id)){
+						$this->error('code_repeated');
+					}
+				}
+			}
+			
 			$data = array(
+				'code' => $code,
 				'name_key_' => trim($_POST['name_key_']),
 				'name' => trim($_POST['name']),
 				'type' => intval($_POST['type']),

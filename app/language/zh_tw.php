@@ -25,7 +25,6 @@ return array (
   'Incorrect password authentication' => '未輸入密碼或密碼驗證不正確',
   'Please select a shipping method' => '未選擇配送方式',
   'Please select a payment method' => '未選擇支付方式',
-  'Payment is invalid' => '無效的支付方式',
   'Failed to validate: %s' => '驗證失敗: %s',
   'Failed to create order' => '創建訂單失敗',
   'Username can only consist of letters, numbers, spaces or single quotes composition' => '用戶名只能由字母,數字,空格或單引號組成',
@@ -96,6 +95,7 @@ return array (
   'Total' => '總計',
   'Shipping method' => '配送方式',
   'Payment method' => '支付方式',
+  'Do not need pay' => '無需支付',
   'Shipping address' => '配送地址',
   'Goods' => '商品',
   'Goods name' => '商品名稱',
@@ -145,5 +145,6 @@ return array (
   'Your Email' => '請輸入您的郵箱',
   'Can not find the email' => '找不到此郵箱',
   'A temporary password has been sent to your mailbox' => '一個臨時密碼已發送到您的郵箱',
+  'Find password' => '找回密碼',
 )
 ?>

@@ -8,12 +8,12 @@ $(document).ready(function(){
 		success:function(res)
 		{
 			if(res != '0'){
-				$('#upgrade').html('You can update to Mallmold '+ res +' <a id="update" href="{:url('upgrade/index')}">Click to upgrade</a>.');
+				$('#upgrade').html('You can update to Mallmold '+ res +' <a id="update" href="{:url('upgrade/index')}">Click to upgrade</a>. (<a target="_blank" href="http://www.mallmold.com/article/mallmold-upgrade-process">help</a>)');
 			}
 		}
 	});
 	$('#update').live('click', function(e){
-		if(confirm('This will take several minutes, Are you sure to upgrade?')){
+		if(confirm('This may take several minutes, Are you sure to upgrade?')){
 			$('#upgrade').html('<img src="{TPL_PATH}images/loading.gif"> Updating... ');
 		}else{
 			e.preventDefault();

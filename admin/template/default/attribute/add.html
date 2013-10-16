@@ -11,7 +11,18 @@
 <input name="id" type="hidden" value="{$data['attr_id']}">
 <table width="100%" class="r_table" id="c_0">
   <tr>
-    <th>{L:attribute_name}:</th>
+	<th>{L:attribute_code}:</th>
+	<td class="tleft">
+		{if $data['code']}
+			{$data['code']}
+			<input name="code" type="hidden" value="{$data['code']}">
+		{else}
+			<input class="len2" name="code" type="text" value="">
+		{/if}
+	</td>
+  </tr>
+  <tr>
+	<th>{L:attribute_name}:</th>
 	<td class="tleft">
 		<input name="name_key_" type="hidden" value="{$data['name_key_']}">
 		<input class="len2" name="name" type="text" value="{$data['name']}"> 

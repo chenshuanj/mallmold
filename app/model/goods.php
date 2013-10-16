@@ -109,11 +109,13 @@ class goods extends model
 		$goods_attr = $this->db->table('goods_attr')->where("goods_id=$goods_id")->getlist();
 		if($goods_attr){
 			$attribute_list = $this->model('catalog')->get_attributes();
+			$n = 1;
 			foreach($goods_attr as $v){
 				$attr_id = $v['attr_id'];
 				$av_id = $v['av_id'];
 				$attribute = $attribute_list[$attr_id];
-				$attr[] = array(
+				$code = $attribute['code'] ? $attribute['code'] : $n++;
+				$attr[$code] = array(
 						'name' => $attribute['name'],
 						'value' => $attribute['values'][$av_id]['title'],
 					);
@@ -128,6 +130,7 @@ class goods extends model
 		$goods_extend = $this->db->table('goods_extend')->where("goods_id=$goods_id")->getlist();
 		if($goods_extend){
 			$extend_list = $this->model('catalog')->get_extends();
+			$n = 1;
 			foreach($goods_extend as $v){
 				$extend_id = $v['extend_id'];
 				switch($extend_list[$extend_id]['type']){
@@ -152,7 +155,8 @@ class goods extends model
 						$value = $v['val'];
 				}
 				
-				$extends[] = array(
+				$code = $extend_list[$extend_id]['code'] ? $extend_list[$extend_id]['code'] : $n++;
+				$extends[$code] = array(
 						'name' => $extend_list[$extend_id]['name'],
 						'value' => $value,
 					);

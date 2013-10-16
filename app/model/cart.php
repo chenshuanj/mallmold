@@ -68,6 +68,7 @@ class cart extends model
 		foreach($list as $k=>$v){
 			$goods_id = $v['goods_id'];
 			$list[$k]['goods'] = $this->model('mdata')->table('goods')->where("goods_id=$goods_id")->get();
+			$list[$k]['price'] = $list[$k]['goods']['price'];
 			$options = $v['options'];
 			if($options){
 				$options_list = $this->model('goods')->get_price_option($goods_id);
@@ -79,8 +80,10 @@ class cart extends model
 						'value' => $options_list[$op_id]['option'][$id]['name'],
 						'price' => $options_list[$op_id]['option'][$id]['price'],
 					);
+					$list[$k]['price'] += $options_name[$op_id]['price'];
 				}
 				$list[$k]['options_name'] = $options_name;
+				
 			}
 		}
 		

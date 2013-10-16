@@ -79,9 +79,10 @@ class catalogAction extends commonAction
 		$this->view['cate'] = $cate;
 		$this->view['attributes'] = $attributes;
 		$this->view['attr_args'] = $attr_args;
-		$this->view['html_title'] = $cate['name'];
+		$this->view['html_title'] = $cate['meta_title'] ? $cate['meta_title'] : $cate['name'];
 		$this->view['meta_description'] = $cate['meta_description'];
 		$this->view['meta_keywords'] = $cate['meta_keywords'];
+		$this->view['map'] = $this->model('catalog')->cate_map($id);
 		$this->view('catalog/index.html');
 	}
 	
@@ -163,6 +164,7 @@ class catalogAction extends commonAction
 		
 		$this->view['keyword'] = $keyword;
 		$this->view['html_title'] = $title;
+		$this->view['map'] = array(array('title' => $title));
 		$this->view['list'] = $list;
 		$this->view['pager'] = $pager;
 		$this->view['catelist'] = $this->model('catalog')->get_catelist(0);

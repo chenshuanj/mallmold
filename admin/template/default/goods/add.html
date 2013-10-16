@@ -267,6 +267,17 @@
 
 <table width="100%" class="r_table" id="c_6" style="display:none">
   <tr>
+    <th>{L:meta_title}:</th>
+	<td class="tleft"><input name="meta_title_key_" type="hidden" value="{$data['meta_title_key_']}">
+	<input class="len2" name="meta_title" type="text" value="{$data['meta_title']}">
+	{if $data['meta_title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['meta_title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+	{/if} 
+	</td>
+  </tr>
+  <tr>
     <th width="180" valign="top">{L:meta_keywords}:</th>
 	<td class="tleft">
 		<input name="meta_keywords_txtkey_" type="hidden" value="{$data['meta_keywords_txtkey_']}">

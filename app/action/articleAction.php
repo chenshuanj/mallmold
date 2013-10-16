@@ -35,6 +35,7 @@ class articleAction extends commonAction
 		$list = $this->model('article')->get_list($cate_id);
 		
 		$this->view['html_title'] = $cate['name'];
+		$this->view['map'] = array(array('title' => $cate['name']));
 		$this->view['cate_id'] = $cate_id;
 		$this->view['list'] = $list;
 		$this->view['cates_list'] = $this->model('article')->cates_list();
@@ -55,7 +56,19 @@ class articleAction extends commonAction
 			return;
 		}
 		
+		$map = array();
+		$cate_id = $article['cate_id'];
+		if($cate_id){
+			$cate = $this->model('article')->get_cate($cate_id);
+			$map[] = array(
+				'title' => $cate['name'],
+				'url' => $this->model('urlkey')->geturl('cate_id', $cate['cate_id'], $cate['urlkey']),
+			);
+		}
+		$map[] = array('title' => $article['title']);
+		
 		$this->view['html_title'] = $article['title'];
+		$this->view['map'] = $map;
 		$this->view['article'] = $article;
 		$this->view['cates_list'] = $this->model('article')->cates_list();
 		$this->view('article/view.html');

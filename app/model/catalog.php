@@ -16,6 +16,8 @@
 
 class catalog extends model
 {
+	public $list_field = 'id,pid,name_key_,urlkey,image';
+	
 	public function get($id)
 	{
 		$cate = $this->cache('goods_cate_'.$id);
@@ -28,10 +30,13 @@ class catalog extends model
 	
 	public function get_catelist($pid = 0)
 	{
-		$list = $this->db->table('goods_cate')->where("pid=$pid")->order('sort_order asc')->getlist();
+		$list = $this->model('mdata')->table('goods_cate')
+									->field($this->list_field)
+									->where("pid=$pid")
+									->order('sort_order asc')
+									->getlist();
 		foreach($list as $key=>$val){
 			$id = $val['id'];
-			$list[$key] = $this->model('dictionary')->getdict($val);
 			$list[$key]['url'] = $this->model('urlkey')->geturl('id', $id, $val['urlkey']);
 			//$list[$key]['image'] = $this->model('image')->getimgbytype('goods_cate', $val['image']);
 			$rownum = $this->db->table('goods_cate')->where("pid=$id")->count();
@@ -105,5 +110,80 @@ class catalog extends model
 		}
 		return $optionlist;
 	}
+	
+	public function cate_map($id)
+	{
+		$map = array();
+		$cate = $this->get($id);
+		if($cate){
+			$map[] = array('title' => $cate['name']);
+		}else{
+			return $map;
+		}
+		
+		$n = 0;
+		while($n < 2){
+			if($cate['pid'] > 0){
+				$cate = $this->get($cate['pid']);
+				$map[] = array(
+					'title' => $cate['name'],
+					'url' => $this->model('urlkey')->geturl('id', $cate['id'], $cate['urlkey']),
+				);
+				$n++;
+			}else{
+				break;
+			}
+		}
+		
+		return array_reverse($map);
+	}
+	
+	public function goods_map($goods_id)
+	{
+		$map = array();
+		$list = $this->db->table('goods_cate_val')->where("goods_id=$goods_id")->getlist();
+		if($list){
+			$catelist = $this->get_catelist();
+			$n = 0;
+			while($n < 3){
+				$cate = $this->find_goods_map($catelist, $list);
+				if($cate){
+					$map[] = array(
+						'title' => $cate['name'],
+						'url' => $cate['url'],
+					);
+					
+					$catelist = $cate['child'];
+					$n++;
+				}else{
+					break;
+				}
+			}
+		}
+		return $map;
+	}
+	
+	private function find_goods_map($catelist, $vallist)
+	{
+		if(!$catelist || !$vallist || !is_array($catelist) || !is_array($vallist)){
+			return null;
+		}
+		
+		$cates = array();
+		foreach($catelist as $v){
+			$id = $v['id'];
+			$cates[$id] = $v;
+		}
+		
+		foreach($vallist as $v){
+			$cate_id = $v['cate_id'];
+			if($cates[$cate_id]){
+				return $cates[$cate_id];
+			}
+		}
+		
+		return null;
+	}
+	
 }
 ?>

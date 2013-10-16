@@ -59,6 +59,8 @@ class goodscateAction extends commonAction
 				'name' => trim($_POST['name']),
 				'description_txtkey_' => $_POST['description_txtkey_'],
 				'description' => $_POST['description'],
+				'meta_title_key_' => $_POST['meta_title_key_'],
+				'meta_title' => trim($_POST['meta_title']),
 				'meta_keywords_txtkey_' => $_POST['meta_keywords_txtkey_'],
 				'meta_keywords' => trim($_POST['meta_keywords']),
 				'meta_description_txtkey_' => $_POST['meta_description_txtkey_'],

@@ -36,6 +36,7 @@ class pageAction extends commonAction
 		$page['content'] = $this->parse($page['content']);
 		
 		$this->view['html_title'] = $page['title'];
+		//$this->view['map'] = array(array('title' => $page['title']));
 		$this->view['page'] = $page;
 		$this->view('page/index.html');
 	}

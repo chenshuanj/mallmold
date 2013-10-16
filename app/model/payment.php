@@ -83,6 +83,13 @@ class payment extends model
 	//return: -1 Failed, 0 can't localpay(Pending Payment), 1 pay success(Payment review)
 	public function localpay($order_data)
 	{
+		//Do not need pay
+		$payment_id = $order_data['payment']['id'];
+		if($payment_id == -1){
+			$this->status = $this->pay_status('processing');
+			return 1;
+		}
+		
 		$model = $order_data['payment']['model'];
 		$allow = $this->model($model)->can_localpay();
 		if(!$allow){

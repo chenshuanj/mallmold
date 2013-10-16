@@ -218,7 +218,9 @@ class dict extends model
 					continue;
 				}
 				$code = str_replace('dict_val_', '', $k);
-				$langs[$code]['value'] = $v;
+				if(isset($langs[$code])){
+					$langs[$code]['value'] = $v;
+				}
 			}
 		}elseif($type == '_txtkey_'){
 			foreach($langs as $k=>$v){

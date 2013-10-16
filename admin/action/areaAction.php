@@ -73,6 +73,7 @@ class areaAction extends commonAction
 		$id = intval($_GET['id']);
 		if($id>0){
 			$code = $this->db->table('country')->where("id=$id")->getval('code');
+			$this->db->table('region')->where("country_id=$id")->delete();
 			$this->db->table('country')->where("id=$id")->delete();
 			$this->db->query("DROP TABLE `mm_region_city_".$code."`");
 		}

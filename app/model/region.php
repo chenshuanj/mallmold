@@ -65,12 +65,14 @@ class region extends model
 	
 	public function ajax_options($country_id)
 	{
-		$options = '<option value="0">-'.lang('Select country').'-</option>';
+		$options = '';
 		if($country_id){
 			$region_list = $this->region_list($country_id);
 			foreach($region_list as $v){
 				$options .= '<option value="'.$v['region_id'].'">'.$v['name'].'</option>';
 			}
+		}else{
+			$options = '<option value="0">-'.lang('Select country').'-</option>';
 		}
 		return $options;
 	}

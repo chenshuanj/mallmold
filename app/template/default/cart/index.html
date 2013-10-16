@@ -26,7 +26,7 @@
 						</div>
 					</div>
 				</td>
-				<td>{$current_symbol}{$v['goods']['price']}</td>
+				<td>{$current_symbol}{$v['price']}</td>
 				<td><input type="text" class="quantity" name="quantity[]" cart_id="{$v['id']}" value="{$v['quantity']}"></td>
 				<td>{$current_symbol}<span class="subtotal" id="subtotal_{$v['id']}">{$v['subtotal']}</span></td>
 				<td><a href="{:url('cart/delete?id='.$v['id'])}">{L:Delete}</a></td>
