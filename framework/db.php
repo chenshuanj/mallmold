@@ -208,9 +208,27 @@ class db
 		}
 		$str = '';
 		foreach($data as $k=>$v){
-			$str .= ($str ? "," : "")."$k='$v'";
+			$str .= ($str ? "," : "")."`$k`='$v'";
 		}
 		$sql = 'update '.$this->table." set $str".($this->where ? ' where '.$this->where : '');
+		$this->query($sql);
+		return mysql_affected_rows($this->conn);
+	}
+	
+	public function addnum($field, $num)
+    {
+		$this->check();
+		$num = intval($num);
+		if(!$field || $num == 0){
+			return 0;
+		}
+		$sql = 'update '.$this->table." set ";
+		if($num > 0){
+			$sql .= "`$field` = `$field` + $num";
+		}else{
+			$num = 0 - $num;
+			$sql .= "`$field` = `$field` - $num";
+		}
 		$this->query($sql);
 		return mysql_affected_rows($this->conn);
 	}
