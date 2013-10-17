@@ -67,7 +67,7 @@ class commonAction extends action
 		$this->view['select_lang'] = $languages;
 		
 		//default_cur
-		$this->view['main_cur'] = &$this->model('common')->main_cur();
+		$this->view['main_cur'] = $this->model('common')->main_cur();
 		$this->view['current_symbol'] = &$this->model('common')->current_symbol();
 		
 		//weight_unit

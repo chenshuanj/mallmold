@@ -50,7 +50,7 @@ class indexAction extends commonAction
 		$this->view('index.html');
 	}
 	
-	public function cache()
+	public function cachelist()
 	{
 		$this->view['title'] = lang('clearcache');
 		$this->view('cache.html');
@@ -71,7 +71,7 @@ class indexAction extends commonAction
 			$this->load('lib/dir')->deldir($dir.'/template');
 		}
 		
-		$this->ok('edit_success', url('index/cache'));
+		$this->ok('edit_success', url('index/cachelist'));
 	}
 }
 
