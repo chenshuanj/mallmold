@@ -1,0 +1,36 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+  <th width="200">{L:select_group}</th>
+  <td class="tleft">
+	{foreach $group as $k=>$v}
+		<label><input name="group_id" class="group_id" type="radio" value="{$k}">{$v}</label><br/>
+	{/foreach}
+  </td>
+  </tr>
+  <tr>
+  <td colspan="2">
+  <div class="d_bottom">
+  <input type="button" id="submit_select" value="{L:submit}"> 
+  </div></td>
+  </tr>
+</table>
+<script type="text/javascript">
+$('#submit_select').click(function(){
+	var group_id = -1;
+	$('.group_id').each(function(){
+		if($(this).attr("checked")){
+			group_id = $(this).val();
+		}
+	});
+	if(group_id >= 0){
+		window.location = "{:url('goods/add?group_id=')}" + group_id;
+	}else{
+		alert('{L:Please select a group}');
+	}
+});
+</script>
+</div>
+{include comm_footer.html}

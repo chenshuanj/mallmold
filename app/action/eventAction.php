@@ -128,6 +128,12 @@ class eventAction extends action
 					}
 				}
 				break;
+			case 'backend': //backend task
+				$id = trim($e['id']);
+				if($id == 'sitemap.generate'){
+					$this->model('sitemap')->generate();
+				}
+				break;
 			default:
 				break;
 		}

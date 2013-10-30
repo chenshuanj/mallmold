@@ -146,5 +146,8 @@ return array (
   'Can not find the email' => '找不到此郵箱',
   'A temporary password has been sent to your mailbox' => '一個臨時密碼已發送到您的郵箱',
   'Find password' => '找回密碼',
+  'Billing address' => '賬單地址',
+  'View order' => '查看訂單',
+  'Forgot your password?' => '忘記密碼？',
 )
 ?>

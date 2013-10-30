@@ -46,6 +46,12 @@ class commonAction extends action
 			$this->model('cart')->change_cart_cur();
 		}
 		
+		//set template
+		$template = $this->model('visitor')->visitor_tpl();
+		if($template){
+			$this->set_template($template);
+		}
+		
 		$this->view['current_lang'] = $current_lang;
 		$this->view['current_cur'] = $current_cur;
 		$this->view['current_symbol'] = &$this->model('common')->current_symbol();

@@ -92,9 +92,6 @@ class paymentAction extends commonAction
 		$setting = $this->db->table('payment_paypal')->get();
 		$setting['test_mode'] = intval($_POST['test_mode']);
 		$setting['email'] = trim($_POST['email']);
-		$setting['user'] = trim($_POST['user']);
-		$setting['password'] = trim($_POST['password']);
-		$setting['signature'] = trim($_POST['signature']);
 		$setting['type'] = intval($_POST['type']);
 		$setting['paypal_cert_id'] = trim($_POST['paypal_cert_id']);
 		
@@ -138,6 +135,35 @@ class paymentAction extends commonAction
 		$setting['api_id'] = trim($_POST['api_id']);
 		$setting['api_key'] = trim($_POST['api_key']);
 		$this->db->table('payment_authorize')->update($setting);
+	}
+	
+	private function save_moneybookers()
+	{
+		$setting = $this->db->table('payment_moneybookers')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['pay_to_email'] = trim($_POST['pay_to_email']);
+		$setting['secret'] = trim($_POST['secret']);
+		$this->db->table('payment_moneybookers')->update($setting);
+	}
+	
+	private function save_paypal_pro()
+	{
+		$setting = $this->db->table('payment_paypal_pro')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['user'] = trim($_POST['user']);
+		$setting['password'] = trim($_POST['password']);
+		$setting['signature'] = trim($_POST['signature']);
+		$this->db->table('payment_paypal_pro')->update($setting);
+	}
+	
+	private function save_paypal_express()
+	{
+		$setting = $this->db->table('payment_paypal_express')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['user'] = trim($_POST['user']);
+		$setting['password'] = trim($_POST['password']);
+		$setting['signature'] = trim($_POST['signature']);
+		$this->db->table('payment_paypal_express')->update($setting);
 	}
 }
 

@@ -1,0 +1,124 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > <a href="{:url('group/index')}">{L:product_group}</a> > {L:edit}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:bind_category}</li>
+		<li style="border-top:none" onclick="m(2)">{L:bind_attribute}</li>
+		<li style="border-top:none" onclick="m(3)">{L:bind_extend}</li>
+		<li style="border-top:none" onclick="m(4)">{L:bind_option}</li>
+		<li style="border-top:none" onclick="m(5)">{L:bind_summary}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('group/add')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input name="name_key_" type="hidden" value="{$data['name_key_']}">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> 
+		{if $data['name_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['name_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+   <tr>
+    <th>{L:enable}:</th>
+	<td class="tleft">
+		<input name="status" type="radio" value="1" {if $data['status']==1} checked{/if}>{L:yes} 
+		<input name="status" type="radio" value="0" {if $data['status']==0} checked{/if}>{L:no}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:category}:</th>
+	<td class="tleft">
+	{foreach $catelist as $v}
+		<label><input name="cate_id[]" type="checkbox" value="{$v['id']}" {if in_array($v['id'], $group_cate)} checked{/if}>{$v['name']}</label><br/>
+		{if $v['childnum']>0}
+			{foreach $v['child'] as $val}
+				&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val['id']}" {if in_array($val['id'], $group_cate)} checked{/if}>{$val['name']}</label><br/>
+				{if $val['childnum']>0}
+					{foreach $val['child'] as $val2}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val2['id']}" {if in_array($val2['id'], $group_cate)} checked{/if}>{$val2['name']}</label><br/>
+					{/foreach}
+				{/if}
+			{/foreach}
+		{/if}
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:filter_attribute}:</th>
+	<td class="tleft">
+	{foreach $attribute as $v}
+		<label><input name="attr_id[]" type="checkbox" value="{$v['attr_id']}" {if in_array($v['attr_id'], $group_attr)} checked{/if}>{$v['name']}</label><br/>
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_3" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:extend_attribute}:</th>
+	<td class="tleft">
+	{foreach $extend as $v}
+		<label><input name="extend_id[]" type="checkbox" value="{$v['extend_id']}" {if in_array($v['extend_id'], $group_extend)} checked{/if}>{$v['name']}</label><br/>
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_4" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:price_option}:</th>
+	<td class="tleft">
+	{foreach $option as $v}
+		<label><input name="op_id[]" type="checkbox" value="{$v['op_id']}" {if in_array($v['op_id'], $group_option)} checked{/if}>{$v['name']}</label><br/>
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_5" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:summary}:</th>
+	<td class="tleft">
+	{foreach $summary as $v}
+		<label><input name="summary_id[]" type="checkbox" value="{$v['id']}" {if in_array($v['id'], $group_summary)} checked{/if}>{$v['name']}</label><br/>
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

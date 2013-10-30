@@ -32,7 +32,7 @@ class userAction extends commonAction
 		$pager = $this->view['pager'];
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		
-		$list = $this->db->table('user')->where($where)->limit($limit)->getlist();
+		$list = $this->db->table('user')->where($where)->order('reg_time desc')->limit($limit)->getlist();
 		foreach($list as $k=>$v){
 			$list[$k]['reg_time'] = date('Y-m-d H:i:s', $v['reg_time']);
 		}

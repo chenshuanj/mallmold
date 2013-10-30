@@ -1,3 +1,15 @@
+==V1.2 release==
+Add product group
+Add sitemap management
+Add Paypal Website Payments Pro
+Add paypal express checkout payment
+Add MoneyBookers payment
+Improved upgrade module
+Improved framework
+Improved checkout page
+Improved backend
+Fix authorize bug
+
 ==V1.1 release==
 Add attribute code
 Add meta title

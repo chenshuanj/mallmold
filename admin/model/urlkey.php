@@ -16,6 +16,30 @@
 
 class urlkey extends model
 {
+	public function model_keys()
+	{
+		return array(
+			'id' => 'catalog',
+			'goods_id' => 'goods',
+			'article_id' => 'article',
+			'cate_id' => 'list',
+			'page_id' => 'page',
+		);
+	}
+	
+	public function geturl($item_key, $item_id, $urlkey='')
+	{
+		$router = &$GLOBALS['router'];
+		$type = isset($router['type']) ? $router['type'] : 0;
+		$model_keys = $this->model_keys();
+		$model = $model_keys[$item_key];
+		if($type == 0){
+			return "$model/index?$item_key=$item_id";
+		}else{
+			return "$model/".($urlkey ? $urlkey : "index/$item_key/$item_id");
+		}
+	}
+	
 	public function set_goods($id, $urlkey)
 	{
 		return $this->save('goods', $id, $urlkey);

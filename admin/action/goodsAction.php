@@ -32,7 +32,14 @@ class goodsAction extends commonAction
 		$pager = $this->view['pager'];
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		
-		$this->view['list'] = $this->mdata('goods')->where($where)->limit($limit)->getlist();
+		$group = array(0 => lang('default_group'));
+		$group_list = $this->mdata('group')->getlist();
+		foreach($group_list as $v){
+			$group[$v['id']] = $v['name'];
+		}
+		
+		$this->view['group'] = $group;
+		$this->view['list'] = $this->mdata('goods')->where($where)->order('addtime desc')->limit($limit)->getlist();
 		$this->view['sku'] = $sku;
 		$this->view['title'] = lang('product_list');
 		$this->view('goods/list.html');
@@ -41,9 +48,25 @@ class goodsAction extends commonAction
 	public function add()
 	{
 		$goods_id = intval($_GET['goods_id']);
+		if(!isset($_GET['group_id']) && !$goods_id){
+			$group = array(0 => lang('default_group'));
+			$group_list = $this->mdata('group')->where('status=1')->getlist();
+			foreach($group_list as $v){
+				$group[$v['id']] = $v['name'];
+			}
+			
+			$this->view['group'] = $group;
+			$this->view['title'] = lang('edit_product');
+			$this->view('goods/select_group.html');
+			return;
+		}else{
+			$group_id = intval($_GET['group_id']);
+		}
+		
 		$data = $cates = $attr = $option = $extend = array();
 		if($goods_id){
 			$data = $this->mdata('goods')->where("goods_id=$goods_id")->get();
+			$group_id = $data['group_id'];
 			
 			$attrlist = $this->db->table('goods_attr')->where("goods_id=$goods_id")->getlist();
 			foreach($attrlist as $v){
@@ -75,14 +98,31 @@ class goodsAction extends commonAction
 			$data['option'] = $option;
 		}else{
 			$data['images'] = array();
+			$data['group_id'] = $group_id;
 		}
 			
 		$this->editor_header();
 		$this->editor('description', $data['description'], 'description_txtkey_', $data['description_txtkey_'], 'goods_desc');
 		$this->editor_uploadbutton('image', $data['image'], 'goods_main_img');
 		$this->editor_multiuploadbutton('imagemore', $data['images'], 'goods_imgs');
-			
-		$attrlist = $this->mdata('attribute')->where("status=1")->getlist();
+		
+		if($group_id == 0){
+			$catelist = $this->model('goodscate')->getlist();
+			$attrlist = $this->mdata('attribute')->where("status=1")->getlist();
+			$extendlist = $this->model('extend')->getlist();
+			$option = $this->mdata('option')->where("status=1")->getlist();
+		}else{
+			$catelist = $this->model('goodscate')->getgrouplist($group_id);
+			$attrlist = $this->mdata('attribute')
+							->where("status=1 and attr_id in (select attr_id from ".$this->db->tbname('group_attr')." where group_id=$group_id)")
+							->getlist();
+			$where = "extend_id in (select extend_id from ".$this->db->tbname('group_extend')." where group_id=$group_id)";
+			$extendlist = $this->model('extend')->getlist($where);
+			$option = $this->mdata('option')
+							->where("status=1 and op_id in (select op_id from ".$this->db->tbname('group_option')." where group_id=$group_id)")
+							->getlist();
+		}
+		
 		foreach($attrlist as $k=>$v){
 			if($attr[$v['attr_id']]){
 				$attrlist[$k]['at'] = 1;
@@ -92,17 +132,18 @@ class goodsAction extends commonAction
 		
 		$this->view['data'] = $data;
 		$this->view['attrlist'] = $attrlist;
-		$this->view['extendlist'] = $this->model('extend')->getlist();
+		$this->view['extendlist'] = $extendlist;
 		$this->view['attr_at'] = $attr;
-		$this->view['catelist'] = $this->model('goodscate')->getlist();
+		$this->view['catelist'] = $catelist;
 		$this->view['cate_at'] = $cates;
-		$this->view['option'] = $this->mdata('option')->where("status=1")->getlist();
+		$this->view['option'] = $option;
 		$this->view['title'] = lang('edit_product');
 		$this->view('goods/add.html');
 	}
 	
 	public function update()
 	{
+		$group_id = intval($_POST['group_id']);
 		$title = trim($_POST['title']);
 		$title_key_ = $_POST['title_key_'];
 		$urlkey = to_url(trim($_POST['urlkey']));
@@ -128,6 +169,7 @@ class goodsAction extends commonAction
 		$image = $this->model('image')->check_img($image, 'goods_main_img');
 		
 		$data = array(
+			'group_id' => $group_id,
 			'title' => $title,
 			'title_key_' => $title_key_,
 			'urlkey' => $urlkey,

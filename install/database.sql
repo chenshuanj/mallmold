@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}country` (
 
 INSERT INTO `{PREFIX}country` (`id`, `code`, `name`, `phone_code`, `time_zone`, `status`) VALUES
 (1, 'US', 'United States', '1', -8.0, 1);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}coupon` (
   `id` int(10) NOT NULL auto_increment,
   `code` char(12) NOT NULL,
@@ -165,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}currency` (
 
 INSERT INTO `{PREFIX}currency` (`id`, `name_key_`, `code`, `rate`, `symbol`, `is_main`, `sort_order`, `status`) VALUES
 (1, 'k_1', 'USD', 1.0000, '$', 0, 1, 1);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict` (
   `id` int(10) NOT NULL auto_increment,
   `dict_key` char(10) NOT NULL,
@@ -195,6 +197,7 @@ INSERT INTO `{PREFIX}dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (19, 'k_28', 'New order notification'),
 (20, 'k_30', 'Successful payment, thank patrons'),
 (21, 'k_32', 'You order has been refunded');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_keys` (
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
@@ -234,6 +237,7 @@ INSERT INTO `{PREFIX}dict_keys` (`id`) VALUES
 (31),
 (32),
 (33);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text` (
   `id` int(10) NOT NULL auto_increment,
   `text_key` char(10) NOT NULL,
@@ -263,6 +267,7 @@ INSERT INTO `{PREFIX}dict_text_en` (`id`, `text_key`, `content`) VALUES
 (10, 'k_29', '<table cellpadding="2" cellspacing="0" border="1">\r\n	<tbody>\r\n		<tr>\r\n			<td>\r\n				OrderID:\r\n			</td>\r\n			<td>\r\n				{$order[''order_sn'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods amount:\r\n			</td>\r\n			<td>\r\n				{$order[''goods_amount'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_fee'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Tax:\r\n			</td>\r\n			<td>\r\n				{$order[''tax_fee'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Grand total:\r\n			</td>\r\n			<td>\r\n				{$order[''total_amount'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Order time:\r\n			</td>\r\n			<td>\r\n				{$order[''time'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Currency:\r\n			</td>\r\n			<td>\r\n				{$order[''currency'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Currency symbol:\r\n			</td>\r\n			<td>\r\n				{$order[''symbol'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping method:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_method'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Payment method:\r\n			</td>\r\n			<td>\r\n				{$order[''payment_method'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping country:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''country'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping state:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''state'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping firstname:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''firstname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping lastname:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''lastname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping city:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''city'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping address:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''address'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping address2:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''address2'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping ZIP:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''postcode'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping phone:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''phone'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing country:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''country'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing state:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''state'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing firstname:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''firstname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing lastname:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''lastname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing city:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''city'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing address:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''address'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing address2:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''address2'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing ZIP:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''postcode'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing phone:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''phone'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Order goods(array):\r\n			</td>\r\n			<td>\r\n				{$order[''goods'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods name:\r\n			</td>\r\n			<td>\r\n				{$goods[''goods_name'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods options:\r\n			</td>\r\n			<td>\r\n				{$goods[''options'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods price:\r\n			</td>\r\n			<td>\r\n				{$goods[''price'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods quantity:\r\n			</td>\r\n			<td>\r\n				{$goods[''quantity'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods subtotal:\r\n			</td>\r\n			<td>\r\n				{$goods[''subtotal'']}\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>'),
 (11, 'k_31', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been paid Successful.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Shipping method: {$order[''shipping_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Payment method: {$order[''payment_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Shipping address:&nbsp; {$order[''shipping_address''][''firstname'']} {$order[''shipping_address''][''lastname'']} <br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''postcode'']} {$order[''shipping_address''][''address'']}{$order[''shipping_address''][''address2'']}<br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''city'']} {$order[''shipping_address''][''state'']} {$order[''shipping_address''][''country'']}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\n&nbsp;&nbsp; &nbsp;Order goods:<br />\r\n&nbsp;&nbsp; &nbsp;{foreach $order[''goods''] as $order}<br />\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{$goods[''goods_name'']} {$goods[''price'']} {$goods[''quantity'']} {$goods[''subtotal'']}<br />\r\n&nbsp;&nbsp; &nbsp;{/foreach}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
 (12, 'k_33', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been refunded.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}discount` (
   `id` int(4) NOT NULL auto_increment,
   `title_key_` varchar(10) NOT NULL,
@@ -317,6 +322,7 @@ INSERT INTO `{PREFIX}email_template` (`name`, `type`, `path`, `title_key_`, `con
 ('new_order_admin', 'frontend', 'new_order_admin.html', 'k_28', 'k_29'),
 ('order_pay', 'frontend', 'order_pay.html', 'k_30', 'k_31'),
 ('order_refund', 'backend', 'order_refund.html', 'k_32', 'k_33');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}error_report` (
   `id` int(10) NOT NULL auto_increment,
   `type` varchar(16) NOT NULL,
@@ -348,6 +354,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}extend_val` (
 
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods` (
   `goods_id` int(8) NOT NULL auto_increment,
+  `group_id` int(4) NOT NULL default '0',
   `title_key_` varchar(10) NOT NULL,
   `urlkey` varchar(255) default NULL,
   `sku` varchar(32) default NULL,
@@ -433,6 +440,43 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods_statistic` (
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `{PREFIX}group` (
+  `id` int(4) NOT NULL auto_increment,
+  `name_key_` char(10) NOT NULL,
+  `status` tinyint(1) NOT NULL default '1',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}group_attr` (
+  `group_id` int(4) NOT NULL,
+  `attr_id` int(4) NOT NULL,
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}group_cate` (
+  `group_id` int(4) NOT NULL,
+  `cate_id` int(4) NOT NULL,
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}group_extend` (
+  `group_id` int(4) NOT NULL,
+  `extend_id` int(4) NOT NULL,
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}group_option` (
+  `group_id` int(4) NOT NULL,
+  `op_id` int(8) NOT NULL,
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}group_summary` (
+  `group_id` int(4) NOT NULL,
+  `summary_id` int(4) NOT NULL,
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}host` (
   `id` int(4) NOT NULL auto_increment,
   `host` varchar(32) NOT NULL,
@@ -453,6 +497,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}images` (
 
 INSERT INTO `{PREFIX}images` (`id`, `type`, `dir`, `addtime`) VALUES
 (1, 'other', '/upload/image/201308/17130509_58243.png', 1376744709);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}image_setting` (
   `id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -478,6 +523,7 @@ INSERT INTO `{PREFIX}image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbna
 (4, 'k_5', 'goods_cate', 'goods_cate', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (5, 'k_6', 'article_img', 'article_img', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (6, 'k_7', 'article_desc', 'article_desc', 0, 0, 0, 0, '', 1, 0, 1, 1);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}keywords` (
   `id` int(10) NOT NULL auto_increment,
   `keyword` varchar(32) NOT NULL,
@@ -495,6 +541,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}language` (
 
 INSERT INTO `{PREFIX}language` (`id`, `code`, `name`, `status`) VALUES
 (1, 'en', 'English', 1);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}language_code` (
   `id` int(4) NOT NULL auto_increment,
   `code` varchar(8) NOT NULL,
@@ -567,6 +614,7 @@ INSERT INTO `{PREFIX}language_code` (`id`, `code`, `name`) VALUES
 (77, 'vi', 'tiếng Việt'),
 (79, 'zh_cn', '中文(简体)'),
 (80, 'zh_tw', '中文(繁体)');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}nav` (
   `id` int(4) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '2',
@@ -679,6 +727,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_sn` (
 
 INSERT INTO `{PREFIX}order_sn` (`sn`) VALUES
 (1000000);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_status` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL,
@@ -709,11 +758,15 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment` (
   `bind` tinyint(1) NOT NULL default '0',
   `status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 INSERT INTO `{PREFIX}payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES
-(1, 'Paypal', 'Paypal(Website Payments Standard)', 'paypal', 1, 0, 1),
-(2, 'Credit card', 'Authorize.net(Advanced Integration Method)', 'authorize', 2, 0, 1);
+(1, 'Paypal', 'Paypal Website Payments Standard', 'paypal', 1, 0, 1),
+(2, 'Credit card(Paypal)', 'Paypal Website Payments Pro(Direct Payment)', 'paypal_pro', 2, 0, 1),
+(3, 'Paypal Express Checkout', 'Paypal Express Checkout', 'paypal_express', 3, 0, 1),
+(4, 'Credit card(Authorize.net)', 'Authorize.net(Advanced Integration Method)', 'authorize', 4, 0, 1),
+(5, 'MoneyBookers', 'MoneyBookers(Skrill)', 'moneybookers', 5, 0, 0);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -724,6 +777,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
 
 INSERT INTO `{PREFIX}payment_authorize` (`id`, `test_mode`, `api_id`, `api_key`) VALUES
 (1, 1, '6nrM7QzAM6z', '2Z3kT2wmLW62dB6t');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_bind` (
   `payment_id` int(2) NOT NULL,
   `country_id` int(4) NOT NULL,
@@ -752,13 +806,21 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_log` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_moneybookers` (
+  `id` tinyint(1) NOT NULL auto_increment,
+  `test_mode` tinyint(1) NOT NULL default '0',
+  `pay_to_email` varchar(32) NOT NULL,
+  `secret` varchar(64) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `{PREFIX}payment_moneybookers` (`id`, `test_mode`, `pay_to_email`, `secret`) VALUES
+(1, 1, 'merchant-email@example.com', '123456');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
   `email` varchar(32) NOT NULL,
-  `user` varchar(32) default NULL,
-  `password` varchar(32) default NULL,
-  `signature` varchar(32) default NULL,
   `type` tinyint(1) NOT NULL default '1',
   `paypal_cert_id` varchar(32) default NULL,
   `paypal_cert_file` varchar(32) default NULL,
@@ -768,8 +830,33 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `{PREFIX}payment_paypal` (`id`, `test_mode`, `email`, `user`, `password`, `signature`, `type`, `paypal_cert_id`, `paypal_cert_file`, `my_public_cert_file`, `my_private_key_file`, `my_private_key_pswd`) VALUES
-(1, 1, 'chenshuanj-facilitator@gmail.com', '', '', '', 1, '', '', '', '', '');
+INSERT INTO `{PREFIX}payment_paypal` (`id`, `test_mode`, `email`, `type`, `paypal_cert_id`, `paypal_cert_file`, `my_public_cert_file`, `my_private_key_file`, `my_private_key_pswd`) VALUES
+(1, 1, 'merchant-email@example.com', 1, '', '', '', '', '');
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal_express` (
+  `id` tinyint(1) NOT NULL auto_increment,
+  `test_mode` tinyint(1) NOT NULL default '0',
+  `user` varchar(64) default NULL,
+  `password` varchar(64) default NULL,
+  `signature` varchar(64) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `{PREFIX}payment_paypal_express` (`id`, `test_mode`, `user`, `password`, `signature`) VALUES
+(1, 1, 'platfo_1255077030_biz_api1.gmail.com', '1255077037', 'Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf');
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal_pro` (
+  `id` tinyint(1) NOT NULL auto_increment,
+  `test_mode` tinyint(1) NOT NULL default '0',
+  `user` varchar(64) default NULL,
+  `password` varchar(64) default NULL,
+  `signature` varchar(64) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `{PREFIX}payment_paypal_pro` (`id`, `test_mode`, `user`, `password`, `signature`) VALUES
+(1, 1, 'platfo_1255077030_biz_api1.gmail.com', '1255077037', 'Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}region` (
   `region_id` int(8) NOT NULL auto_increment,
   `country_id` int(4) NOT NULL default '1',
@@ -846,6 +933,7 @@ INSERT INTO `{PREFIX}region` (`region_id`, `country_id`, `code`, `name`, `sort_o
 (64, 1, 'WI', 'Wisconsin', 0),
 (65, 1, 'WY', 'Wyoming', 0),
 (66, 1, 'AL', 'Alabama', 0);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}region_city` (
   `city_id` int(10) NOT NULL auto_increment,
   `region_id` int(8) NOT NULL,
@@ -42234,6 +42322,7 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (41336, 65, 'Thayne', '83127', 0),
 (41337, 65, 'Alpine', '83128', 0),
 (41338, 65, 'Alta', '83414', 0);
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}setting` (
   `name` varchar(32) NOT NULL,
   `val` varchar(128) default NULL,
@@ -42296,6 +42385,7 @@ INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('memcache_port', ''),
 ('web_logo', '/upload/image/201308/17130509_58243.png'),
 ('btm_logo', '/upload/image/201308/17130509_58243.png');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}shipping` (
   `shipping_id` int(4) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
@@ -42318,6 +42408,25 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shipping_set` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `{PREFIX}sitemap` (
+  `name` varchar(32) NOT NULL,
+  `val` varchar(32) default NULL,
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `{PREFIX}sitemap` (`name`, `val`) VALUES
+('updatetime', '0'),
+('index_frequency', 'weekly'),
+('index_priority', '1'),
+('cate_frequency', 'weekly'),
+('cate_priority', '0.8'),
+('goods_frequency', 'weekly'),
+('goods_priority', '0.7'),
+('page_frequency', 'monthly'),
+('page_priority', '0.5'),
+('article_frequency', 'monthly'),
+('article_priority', '0.5');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}slider` (
   `slider_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -42338,7 +42447,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}slider_image` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `{PREFIX}summary` (
-  `id` int(2) NOT NULL auto_increment,
+  `id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)

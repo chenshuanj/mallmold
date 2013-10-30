@@ -56,12 +56,17 @@ class comment extends model
 		return $list;
 	}
 	
-	public function get_summarys()
+	public function get_summarys($group_id = 0)
 	{
-		$summarys = $this->cache('summarys');
+		$summarys = $this->cache('summarys_'.$group_id);
 		if(!$summarys){
-			$summarys = $this->model('mdata')->table('summary')->where('status=1')->getlist();
-			$this->cache('summarys', $summarys);
+			$where = 'status=1';
+			if($group_id > 0){
+				$where .= " and id in (select summary_id from ".$this->db->tbname('group_summary')." where group_id=$group_id)";
+			}
+			$summarys = $this->model('mdata')->table('summary')->where($where)->getlist();
+			
+			$this->cache('summarys_'.$group_id, $summarys);
 		}
 		return $summarys;
 	}

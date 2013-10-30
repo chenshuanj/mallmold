@@ -43,7 +43,7 @@ class goodsAction extends commonAction
 		//comment
 		$goods['score'] = $this->model('comment')->get_score($goods_id);
 		$this->view['comments'] = $this->model('comment')->get_comments($goods_id);
-		$this->view['summarys'] = $this->model('comment')->get_summarys();
+		$this->view['summarys'] = $this->model('comment')->get_summarys($goods['group_id']);
 		$this->view['goods'] = $goods;
 		$this->view['catelist'] = $this->model('catalog')->get_catelist(0);
 		$this->view['attributes'] = $this->model('catalog')->get_attributes();
@@ -79,7 +79,8 @@ class goodsAction extends commonAction
 		
 		$score = $_POST['score'];
 		$summarys = array();
-		$summarys_list = $this->model('comment')->get_summarys();
+		$group_id = $this->db->table('goods')->where("goods_id=$goods_id")->getval('group_id');
+		$summarys_list = $this->model('comment')->get_summarys($group_id);
 		foreach($summarys_list as $v){
 			$id = $v['id'];
 			if($score[$id]){

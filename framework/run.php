@@ -69,7 +69,6 @@ $_uri = router($router);
 
 define('MODULE', $_uri['module']);
 define('ACTION', $_uri['action']);
-define('TPL_NAME', $config['TPL_NAME']);
 
 require(CORE_PATH .'/db.php');
 $db = new db();

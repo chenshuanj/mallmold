@@ -16,7 +16,7 @@
 
 class visitor extends model
 {
-	public function visitor_set()
+	public function &visitor_set()
 	{
 		static $set = null;
 		if($set == null){
@@ -24,6 +24,36 @@ class visitor extends model
 			$set = $this->db->table('host')->where("host='$host'")->get();
 		}
 		return $set;
+	}
+	
+	public function visitor_tpl()
+	{
+		$template = null; 
+		$set = &$this->visitor_set();
+		if(!empty($set['template'])){
+			$template = $set['template'];
+		}else{
+			$setting = &$this->model('common')->setting();
+			if(!empty($setting['default_tpl'])){
+				$template = $setting['default_tpl'];
+			}
+		}
+		return $template;
+	}
+	
+	public function visitor_country()
+	{
+		$country_id = 0;
+		$set = &$this->visitor_set();
+		if($set['bind_country']){
+			$country_id = $set['bind_country'];
+		}else{
+			$setting = &$this->model('common')->setting();
+			if(!empty($setting['default_country'])){
+				$country_id = $setting['default_country'];
+			}
+		}
+		return $country_id;
 	}
 	
 	public function visitor_lang()
@@ -48,7 +78,7 @@ class visitor extends model
 			}
 		}
 		
-		$set = $this->visitor_set();
+		$set = &$this->visitor_set();
 		if(!empty($set['bind_language'])){
 			return $set['bind_language'];
 		}
@@ -71,7 +101,7 @@ class visitor extends model
 			return $code;
 		}
 		
-		$set = $this->visitor_set();
+		$set = &$this->visitor_set();
 		if(!empty($set['bind_currency'])){
 			return $set['bind_currency'];
 		}

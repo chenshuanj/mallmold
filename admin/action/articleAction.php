@@ -24,7 +24,7 @@ class articleAction extends commonAction
 		$this->pager($total);
 		$pager = $this->view['pager'];
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
-		$this->view['list'] = $this->mdata('article')->limit($limit)->getlist();
+		$this->view['list'] = $this->mdata('article')->order('article_id desc')->limit($limit)->getlist();
 		$this->view['title'] = lang('articlelist');
 		$this->view('article/index.html');
 	}

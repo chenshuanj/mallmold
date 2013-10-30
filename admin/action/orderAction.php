@@ -66,7 +66,7 @@ class orderAction extends commonAction
 		if($order['user_id']>0){
 			$buyer = $this->db->table('user')->where("user_id=".$order['user_id'])->get();
 			if($buyer['group_id'] > 0){
-				$group = $this->mdata('user_group')->where('group_id='.intval($data['group_id']))->get();
+				$group = $this->mdata('user_group')->where('group_id='.intval($buyer['group_id']))->get();
 				$buyer['group'] = $group['name'];
 			}else{
 				$buyer['group'] = lang('none_group');
@@ -228,7 +228,7 @@ class orderAction extends commonAction
 			$data = array(
 				'order_id' => $order_id,
 				'status' => $status,
-				'remark' => lang('ship'),
+				'remark' => 'ship',
 				'notice' => 1,
 				'time' => time(),
 			);
@@ -277,7 +277,7 @@ class orderAction extends commonAction
 			$data = array(
 				'order_id' => $order_id,
 				'status' => 4,
-				'remark' => lang('refund'),
+				'remark' => 'refund',
 				'notice' => 1,
 				'time' => time(),
 			);

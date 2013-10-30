@@ -63,10 +63,10 @@ class authorize extends model
 	public function validate()
 	{
 		//check credit card 
-		$card_number = trim($_POST['card_number']);
-		$card_exp_month = trim($_POST['card_exp_month']);
-		$card_exp_day = trim($_POST['card_exp_day']);
-		$card_code = trim($_POST['card_code']);
+		$card_number = trim($_POST['x_card_number']);
+		$card_exp_month = trim($_POST['x_card_exp_month']);
+		$card_exp_year = trim($_POST['x_card_exp_year']);
+		$card_code = trim($_POST['x_card_code']);
 		
 		if(!$card_number){
 			$this->model('payment')->error_msg = 'Credit Card Number is required';
@@ -76,7 +76,7 @@ class authorize extends model
 			$this->model('payment')->error_msg = 'Wrong Credit Card Number';
 			return false;
 		}
-		if(!$card_exp_month || !$card_exp_day){
+		if(!$card_exp_month || !$card_exp_year){
 			$this->model('payment')->error_msg = 'Credit Card Expiration Date is required';
 			return false;
 		}
@@ -90,7 +90,7 @@ class authorize extends model
 		}
 		
 		$this->card_num = $card_number;
-		$this->exp_date = $card_exp_month.'/'.$card_exp_day;
+		$this->exp_date = $card_exp_month.'/'.$card_exp_year;
 		$this->card_code = $card_code;
 		
 		return true;

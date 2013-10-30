@@ -1,0 +1,25 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="checkout" style="padding:10px 300px">
+		<form action="{:url('order/paypal_express_review')}" method="post">
+		<input type="hidden" name="step" value="pay">
+		<input type="hidden" name="order_id" value="{$order_id}">
+		{foreach $data as $k=>$v}
+		<input type="hidden" name="{$k}" value="{$v}">
+		{/foreach}
+		<table>
+            <tr>
+                <td><b>Order Total:</b></td>
+                <td>{$order_total}</td>
+            </tr>
+            <tr>
+                <td></td>
+				<td><input type="submit" class="abutton" value="Pay"/></td>
+            </tr>
+        </table>
+		
+		</form>
+	</div>
+</div>
+{include footer.html}

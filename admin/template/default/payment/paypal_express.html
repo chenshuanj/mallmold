@@ -1,0 +1,25 @@
+<tr>
+	<th>{L:Test Mode}:</th>
+	<td class="tleft">
+		<label><input name="test_mode" type="radio" value="1" {if $setting['test_mode']==1} checked{/if}>{L:yes}</label> 
+		<label><input name="test_mode" type="radio" value="0" {if $setting['test_mode']==0} checked{/if}>{L:no}</label>
+	</td>
+</tr>
+<tr>
+	<th>API Username:</th>
+	<td class="tleft">
+		<input class="len2" name="user" type="text" value="{$setting['user']}"> *
+	</td>
+</tr>
+<tr>
+	<th>API Password:</th>
+	<td class="tleft">
+		<input class="len2" name="password" type="text" value="{$setting['password']}"> *
+	</td>
+</tr>
+<tr>
+	<th>API Signature:</th>
+	<td class="tleft">
+		<input class="len2" name="signature" type="text" value="{$setting['signature']}"> *
+	</td>
+</tr>

@@ -7,7 +7,7 @@ $(document).ready(function(){
 		dataType:"html",
 		success:function(res)
 		{
-			if(res != '0'){
+			if(res && res != '0'){
 				$('#upgrade').html('You can update to Mallmold '+ res +' <a id="update" href="{:url('upgrade/index')}">Click to upgrade</a>. (<a target="_blank" href="http://www.mallmold.com/article/mallmold-upgrade-process">help</a>)');
 			}
 		}

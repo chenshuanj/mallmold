@@ -49,10 +49,8 @@ class checkoutAction extends commonAction
 		
 		//host bind country_id
 		if(!$country_id){
-			$set = $this->model('visitor')->visitor_set();
-			if($set['bind_country']){
-				$country_id = $set['bind_country'];
-			}
+			$country_id = $this->model('visitor')->visitor_country();
+			$checkout['country_id'] = $country_id;
 		}
 		
 		//My saved address

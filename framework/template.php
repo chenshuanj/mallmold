@@ -16,11 +16,12 @@
 
 class template
 {
-	public $tpl_dir = '';
-	public $tpl_path = '';
+	public $tpl_dir;
+	public $tpl_path;
+	public $tpl_default;
+	public $tpl_name;
 	public $cache = 0;
-	public $cache_path = '';
-	public $lang_path = '';
+	public $cache_path;
 	
 	public function parse($str)
 	{
@@ -48,7 +49,7 @@ class template
 		}
 		
 		if(!$path || $path=='/' || $path=='.'){
-			exit('error template name: '. $path);
+			exit('Wrong template name: '. $path);
 		}
 		
 		$isvar = 0;
@@ -58,9 +59,12 @@ class template
 		
 		$cachefile = $this->cache_path.$path.'.php';
 		if(($this->cache != 1 || !file_exists($cachefile)) && $isvar == 0){
-			$tplfile = $this->tpl_dir.$path;
+			$tplfile = $this->tpl_dir.$this->tpl_name.'/'.$path;
 			if(!file_exists($tplfile)){
-				exit('Can not find the file '. $tplfile);
+				$tplfile = $this->tpl_dir.$this->tpl_default.'/'.$path;
+			}
+			if(!file_exists($tplfile)){
+				exit('Can not find the template file: '.$path);
 			}else{
 				$str = file_get_contents($tplfile);
 				$str = $this->parse($str);

@@ -1,5 +1,5 @@
 <tr>
-	<th>Test Mode:</th>
+	<th>{L:Test Mode}:</th>
 	<td class="tleft">
 		<label><input name="test_mode" type="radio" value="1" {if $setting['test_mode']==1} checked{/if}>{L:yes}</label> 
 		<label><input name="test_mode" type="radio" value="0" {if $setting['test_mode']==0} checked{/if}>{L:no}</label>
@@ -11,26 +11,6 @@
 		<input class="len2" name="email" type="text" value="{$setting['email']}"> *
 	</td>
 </tr>
-
-<tr>
-	<th>API Username:<br/>(Express Checkout)</th>
-	<td class="tleft">
-		<input class="len2" name="user" type="text" value="{$setting['user']}">
-	</td>
-</tr>
-<tr>
-	<th>API Password:</th>
-	<td class="tleft">
-		<input class="len2" name="password" type="text" value="{$setting['password']}">
-	</td>
-</tr>
-<tr>
-	<th>API Signature:</th>
-	<td class="tleft">
-		<input class="len2" name="signature" type="text" value="{$setting['signature']}">
-	</td>
-</tr>
-
 <tr>
 	<th>Transport Type:</th>
 	<td class="tleft">
@@ -47,21 +27,21 @@
 <tr>
 	<th>PayPal Cert File:</th>
 	<td class="tleft">
-		<input class="len2" name="paypal_cert_file" type="file"> <br/>
+		<input class="len2" name="paypal_cert_file" type="file"> (*.pem)<br/>
 		{$setting['paypal_cert_id']}
 	</td>
 </tr>
 <tr>
 	<th>Public Cert File:</th>
 	<td class="tleft">
-		<input class="len2" name="my_public_cert_file" type="file"> <br/>
+		<input class="len2" name="my_public_cert_file" type="file"> (*.txt)<br/>
 		{$setting['my_public_cert_file']}
 	</td>
 </tr>
 <tr>
 	<th>Private Key File:</th>
 	<td class="tleft">
-		<input class="len2" name="my_private_key_file" type="file"> <br/>
+		<input class="len2" name="my_private_key_file" type="file"> (*.pem)<br/>
 		{$setting['my_private_key_file']}
 	</td>
 </tr>

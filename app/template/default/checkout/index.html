@@ -377,6 +377,13 @@
 						$('#showaccount').hide();
 					}
 				});
+				$('.payment_id').live('click', function(){
+					var option = $(this).parent().next();
+					$('#payment_method').find('.payment_option').each(function(){
+						$(this).hide();
+					});
+					option.show();
+				});
 				$('#place_order').live('click', function(e){
 					e.preventDefault();
 					var address_id = 0;

@@ -32,7 +32,7 @@ class batchAction extends commonAction
 		$pager = $this->view['pager'];
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		
-		$this->view['list'] = $this->mdata('goods')->where($where)->limit($limit)->getlist();
+		$this->view['list'] = $this->mdata('goods')->where($where)->order('addtime desc')->limit($limit)->getlist();
 		$this->view['sku'] = $sku;
 		$this->view['title'] = lang('batch_action');
 		$this->view('batch/index.html');

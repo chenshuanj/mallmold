@@ -144,5 +144,8 @@ return array (
   'Can not find the email' => 'Can not find the email',
   'A temporary password has been sent to your mailbox' => 'A temporary password has been sent to your mailbox',
   'Find password' => 'Find password',
+  'Billing address' => 'Billing address',
+  'View order' => 'View order',
+  'Forgot your password?' => 'Forgot your password?',
 )
 ?>

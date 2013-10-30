@@ -31,7 +31,7 @@ class http
 		return $this->$fun($url, 'POST', $content);
 	}
 	
-	public function http_file_get($url, $timeout=5)
+	public function http_file_get($url, $timeout=10)
     {
 		$opts = array(
 			'http'=>array(
@@ -40,7 +40,7 @@ class http
 			)
 		);
 		$context = stream_context_create($opts);
-		return file_get_contents($url, false, $context);
+		return @file_get_contents($url, false, $context);
 	}
 	
 	public function http_socket($url, $method='GET', $content='')

@@ -118,6 +118,10 @@ function router($router)
 {
 	if(isset($router['type']) && $router['type'] > 0){
 		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
+		if(strpos($path, '?') > 0){
+			$uri = explode('?', $path);
+			$path = $uri[0];
+		}
 		$request = explode('/', $path);
 		$_GET['c'] = $request[1];
 		$_GET['a'] = $request[2];
@@ -255,11 +259,25 @@ class core
 class action extends core
 {
 	protected $tpl;
+	protected $tpl_name = 'default';
 	protected $view = array();
 	
 	public function __construct()
     {
 		parent::__construct();
+		
+		if($this->config['TPL_NAME']){
+			$this->set_template($this->config['TPL_NAME']);
+		}
+	}
+	
+	public function set_template($name)
+    {
+		if(!$name){
+			return false;
+		}
+		
+		$this->tpl_name = $name;
 	}
 	
 	protected function view($path='', $output=1)
@@ -268,8 +286,11 @@ class action extends core
 			require(CORE_PATH .'/template.php');
 			$script_path = str_replace('\\', '/', pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME));
 			$this->tpl = new template();
-			$this->tpl->tpl_dir = APP_PATH .'template/'.TPL_NAME.'/';
-			$this->tpl->tpl_path = $script_path.APP_NAME.'/template/'.TPL_NAME.'/';
+			
+			$this->tpl->tpl_dir = APP_PATH .'template/';
+			$this->tpl->tpl_default = 'default';
+			$this->tpl->tpl_name = $this->tpl_name;
+			$this->tpl->tpl_path = $script_path.APP_NAME.'/template/'.$this->tpl_name.'/';
 			$this->tpl->cache_path = APP_PATH .'cache/template/';
 			$this->config['TPL_CACHE'] && $this->tpl->cache = 1;
 		}

@@ -1,0 +1,29 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:product} > {$title}</div>
+<table width="100%" class="l_table">
+  <tr>
+    <th>ID</th>
+	<th>{L:name}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+    <td>{$v['id']}</td>
+	<td class="pleft">{$v['name']}</td>
+	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+	<a href="{:url('group/add?id='.$v['id'])}">{L:modify}</a> 
+	<a href="{:url('group/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a>
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="4">
+	<div class="d_bottom"><a class="aborder" href="{:url('group/add')}">{L:add_group}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

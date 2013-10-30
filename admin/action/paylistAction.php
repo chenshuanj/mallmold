@@ -20,13 +20,19 @@ class paylistAction extends commonAction
 {
 	public function index()
 	{
-		$total = $this->db->table('payment_log')->count();
+		$where = '';
+		$order_sn = trim($_POST['order_sn']);
+		if($order_sn){
+			$where = "order_sn like '%$order_sn%'";
+		}
+		
+		$total = $this->db->table('payment_log')->where($where)->count();
 		$this->pager($total);
 		
 		$pager = $this->view['pager'];
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		
-		$list = $this->db->table('payment_log')->limit($limit)->getlist();
+		$list = $this->db->table('payment_log')->where($where)->limit($limit)->order('time desc')->getlist();
 		foreach($list as $k=>$v){
 			$list[$k]['time'] = date('Y-m-d H:i:s', $v['time']);
 		}
@@ -42,8 +48,6 @@ class paylistAction extends commonAction
 		$this->view['title'] = lang('paylist');
 		$this->view('paylist/list.html');
 	}
-	
-	
 }
 
 ?>

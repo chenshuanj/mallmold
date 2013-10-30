@@ -17,8 +17,8 @@
 <div class="m_left">
 	<ul id="leftmenu">
 		<li class="l_hover" onclick="m(0)">{L:general}</li>
-		<li style="border-top:none" onclick="m(1)">{L:attribute}</li>
-		<li style="border-top:none" onclick="m(2)">{L:category}</li>
+		<li style="border-top:none" onclick="m(1)">{L:category}</li>
+		<li style="border-top:none" onclick="m(2)">{L:attribute}</li>
 		<li style="border-top:none" onclick="m(3)">{L:description}</li>
 		<li style="border-top:none" onclick="m(4)">{L:picinfo}</li>
 		<li style="border-top:none" onclick="m(5)">{L:price_option}</li>
@@ -28,6 +28,7 @@
 <div class="m_right">
 <form  method="post" action="{:url('goods/update')}" >
 <input name="goods_id" type="hidden" value="{$data['goods_id']}">
+<input name="group_id" type="hidden" value="{$data['group_id']}">
 <table width="100%" class="r_table" id="c_0">
   <tr>
     <th>{L:product_name}:</th>
@@ -95,8 +96,28 @@
   {include goods/extend.html}
 </table>
 
-
 <table width="100%" class="r_table" id="c_1" style="display:none">
+    <tr>
+    <th valign="top" width="20%">{L:category}:</th>
+	<td class="tleft">
+	{foreach $catelist as $v}
+		<label><input name="cate_id[]" type="checkbox" value="{$v['id']}" {if $v['disable']==1}disabled="disabled"{/if} {if in_array($v['id'], $cate_at)} checked{/if}>{$v['name']}</label><br/>
+		{if $v['childnum']>0}
+			{foreach $v['child'] as $val}
+				&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val['id']}" {if $val['disable']==1}disabled="disabled"{/if} {if in_array($val['id'], $cate_at)} checked{/if}>{$val['name']}</label><br/>
+				{if $val['childnum']>0}
+					{foreach $val['child'] as $val2}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val2['id']}" {if in_array($val2['id'], $cate_at)} checked{/if}>{$val2['name']}</label><br/>
+					{/foreach}
+				{/if}
+			{/foreach}
+		{/if}
+	{/foreach}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
   <tr>
 	<th width="40">{L:select}</th>
 	<td colspan="2">
@@ -138,27 +159,6 @@
 	</td>
   </tr>
   {/if}
-</table>
-
-<table width="100%" class="r_table" id="c_2" style="display:none">
-    <tr>
-    <th valign="top" width="20%">{L:category}:</th>
-	<td class="tleft">
-	{foreach $catelist as $v}
-		<label><input name="cate_id[]" type="checkbox" value="{$v['id']}" {if in_array($v['id'], $cate_at)} checked{/if}>{$v['name']}</label><br/>
-		{if $v['childnum']>0}
-			{foreach $v['child'] as $val}
-				&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val['id']}" {if in_array($val['id'], $cate_at)} checked{/if}>{$val['name']}</label><br/>
-				{if $val['childnum']>0}
-					{foreach $val['child'] as $val2}
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-<label><input name="cate_id[]" type="checkbox" value="{$val2['id']}" {if in_array($val2['id'], $cate_at)} checked{/if}>{$val2['name']}</label><br/>
-					{/foreach}
-				{/if}
-			{/foreach}
-		{/if}
-	{/foreach}
-	</td>
-  </tr>
 </table>
 
 <table width="100%" class="r_table" id="c_3" style="display:none">

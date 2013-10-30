@@ -5,7 +5,7 @@
 			<label>
 				<input type="radio" class="payment_id" name="payment_id" value="{$v['id']}" {if $address_tmp['payment_id']==$v['id']}checked{/if}>{$v['name']}
 			</label>
-			<div class="payment_option" id="payment_option_{$v['id']}">
+			<div class="payment_option" id="payment_option_{$v['id']}"{if $address_tmp['payment_id']==$v['id']} style="display:block;"{/if}>
 				{include 'checkout/payment/'.$v['model'].'.html'}
 			</div>
 		</div>

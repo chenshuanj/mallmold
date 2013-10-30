@@ -26,9 +26,10 @@ class extend extends model
 		);
 	}
 	
-	public function getlist()
+	public function getlist($where = '')
 	{
-		$list = $this->model('mdata')->table('extend')->where("status=1")->getlist();
+		$where .= ($where ? ' and ' : '').'status=1';
+		$list = $this->model('mdata')->table('extend')->where($where)->getlist();
 		foreach($list as $k=>$v){
 			if($v['type']==2 || $v['type']==3){
 				$list[$k]['values'] = $this->model('mdata')

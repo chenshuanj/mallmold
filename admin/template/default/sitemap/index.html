@@ -1,0 +1,132 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} <span>></span> {$title}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+		<li style="border-top:none" onclick="m(1)">{L:generate}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('sitemap/update')}" >
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:homepage_frequency}:</th>
+	<td class="tleft">
+		<select class="len2" name="data[index_frequency]">
+			{foreach $changefreq as $v}
+			<option value="{$v}" {if $v==$data['index_frequency']} selected{/if}>{$v}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:homepage_priority}:</th>
+	<td class="tleft">
+		<input class="len2" name="data[index_priority]" type="text" value="{$data['index_priority']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:cate_frequency}:</th>
+	<td class="tleft">
+		<select class="len2" name="data[cate_frequency]">
+			{foreach $changefreq as $v}
+			<option value="{$v}" {if $v==$data['cate_frequency']} selected{/if}>{$v}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:cate_priority}:</th>
+	<td class="tleft">
+		<input class="len2" name="data[cate_priority]" type="text" value="{$data['cate_priority']}">
+	</td>
+  </tr>
+  <tr>
+    <th>{L:goods_frequency}:</th>
+	<td class="tleft">
+		<select class="len2" name="data[goods_frequency]">
+			{foreach $changefreq as $v}
+			<option value="{$v}" {if $v==$data['goods_frequency']} selected{/if}>{$v}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:goods_priority}:</th>
+	<td class="tleft">
+		<input class="len2" name="data[goods_priority]" type="text" value="{$data['goods_priority']}">
+	</td>
+  </tr>
+  
+  <tr>
+    <th>{L:page_frequency}:</th>
+	<td class="tleft">
+		<select class="len2" name="data[page_frequency]">
+			{foreach $changefreq as $v}
+			<option value="{$v}" {if $v==$data['page_frequency']} selected{/if}>{$v}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:page_priority}:</th>
+	<td class="tleft">
+		<input class="len2" name="data[page_priority]" type="text" value="{$data['page_priority']}">
+	</td>
+  </tr>
+  
+  <tr>
+    <th>{L:article_frequency}:</th>
+	<td class="tleft">
+		<select class="len2" name="data[article_frequency]">
+			{foreach $changefreq as $v}
+			<option value="{$v}" {if $v==$data['article_frequency']} selected{/if}>{$v}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:article_priority}:</th>
+	<td class="tleft">
+		<input class="len2" name="data[article_priority]" type="text" value="{$data['article_priority']}">
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_1" style="display:none">
+  <tr>
+    <th width="200">URL:</th>
+	<td class="tleft">
+		<a href="http://{$host}/sitemap.xml" target="_blank">http://{$host}/sitemap.xml</a>
+	</td>
+  </tr>
+  <tr>
+    <th width="200">{L:generate}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="generate" checked>{L:yes}</label>
+		<label><input type="radio" value="0" name="generate">{L:no}</label>
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}
