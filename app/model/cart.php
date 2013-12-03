@@ -85,8 +85,9 @@ class cart extends model
 					$list[$k]['price'] += $options_name[$op_id]['price'];
 				}
 				$list[$k]['options_name'] = $options_name;
-				
 			}
+			
+			$list[$k]['price'] = $this->model('common')->current_price($list[$k]['price'], 0);
 		}
 		
 		return $list;
