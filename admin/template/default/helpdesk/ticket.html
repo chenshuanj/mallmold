@@ -1,0 +1,121 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('helpdesk/index')}">{L:helpdesk}</a> > {L:view}</div>
+<script type="text/javascript">
+	function m(id){
+		$('#leftmenu').find('li').each(function(index, val){
+			if(index == id){
+				$(this).addClass('l_hover');
+				$('#c_' + id).show();
+			}else{
+				$(this).removeClass('l_hover');
+				$('#c_' + index).hide();
+			}
+		});
+	}
+</script>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right order">
+	<div id="c_0">
+		<h3>#{$ticket['id']} {$ticket['title']}</h3>
+		<hr/>
+		<table width="100%">
+			<tr>
+				<th width="20%">{L:department}:</th><td>{$department['name']}</td>
+				<th width="20%">{L:Email}:</th><td>{$ticket['email']}</td>
+			</tr>
+			<tr>
+				<th>{L:Customer Name}:</th><td>
+				{if $ticket['user_id']>0}
+				<a href="{:url('user/show?user_id='.$ticket['user_id'])}">{$ticket['firstname']} {$ticket['lastname']}</a>
+				{else}
+				{$ticket['firstname']} {$ticket['lastname']}
+				{/if}
+				</td>
+				<th>{L:phone}:</th><td>{$ticket['phone']}</td>
+			</tr>
+			<tr>
+				<th>{L:priority}:</th><td>{$ticket['priority']}</td>
+				<th>{L:time}:</th><td>{$ticket['time']}</td>
+			</tr>
+		</table>
+		<h4></h4>
+		<style>
+		.message{border:1px solid #ccc;background:#eee;padding:4px 6px}
+		.reply{border:1px solid #ccc;margin:4px 0 0 24px;background:#efefef;padding:2px 4px}
+		.time{padding-top:4px}
+		</style>
+		<hr/>
+		<div class="message">
+		{$ticket['message']}
+		</div>
+		{foreach $reply as $v}
+			<div class="reply">
+				{$v['message']}
+				<div class="time">
+					{$v['time']} &nbsp;&nbsp;
+					{L:send_email}: {if $v['mail']==1}{L:yes}{else}{L:no}{/if}
+				</div>
+			</div>
+		{/foreach}
+		<h4></h4>
+		<hr/>
+		<h4></h4>
+		<table width="100%">
+			<form  method="post" action="{:url('helpdesk/reply')}" >
+			<input name="id" type="hidden" value="{$ticket['id']}">
+			<tr>
+				<th valign="top">{L:reply}:</th>
+				<td>
+				<textarea name="reply" id="reply" cols="48" rows="6"></textarea>
+				<br/>
+				{L:From Template}: <select name="response" id="response">
+					<option value="0">-{L:select}-</option>
+					{foreach $response as $v}
+						<option value="{$v['id']}">{$v['title']}</option>
+					{/foreach}
+				</select>
+				<script type="text/javascript">
+				$('#response').change(function(){
+					var id = $(this).val();
+					if(id > 0){
+						$.ajax({
+							url:"{:url('helpdesk/get_response')}", 
+							dataType:"html",
+							type:"POST",
+							data:{id:id},
+							success:function(res)
+							{
+								$('#reply').html(res);
+							}
+						});
+					}
+				});
+				</script>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+				<label><input type="checkbox" name="mail" checked value="1">{L:send_email}</label>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+				<input type="submit" name="submit" value="{L:submit}">
+				</td>
+			</tr>
+			</form>
+		</table>
+	</div>
+	
+	<h4></h4>
+	<div style="text-align:right"><input type="button" onclick="history.go(-1);" value="{L:back}"></div>
+</div>
+</div>
+{include comm_footer.html}

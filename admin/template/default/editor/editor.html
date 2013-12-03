@@ -1,8 +1,9 @@
 <script>
+	var editor;
 	var loadeditor = 1;
 	KindEditor.ready(function(K) {
 		function creat_editor(){
-			K.create('#{$editor_name}', {
+			editor = K.create('#{$editor_name}', {
 				langType : "{$lang}",
 				themeType : "simple",
 				filterMode : false,
@@ -19,15 +20,38 @@
 		creat_editor();
 		$('#ifload').click(function() {
 			if(loadeditor == 1){
-				$(this).val('Load editor');
+				$(this).val('{L:Load editor}');
 				K.remove('#{$editor_name}');
 				$('#{$editor_name}').css('visibility', 'visible');
 				loadeditor = 0;
 			}else{
-				$(this).val('Remove editor');
+				$(this).val('{L:Remove editor}');
 				creat_editor();
 				loadeditor = 1;
 			}
+		});
+		$('.txt_t').click(function(e){
+			e.preventDefault();
+			var maskWidth = $(window).width();
+			var dialogLeft = (maskWidth/2) - ($('#t_box').width()/2);
+			var dialogTop = ($(window).height() - $('#t_box').height())/2 + $(document).scrollTop();
+			if(dialogTop < 0){
+				dialogTop = 2;
+			}
+			$('#t_box').css({top:dialogTop, left:dialogLeft}).show();
+			$('#t_content').html('<img src="/admin/template/default/images/loading.gif">');
+			
+			var v = editor.html();
+			var href = $(this).attr('href');
+			$.ajax({
+				url:href,   
+				dataType:"html",
+				success:function(res)
+				{
+					$('#t_content').html(res);
+					editer_{$lang}.html(v);
+				}
+			});
 		});
 	});
 </script>
@@ -35,4 +59,11 @@
 <input name="{$editor_namekey}" type="hidden" value="{$editor_keyval}">
 {/if}
 <textarea id="{$editor_name}" name="{$editor_name}" style="width:{$editor_width}px;height:{$editor_height}px;visibility:hidden;">{$editor_value}</textarea>
-<div style="margin-top:2px;"><input type="button" id="ifload" value="Remove editor" /></div>
+<div style="margin-top:2px;">
+	<input type="button" id="ifload" value="{L:Remove editor}" />
+	{if $editor_keyval}
+	<a class="txt_t" href="{:url('dictionary/ajax?type=_txtkey_&key='.$editor_keyval)}">
+		<img src="{TPL_PATH}images/t.png">
+	</a>
+	{/if}
+</div>

@@ -21,9 +21,10 @@
 		<li style="border-top:none" onclick="m(2)">{L:buy_set}</li>
 		<li style="border-top:none" onclick="m(3)">{L:customer_set}</li>
 		<li style="border-top:none" onclick="m(4)">{L:visit_set}</li>
-		<li style="border-top:none" onclick="m(5)">{L:mail_set}</li>
-		<li style="border-top:none" onclick="m(6)">{L:notice_set}</li>
-		<li style="border-top:none" onclick="m(7)">{L:admin_set}</li>
+		<li style="border-top:none" onclick="m(5)">{L:mobile_set}</li>
+		<li style="border-top:none" onclick="m(6)">{L:mail_set}</li>
+		<li style="border-top:none" onclick="m(7)">{L:notice_set}</li>
+		<li style="border-top:none" onclick="m(8)">{L:admin_set}</li>
 	</ul>
 </div>
 <div class="m_right">
@@ -106,6 +107,12 @@
 			{/foreach}
 		</select><br/>
 		<span style="color:red">({L:need_update_prices_of_product_and_other})</span>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:date_format}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[date_format]" type="text" value="{$data['date_format']}"> ({L:default}: Y-m-d H:i:s)
 	</td>
   </tr>
 </table>
@@ -209,9 +216,9 @@
 	</td>
   </tr>
   <tr>
-    <th width="180">{L:date_format}:</th>
+    <th width="220">{L:invoice_prefix}:</th>
 	<td class="tleft">
-		<input class="len2" name="sys[date_format]" type="text" value="{$data['date_format']}"> ({L:default}: Y-m-d H:i:s)
+		<input class="len2" name="sys[invoice_prefix]" type="text" value="{$data['invoice_prefix']}">
 	</td>
   </tr>
   <tr>
@@ -334,6 +341,48 @@
 
 <table width="100%" class="r_table" id="c_5" style="display:none">
   <tr>
+    <th width="180">{L:mobile_mode}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[mobile_mode]" {if $data['mobile_mode']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[mobile_mode]" {if $data['mobile_mode']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:mobile_ua}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[mobile_ua]" type="text" value="{$data['mobile_ua']}">
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:mobile_tpl}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[mobile_tpl]" type="text" value="{$data['mobile_tpl']}">
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:mobile_goods_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[mobile_goods_sid]">
+			{foreach $image_setting['goods_main_img'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['mobile_goods_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th width="120">{L:mobile_goods_imgs_sid}:</th>
+	<td class="tleft">
+		<select class="len2" name="sys[mobile_goods_imgs_sid]">
+			{foreach $image_setting['goods_imgs'] as $v}
+			<option value="{$v['id']}" {if $v['id']==$data['mobile_goods_imgs_sid']} selected{/if}>{$v['name']}</option>
+			{/foreach}
+		</select>
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_6" style="display:none">
+  <tr>
     <th>{L:smtp_host}:</th>
 	<td class="tleft">
 		<input class="len2" name="sys[smtp_host]" type="text" value="{$data['smtp_host']}">
@@ -372,7 +421,7 @@
   </tr>
 </table>
 
-<table width="100%" class="r_table" id="c_6" style="display:none">
+<table width="100%" class="r_table" id="c_7" style="display:none">
   <tr>
     <th>{L:admin_order_notice}:</th>
 	<td class="tleft">
@@ -384,6 +433,19 @@
     <th width="180">{L:admin_order_notice_email}:</th>
 	<td class="tleft">
 		<input class="len2" name="sys[admin_order_notice_email]" type="text" value="{$data['admin_order_notice_email']}"> ({L:use,separate})
+	</td>
+  </tr>
+  <tr>
+    <th>{L:admin_helpdesk_notice}:</th>
+	<td class="tleft">
+		<label><input type="radio" value="1" name="sys[admin_helpdesk_notice]" {if $data['admin_helpdesk_notice']==1} checked{/if}>{L:yes}</label>
+		<label><input type="radio" value="0" name="sys[admin_helpdesk_notice]" {if $data['admin_helpdesk_notice']==0} checked{/if}>{L:no}</label>
+	</td>
+  </tr>
+  <tr>
+    <th width="180">{L:admin_helpdesk_notice_email}:</th>
+	<td class="tleft">
+		<input class="len2" name="sys[admin_helpdesk_notice_email]" type="text" value="{$data['admin_helpdesk_notice_email']}"> ({L:use,separate})
 	</td>
   </tr>
   <tr>
@@ -401,7 +463,7 @@
   </tr>
 </table>
 
-<table width="100%" class="r_table" id="c_7" style="display:none">
+<table width="100%" class="r_table" id="c_8" style="display:none">
   <tr>
     <th width="30%">{L:admin_login_verify}:</th>
 	<td class="tleft">

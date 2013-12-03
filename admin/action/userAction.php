@@ -20,8 +20,14 @@ class userAction extends commonAction
 {
 	public function index()
 	{
+		if(isset($_POST['email'])){
+			$email = trim($_POST['email']);
+			$_SESSION['user_index_email'] = $email;
+		}else{
+			$email = $_SESSION['user_index_email'];
+		}
+		
 		$where = '';
-		$email = trim($_POST['email']);
 		if($email){
 			$where = "email like '%$email%'";
 		}

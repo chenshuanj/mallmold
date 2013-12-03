@@ -90,8 +90,25 @@ class image extends model
 	
 	public function getsignbyid($id)
 	{
-		$settings = $this->getsetting();
-		return $settings[$id]['sign'];
+		$setting = &$this->model('common')->setting();
+		$is_mobile = $this->model('visitor')->is_mobile();
+		if($is_mobile){
+			switch($id)
+			{
+				case 'goods_index_sid':
+				case 'goods_list_sid':
+				case 'goods_view_sid':
+					$id = 'mobile_goods_sid';
+					break;
+				case 'goods_imgs_small_sid':
+					$id = 'mobile_goods_imgs_sid';
+					break;
+			}
+		}
+		
+		$sid = $setting[$id];
+		$image_setting = $this->getsetting();
+		return $image_setting[$sid]['sign'];
 	}
 	
 	public function getimgbyid($ids, $path)

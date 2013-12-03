@@ -14,9 +14,11 @@
 *	additional services, please send an email to <service@mallmold.com>.
 */
 
-class errorAction extends action
+require Action('common');
+
+class errorAction extends commonAction
 {
-	public function _404()
+	public function __404()
 	{
 		header("HTTP/1.1 404 Not Found");
 		$this->view('error/404.html');

@@ -16,7 +16,7 @@
 
 class page
 {
-	public $page = 1;
+	public $page = 0;
 	public $url = '';
 	public $args = array();
 	public $pagesize = 15;
@@ -45,16 +45,16 @@ class page
 	public function addargs(array $arr)
     {
 		$this->args = array_merge($this->args, $arr);
+		return $this;
 	}
 	
 	public function getpage()
     {
-		$page = intval($_GET[$this->page_key]);
-		if($page){
-			return $page;
-		}else{
-			return $this->page;
+		if(!$this->page){
+			$this->page = intval($_GET[$this->page_key]);
 		}
+		
+		return $this->page;
 	}
 	
 	public function pager($total)
@@ -63,6 +63,10 @@ class page
 		$pagesize = $this->pagesize;
 		$pages = ceil($total/$pagesize);
 		$page = $this->getpage();
+		
+		if($page < 1){
+			$page = 1;
+		}
 		
 		$pre = $page > 1 ? $page-1 : 0;
 		$p = $next = $page < $pages ? $page+1 : 0;
@@ -85,6 +89,7 @@ class page
 			'page' => $page,
 			'pre' => $pre,
 			'next' => $next,
+			'first' => ($page>2 ? 1 : 0),
 			'end' => $end,
 			'list' => $list,
 			'url' => $this->geturl(),

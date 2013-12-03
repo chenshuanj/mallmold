@@ -29,7 +29,7 @@ class commonAction extends action
 	
 	private function init()
 	{
-		require(APP_PATH .'lib/common.php');
+		require(APP_PATH .'model/functions.php');
 		$this->setting = &$this->model('common')->setting();
 		
 		//set lang
@@ -66,16 +66,20 @@ class commonAction extends action
 		$this->view['languages'] = &$this->model('common')->languages();
 		$this->view['currencies'] = &$this->model('common')->currencies();
 		
-		$args = $_GET;
-		$url = ($args['c'] ? $args['c'] : 'index').'/'.($args['a'] ? $args['a'] : 'index');
+		$url = $_SERVER['REQUEST_URI'];
+		$query = explode('?', $url);
+		parse_str($query[1], $args);
 		unset($args['set_lang']);
 		unset($args['set_cur']);
-		unset($args['c']);
-		unset($args['a']);
-		unset($args[$_SERVER['REQUEST_URI']]);
-		$query = http_build_query($args);
-		$this->view['current_url_lang'] = url($url.'?'.($query ? $query.'&' : '').'set_lang=');
-		$this->view['current_url_cur'] = url($url.'?'.($query ? $query.'&' : '').'set_cur=');
+		$args = http_build_query($args);
+		$this->view['current_url_lang'] = $query[0].'?'.($args ? $args.'&' : '').'set_lang=';
+		$this->view['current_url_cur'] = $query[0].'?'.($args ? $args.'&' : '').'set_cur=';
+		
+		$is_home = 0;
+		if((!$_GET['c'] || $_GET['c'] == 'index') && (!$_GET['a'] || $_GET['a'] == 'index')){
+			$is_home = 1;
+		}
+		$this->view['is_home'] = $is_home;
 		
 		//login status
 		$is_login = 0;
@@ -101,12 +105,6 @@ class commonAction extends action
 		//all catalogs
 		$this->view['catalogs'] = $this->model('catalog')->get_catelist();
 		
-		$is_home = 0;
-		if(MODULE == 'index' && ACTION == 'index'){
-			$is_home = 1;
-		}
-		$this->view['is_home'] = $is_home;
-		
 		//top block
 		$this->view['top_tel'] = $this->model('common')->block('top_tel');
 	}
@@ -126,13 +124,28 @@ class commonAction extends action
 		$this->view['bottom_logo'] = $this->setting['btm_logo'];
 	}
 	
-	protected function error($msg='', $url='')
+	protected function ok($msg='', $url='')
     {
 		$url = $url ? '"'.$url.'"' : '-1';
 		$this->view['url'] = $url;
 		$this->view['msg'] = lang($msg);
-		$this->view['title'] = 'Error';
+		$this->view['html_title'] = 'success';
+		$this->view('message.html');
+	}
+	
+	protected function error($msg='Error', $url='')
+    {
+		$url = $url ? '"'.$url.'"' : '-1';
+		$this->view['url'] = $url;
+		$this->view['msg'] = lang($msg);
+		$this->view['html_title'] = 'Error';
 		$this->view('error/error.html');
+	}
+	
+	protected function _404($msg='')
+    {
+		header("HTTP/1.1 404 Not Found");
+		$this->view('error/404.html');
 	}
 }
 

@@ -20,7 +20,7 @@ class commonAction extends action
     {
 		parent::__construct();
 		
-		require(APP_PATH .'lib/commonfunc.php'); 
+		require(APP_PATH .'model/functions.php');
 		
 		if(!$this->model('login')->checklogin()){
 			header('Location: '.url('admin/login'));
@@ -90,7 +90,17 @@ class commonAction extends action
 	
 	public function pager($total)
     {
-		$this->view['pager'] = $this->load('lib/page')->pager($total);
+		$pager = $this->load('lib/page');
+		$ss_key = 'p_'.md5($pager->geturl());
+		$page = $pager->getpage();
+		if($page > 0){
+			$_SESSION[$ss_key] = $page;
+		}elseif($_SESSION[$ss_key]){
+			$page = $_SESSION[$ss_key];
+		}
+		
+		$pager->page = $page;
+		$this->view['pager'] = $pager->pager($total);
 	}
 	
 	public function error($msg, $url='')

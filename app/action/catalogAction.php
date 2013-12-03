@@ -22,13 +22,13 @@ class catalogAction extends commonAction
 	{
 		$id = $this->model('urlkey')->getid('id');
 		if(!$id){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
 		$cate = $this->model('catalog')->get($id);
 		if(!$cate){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
@@ -70,8 +70,7 @@ class catalogAction extends commonAction
 			$attributes[$k]['base_args'] = $urlargs;
 		}
 		
-		$goods_list_sid = $this->setting['goods_list_sid'];
-		$this->view['img_sign'] = $this->model('image')->getsignbyid($goods_list_sid);
+		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_list_sid');
 		
 		$this->view['id'] = $id;
 		$this->view['list'] = $list;
@@ -159,9 +158,7 @@ class catalogAction extends commonAction
 			$attributes[$k]['base_args'] = $urlargs;
 		}
 		
-		$goods_list_sid = $this->setting['goods_list_sid'];
-		$this->view['img_sign'] = $this->model('image')->getsignbyid($goods_list_sid);
-		
+		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_list_sid');
 		$this->view['keyword'] = $keyword;
 		$this->view['html_title'] = $title;
 		$this->view['map'] = array(array('title' => $title));

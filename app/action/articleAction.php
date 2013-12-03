@@ -22,13 +22,13 @@ class articleAction extends commonAction
 	{
 		$cate_id = $this->model('urlkey')->getid('cate_id');
 		if(!$cate_id){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
 		$cate = $this->model('article')->get_cate($cate_id);
 		if(!$cate){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
@@ -46,13 +46,13 @@ class articleAction extends commonAction
 	{
 		$article_id = $this->model('urlkey')->getid('article_id');
 		if(!$article_id){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
 		$article = $this->model('article')->get_article($article_id);
 		if(!$article){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		

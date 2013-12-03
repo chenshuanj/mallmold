@@ -7,6 +7,10 @@ return array (
 		'query' => '',
 		'rewrite' => '',
 	),
+	'index/index' => array (
+		'query' => 'page_id=1',
+		'rewrite' => 'page/index',
+	),
 	'goods/*' => array (
 		'rewrite' => 'goods/index',
 	),
@@ -14,6 +18,9 @@ return array (
 		'rewrite' => '',
 	),
 	'goods/comment' => array (
+		'rewrite' => '',
+	),
+	'goods/ajax_get_comment' => array (
 		'rewrite' => '',
 	),
 	'catalog/*' => array (

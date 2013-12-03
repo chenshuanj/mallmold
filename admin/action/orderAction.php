@@ -20,8 +20,14 @@ class orderAction extends commonAction
 {
 	public function index()
 	{
+		if(isset($_POST['order_sn'])){
+			$order_sn = trim($_POST['order_sn']);
+			$_SESSION['order_index_order_sn'] = $order_sn;
+		}else{
+			$order_sn = $_SESSION['order_index_order_sn'];
+		}
+		
 		$where = '';
-		$order_sn = trim($_POST['order_sn']);
 		if($order_sn){
 			$where = "order_sn like '%$order_sn%'";
 		}
@@ -80,6 +86,18 @@ class orderAction extends commonAction
 		$this->view['edit_status'] = $this->model('order')->edit_status($order['status']);
 		$this->view['title'] = lang('view_order');
 		$this->view('order/view_order.html');
+	}
+	
+	public function invoice()
+	{
+		$order_id = intval($_GET['order_id']);
+		if(!$order_id){
+			$this->error('args_error');
+		}
+		$this->view['order'] = $this->model('order')->order_get($order_id);
+		$this->view['order_status'] = $this->model('order')->order_status();
+		$this->view['title'] = lang('invoice');
+		$this->view('order/invoice.html');
 	}
 	
 	public function print_order()

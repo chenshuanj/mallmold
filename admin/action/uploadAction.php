@@ -18,24 +18,24 @@ require Action('common');
 
 class uploadAction extends commonAction
 {
-	public $save_path = '/upload/';
+	public $save_dir = 'upload/';
 	public $fkey = 'imgFile';
 	protected $ext_arr = array('gif', 'jpg', 'jpeg', 'png', 'bmp');
 	public $max_size = 1024000;
 	
 	public function select()
 	{
-		$base_path = BASE_PATH .$this->save_path;
+		$base_path = BASE_PATH .'/'. $this->save_dir;
 		$dir_name = empty($_GET['dir']) ? '' : trim($_GET['dir']);
 		
 		if (empty($_GET['path'])) {
 			$current_path = $base_path .$dir_name . '/';
-			$current_url = $this->save_path .$dir_name . '/';
+			$current_url = PHP_PATH .$this->save_dir .$dir_name . '/';
 			$current_dir_path = '';
 			$moveup_dir_path = '';
 		} else {
 			$current_path = $base_path .$dir_name . '/' . $_GET['path'];
-			$current_url = $this->save_path .$dir_name . '/' .$_GET['path'];
+			$current_url = PHP_PATH . $this->save_dir .$dir_name . '/' .$_GET['path'];
 			$current_dir_path = $_GET['path'];
 			$moveup_dir_path = preg_replace('/(.*?)[^\/]+\/$/', '$1', $current_dir_path);
 		}
@@ -118,8 +118,8 @@ class uploadAction extends commonAction
 	
 	protected function upload()
 	{
-		$save_path = BASE_PATH .$this->save_path;
-		$save_url = $this->save_path;
+		$save_dir = BASE_PATH .'/'.$this->save_dir;
+		$save_url = PHP_PATH .$this->save_dir;
 		
 		if(!empty($_FILES[$this->fkey]['error'])){
 			$this->upload_error($_FILES[$this->fkey]['error']);
@@ -142,10 +142,10 @@ class uploadAction extends commonAction
 				$this->act_error(lang('unsupported_extensions'));
 			}
 			
-			if(@is_dir($save_path) === false){
+			if(@is_dir($save_dir) === false){
 				$this->act_error(lang('dir_notexist'));
 			}
-			if(@is_writable($save_path) === false){
+			if(@is_writable($save_dir) === false){
 				$this->act_error(lang('dir_cannot_write'));
 			}
 			if(@is_uploaded_file($tmp_name) === false){
@@ -157,21 +157,21 @@ class uploadAction extends commonAction
 			
 			$dir_name = empty($_GET['dir']) ? 'image' : trim($_GET['dir']);
 			if($dir_name){
-				$save_path .= $dir_name . "/";
+				$save_dir .= $dir_name . "/";
 				$save_url .= $dir_name . "/";
-				if(!file_exists($save_path)){
-					mkdir($save_path);
+				if(!file_exists($save_dir)){
+					mkdir($save_dir);
 				}
 			}
 			
-			$save_path .= date("Ym") . "/";
+			$save_dir .= date("Ym") . "/";
 			$save_url .= date("Ym") . "/";
-			if(!file_exists($save_path)){
-				mkdir($save_path);
+			if(!file_exists($save_dir)){
+				mkdir($save_dir);
 			}
 			
 			$new_file_name = date("dHis") . '_' . rand(10000, 99999) . '.' . $file_ext;
-			$file_path = $save_path . $new_file_name;
+			$file_path = $save_dir . $new_file_name;
 			if (move_uploaded_file($tmp_name, $file_path) === false) {
 				$this->act_error(lang('upload_failed'));
 			}

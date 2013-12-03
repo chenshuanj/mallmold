@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{$title}</title>
+	<link rel="stylesheet" href="{TPL_PATH}images/style.css">
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+	<style>
+	.box h1 span{font-size:12px;}
+	.box h1 span i{color:green;}
+	.center{width:860px;margin: 20px auto;}
+	.update_box{float:left;margin:0 0 15px 13px;border:none}
+	.update{padding:4px 4px;height:360px;font-size:12px;background:#efefef;border: 1px solid #D0D0D0;overflow:scroll}
+	</style>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#onupdate').click(function(e){
+			if(confirm('This may take several minutes, Are you sure to upgrade?')){
+				$('#updating').html('<img src="{TPL_PATH}images/loading.gif"> Updating... ');
+			}else{
+				e.preventDefault();
+				return;
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+<div class="box center">
+	{foreach $update_files as $v=>$files}
+		<h1>Version {$v} &nbsp; <span>The files will backup to <i>{$backup_dir}/{$update_time[$v]}</i></span></h1>
+		{if $files}
+		<div class="box update_box">
+			Update files
+			<div class="update">
+			{foreach $files as $f}
+				{$f}<br/>
+			{/foreach}
+			</div>
+		</div>
+		{/if}
+		{if $update_sqls[$v]}
+		<div class="box update_box">
+			Database updates
+			<div class="update">
+			{$update_sqls[$v]}
+			</div>
+		</div>
+		{/if}
+		<div class="clear"></div>
+	{/foreach}
+</div>
+<div style="margin:0 auto;">
+<span id="updating"></span><a href="{:url('upgrade/update')}" id="onupdate" class="aborder">Upgrade Now</a>
+</div>
+</body>
+</html>

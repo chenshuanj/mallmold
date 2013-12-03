@@ -1,0 +1,52 @@
+<input id="t_type" type="hidden" value="{$type}">
+<input id="t_key" type="hidden" value="{$key}">
+<table width="100%" class="r_table" id="t_table">
+  {foreach $data as $l}
+  <tr>
+    <th valign="top">{$l['name']}:</th>
+	<td class="tleft">
+		<textarea id="t_v_{$l['code']}" name="{$l['code']}" cols="48" rows="2">{$l['value']}</textarea> 
+	</td>
+  </tr>
+  {/foreach}
+</table>
+<div style="text-align:center;">
+<script type="text/javascript">
+	var t_type = $("#t_type").val();
+	var t_key = $("#t_key").val();
+	{foreach $data as $l}
+	var t_{$l['code']} = '';
+	{/foreach}
+	$('#t_save').click(function(){
+		$('#t_loading').show();
+		{foreach $data as $l}
+		t_{$l['code']} = $("#t_v_{$l['code']}").val();
+		{/foreach}
+		$.ajax({ 
+			type:"post",
+			url:'{:url('dictionary/ajaxsave')}',   
+			dataType:"html",
+			data:{
+				{foreach $data as $l}
+				{$l['code']}: t_{$l['code']},
+				{/foreach}
+				type: t_type,
+				key: t_key
+			},
+			success:function(res)
+			{
+				$('#t_loading').hide();
+				if(res == '1'){
+					alert('update success');
+					t_obj.val(t_{$lang});
+					$('#t_box').hide();
+				}else{
+					alert('update failed');
+				}
+			}
+		});
+	});
+</script>
+	<span id="t_loading" style="display:none;"><img src="{TPL_PATH}images/loading.gif"></span>
+	<input id="t_save" class="aborder" type="button" name="submit" value="{L:save}">
+</div>

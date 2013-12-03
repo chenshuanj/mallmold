@@ -22,20 +22,23 @@ class pageAction extends commonAction
 	{
 		$page_id = $this->model('urlkey')->getid('page_id');
 		if(!$page_id){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
 		$page = $this->model('mdata')->table('pages')->where("id=$page_id")->get();
 		if(!$page){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
 		//parse tag
 		$page['content'] = $this->parse($page['content']);
 		
-		$this->view['html_title'] = $page['title'];
+		$this->view['html_title'] = $page['meta_title'] ? $page['meta_title'] : $page['title'];
+		$this->view['meta_description'] = $page['meta_description'];
+		$this->view['meta_keywords'] = $page['meta_keywords'];
+		
 		//$this->view['map'] = array(array('title' => $page['title']));
 		$this->view['page'] = $page;
 		$this->view('page/index.html');
@@ -59,7 +62,7 @@ class pageAction extends commonAction
 		if(!$tag)
 			return null;
 		
-		preg_match_all('/\s(.+?)="(.+?)"/is', ' '.$tag, $rs);
+		preg_match_all('/\s(.+?)="(|.+?)"/is', ' '.$tag, $rs);
 		$args = array();
 		foreach($rs[1] as $k=>$v){
 			$v = trim($v);

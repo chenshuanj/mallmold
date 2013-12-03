@@ -14,9 +14,9 @@
 			{foreach $list as $v}
 			<tr>
 				<td>
-					<div class="cart_img"><img src="{$v['goods']['image']}"></div>
+					<div class="cart_img"><a href="{:url($v['goods']['url'])}"><img src="{$v['goods']['image']}"></a></div>
 					<div class="cart_goods">
-						<div class="goods_title"><a href="{:url('goods/index?goods_id='.$v['goods_id'])}">{$v['goods']['title']}</a></div>
+						<div class="goods_title"><a href="{:url($v['goods']['url'])}">{$v['goods']['title']}</a></div>
 						<div class="goods_option">
 						{if $v['options_name']}
 							{foreach $v['options_name'] as $option}

@@ -1,0 +1,64 @@
+{include header.html}
+<div class="box">
+	{include map.html}
+	<div class="login">
+		<div class="form">
+			<form method="post" action="{:url('helpdesk/post')}">
+			<input type="hidden" name="back_url" value="{$back_url}">
+			<table>
+				<tr>
+				<th>{L:First Name}:</th>
+				<td><input type="text" name="firstname" value="{$firstname}"> *</td>
+				</tr>
+				<tr>
+				<th>{L:Last Name}:</th>
+				<td><input type="text" name="lastname" value="{$lastname}"> *</td>
+				</tr>
+				<tr>
+				<th>{L:Email}:</th>
+				<td><input type="text" name="email" value="{$email}"> *</td>
+				</tr>
+				<tr>
+				<th>{L:Phone}:</th>
+				<td><input type="text" name="phone" value=""></td>
+				</tr>
+				<tr>
+				<th>{L:Department}:</th>
+				<td>
+				<select name="department_id">
+					{foreach $departments as $v}
+					<option value="{$v['id']}">{$v['name']}</option>
+					{/foreach}
+				</select>
+				</td>
+				</tr>
+				<tr>
+				<th>{L:Priority}:</th>
+				<td>
+				<select name="priority">
+					<option value="1">1</option>
+					<option value="2" selected>2</option>
+					<option value="3">3</option>
+				</select>
+				</td>
+				</tr>
+				<tr>
+				<th>{L:Title}:</th>
+				<td><input type="text" name="title" value="" style="width:240px"> *</td>
+				</tr>
+				<tr>
+				<th valign="top">{L:Message}:</th>
+				<td><textarea cols="40" rows="3" name="message"></textarea> *</td>
+				</tr>
+				
+				<tr>
+				<th></th>
+				<td><input type="submit" class="abutton" name="submit" value="{L:Submit}"></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+{include footer.html}

@@ -18,6 +18,7 @@
 	<ul id="leftmenu">
 		<li class="l_hover" onclick="m(0)">{L:general}</li>
 		<li style="border-top:none" onclick="m(1)">{L:picinfo}</li>
+		<li style="border-top:none" onclick="m(2)">{L:seo_mata}</li>
 	</ul>
 </div>
 <div class="m_right">
@@ -64,6 +65,34 @@
     <th valign="top" width="10%">{L:picture}:</th>
 	<td class="tleft">
 		{include editor/upload_button.html}
+	</td>
+  </tr>
+</table>
+
+<table width="100%" class="r_table" id="c_2" style="display:none">
+  <tr>
+    <th>{L:meta_title}:</th>
+	<td class="tleft"><input name="meta_title_key_" type="hidden" value="{$data['meta_title_key_']}">
+	<input class="len2" name="meta_title" type="text" value="{$data['meta_title']}">
+	{if $data['meta_title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['meta_title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+	{/if} 
+	</td>
+  </tr>
+  <tr>
+    <th width="180" valign="top">{L:meta_keywords}:</th>
+	<td class="tleft">
+		<input name="meta_keywords_txtkey_" type="hidden" value="{$data['meta_keywords_txtkey_']}">
+		<textarea rows="4" cols="48" name="meta_keywords">{$data['meta_keywords']}</textarea>
+	</td>
+  </tr>
+  <tr>
+    <th width="180" valign="top">{L:meta_description}:</th>
+	<td class="tleft">
+		<input name="meta_description_txtkey_" type="hidden" value="{$data['meta_description_txtkey_']}">
+		<textarea rows="4" cols="48" name="meta_description">{$data['meta_description']}</textarea>
 	</td>
   </tr>
 </table>

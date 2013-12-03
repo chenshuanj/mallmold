@@ -1,0 +1,27 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('helpdesk/index')}">{L:helpdesk}</a> > {L:Quick Responses}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:title}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $response as $v}
+  <tr>
+	<td class="pleft">{$v['title']}</td>
+	<td>
+		<a href="{:url('helpdesk/response_edit?id='.$v['id'])}">{L:edit}</a> 
+		<a href="{:url('helpdesk/response_delete?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="2">
+  <div class="d_bottom">
+	<a class="aborder" href="{:url('helpdesk/response_edit')}">{L:add}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

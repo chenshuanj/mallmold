@@ -149,5 +149,13 @@ return array (
   'Billing address' => '账单地址',
   'View order' => '查看订单',
   'Forgot your password?' => '忘记密码？',
+  'Contact Us' => '联系我们',
+  'Department' => '类别',
+  'Priority' => '优先级',
+  'Title' => '标题',
+  'Message' => '信息',
+  'Please fill in the required fields' => '请填写必填选项',
+  'Your form has been submitted, we will contact you soon!' => '您的表单已提交，我们将马上联系您！',
+  'Submit failed' => '提交失败',
 )
 ?>

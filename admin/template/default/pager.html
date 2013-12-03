@@ -2,6 +2,7 @@
 	<div class="pager">
 	{L:total_num, $pager[total]}
 	{if $pager['pre']}<a href="{$pager['url']}{$pager['pre']}">{L:prepage}</a>{/if}
+	{if $pager['first']}<a href="{$pager['url']}{$pager['first']}">1</a>{/if}
 	{if $pager['pages']>1}<span>{$pager['page']}</span>{/if}
 	{if $pager['list']}
 		{foreach $pager['list'] as $p}

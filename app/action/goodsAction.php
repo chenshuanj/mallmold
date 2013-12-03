@@ -22,13 +22,13 @@ class goodsAction extends commonAction
 	{
 		$goods_id = $this->model('urlkey')->getid('goods_id');
 		if(!$goods_id){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
 		$goods = $this->model('goods')->get($goods_id);
 		if(!$goods){
-			$this->error('404 not found');
+			$this->_404();
 			return;
 		}
 		
@@ -36,13 +36,16 @@ class goodsAction extends commonAction
 		$this->model('statistic')->add($goods_id, 'click');
 		
 		//images type
-		$this->view['img_sign'] = $this->model('image')->getsignbyid($this->setting['goods_view_sid']);
-		$this->view['show_sign'] = $this->model('image')->getsignbyid($this->setting['goods_imgs_small_sid']);
-		$this->view['show_sign_big'] = $this->model('image')->getsignbyid($this->setting['goods_imgs_big_sid']);
+		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_view_sid');
+		$this->view['show_sign'] = $this->model('image')->getsignbyid('goods_imgs_small_sid');
+		$this->view['show_sign_big'] = $this->model('image')->getsignbyid('goods_imgs_big_sid');
+		
+		//cross sell
+		$this->view['cross_sell'] = $this->model('goods')->get_cross_sell($goods_id);
 		
 		//comment
-		$goods['score'] = $this->model('comment')->get_score($goods_id);
 		$this->view['comments'] = $this->model('comment')->get_comments($goods_id);
+		$this->view['comments_num'] = count($this->view['comments']);
 		$this->view['summarys'] = $this->model('comment')->get_summarys($goods['group_id']);
 		$this->view['goods'] = $goods;
 		$this->view['catelist'] = $this->model('catalog')->get_catelist(0);
@@ -79,8 +82,8 @@ class goodsAction extends commonAction
 		
 		$score = $_POST['score'];
 		$summarys = array();
-		$group_id = $this->db->table('goods')->where("goods_id=$goods_id")->getval('group_id');
-		$summarys_list = $this->model('comment')->get_summarys($group_id);
+		$goods = $this->db->table('goods')->where("goods_id=$goods_id")->get();
+		$summarys_list = $this->model('comment')->get_summarys($goods['group_id']);
 		foreach($summarys_list as $v){
 			$id = $v['id'];
 			if($score[$id]){
@@ -93,9 +96,23 @@ class goodsAction extends commonAction
 			$this->error();
 			return;
 		}else{
+			$url = $this->model('urlkey')->geturl('goods_id', $goods['goods_id'], $goods['urlkey']);
+			
 			//$this->ok();
-			header('Location: '.url('goods/index?goods_id='.$goods_id));
+			header('Location: '.url($url));
 		}
+	}
+	
+	public function ajax_get_comment()
+	{
+		$goods_id = intval($_POST['goods_id']);
+		$page = $_POST['page'] ? intval($_POST['page']) : 2;
+		$list_num = $this->model('comment')->list_num;
+		$limit = ($page - 1)*$list_num .','.$list_num;
+		
+		$this->view['comments'] = $this->model('comment')->get_comments($goods_id, $limit);
+		$content = $this->view('goods/comments.html', 0);
+		echo $content ? $content : 0;
 	}
 }
 

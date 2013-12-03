@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{$title}</title>
+	<link rel="stylesheet" href="{TPL_PATH}images/style.css">
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+<style>
+	.l_table,.l_table tr, .l_table td{
+		border_ship:1px solid #fff;
+		line-height:24px;
+	}
+	.l_table th{
+		border_ship-top:1px solid #fff;
+		border_ship-left:1px solid #fff;
+		border_ship-right:1px solid #fff;
+	}
+	#amount th{text-align:right}
+	#amount td{padding-left:10px;}
+	.order h4{margin:0 0;padding:0 0}
+</style>
+<div class="main">
+<div class="order" style="margin:0 auto;">
+<div class="order_ship">
+<h3>{L:invoice_id}: #{$order['invoice']}</h3>
+<h4>{L:order_sn}: {$order['order_sn']} ({$order_status[$order['status']]})</h4>
+<h4>{L:order_time}: {$order['time']}</h4>
+<h4>{L:payment_method}: {$order['payment_method']}</h4>
+<h4>{L:shipping_method}: {$order['shipping_method']}</h4>
+<hr/>
+<table width="100%">
+	<tr>
+		<th width="50%">{L:billing_address}</th>
+		<th width="50%">{L:shipping_address}</th>
+	</tr>
+	<tr>
+		<td valign="top">
+		{$order['address']['firstname']} {$order['address']['lastname']}<br/>
+		{$order['address']['phone']} 
+		{$order['address']['address']} 
+		{$order['address']['postcode']}<br/>
+		{$order['address']['state']} {$order['address']['country']}
+		</td>
+		<td valign="top">
+		{$order['billing_address']['firstname']} {$order['billing_address']['lastname']}<br/>
+		{$order['billing_address']['phone']}<br/>
+		{$order['billing_address']['address']} <br/>
+		{if $order['billing_address']['address2']} {$order['billing_address']['address2']}<br/>{/if}
+		{$order['billing_address']['postcode']} {$order['billing_address']['state']} {$order['billing_address']['country']}
+		</td>
+	</tr>
+</table>
+
+<h4>{L:order_goods}</h4>
+<table width="100%" class="l_table">
+			<tr>
+				<th>SKU</th>
+				<th>{L:product_name}</th>
+				<th>{L:options}</th>
+				<th>{L:quantity}</th>
+				<th>{L:subtotal}</th>
+			</tr>
+			{foreach $order['goods'] as $v}
+			<tr>
+				<td>{$v['goods_sku']}</td>
+				<td>{$v['goods_name']}</td>
+				<td>
+				{eval $options = json_decode($v['options'], true);}
+				{if $options}
+				{foreach $options as $op}
+				<div>{$op['name']}:{$op['value']}</div>
+				{/foreach}
+				{/if}
+				</td>
+				<td>{$v['quantity']}</td>
+				<td>{$order['symbol']}{$v['subtotal']}</td>
+			</tr>
+			{/foreach}
+</table>
+<br/>
+<table width="100%" id="amount">
+			<tr>
+				<th width="90%">{L:goods_amount}:</th>
+				<td>{$order['symbol']}{$order['goods_amount']}</td>
+			</tr>
+			<tr>
+				<th>{L:tax_fee}:</th>
+				<td>{$order['symbol']}{$order['tax_fee']}</td>
+			</tr>
+			<tr>
+				<th>{L:shipping_fee}:</th>
+				<td>{$order['symbol']}{$order['shipping_fee']}</td>
+			</tr>
+			<tr>
+				<th>{L:total_amount}:</th>
+				<td>{$order['symbol']}{$order['total_amount']}</td>
+			</tr>
+		</table>
+<h4></h4>
+
+
+</div>
+</div>
+</div>
+{include comm_footer.html}

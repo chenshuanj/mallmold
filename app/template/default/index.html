@@ -6,7 +6,7 @@
 		<div class="list">
 			<ul>
 				{foreach $hot_goods as $k=>$v}
-				<li{if ($k+1)%5== 0} class="last"{/if}><a href="{:url('goods/index?goods_id='.$v['goods_id'])}" title="{$v['title']}"><img src="{$v['image'][$img_sign]}"/></a></li>
+				<li{if ($k+1)%5== 0} class="last"{/if}><a href="{:url($v['url'])}" title="{$v['title']}"><img src="{$v['image'][$img_sign]}"/></a></li>
 				{/foreach}
 			</ul>
 		</div>
@@ -17,7 +17,7 @@
 		<div class="list">
 			<ul>
 				{foreach $new_goods as $k=>$v}
-				<li{if ($k+1)%5 == 0} class="last"{/if}><a href="{:url('goods/index?goods_id='.$v['goods_id'])}" title="{$v['title']}"><img src="{$v['image'][$img_sign]}"/></a></li>
+				<li{if ($k+1)%5 == 0} class="last"{/if}><a href="{:url($v['url'])}" title="{$v['title']}"><img src="{$v['image'][$img_sign]}"/></a></li>
 				{/foreach}
 			</ul>
 		</div>

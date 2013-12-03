@@ -8,18 +8,11 @@ $(document).ready(function(){
 		success:function(res)
 		{
 			if(res && res != '0'){
-				$('#upgrade').html('You can update to Mallmold '+ res +' <a id="update" href="{:url('upgrade/index')}">Click to upgrade</a>. (<a target="_blank" href="http://www.mallmold.com/article/mallmold-upgrade-process">help</a>)');
+				$('#upgrade').html('You can update to Mallmold '+ res +' <a href="{:url('upgrade/index')}">Click to upgrade</a>');
 			}
 		}
 	});
-	$('#update').live('click', function(e){
-		if(confirm('This may take several minutes, Are you sure to upgrade?')){
-			$('#upgrade').html('<img src="{TPL_PATH}images/loading.gif"> Updating... ');
-		}else{
-			e.preventDefault();
-			return;
-		}
-	});
+	
 });
 </script>
 <style>
@@ -29,7 +22,7 @@ h3{margin:4px 0 2px 0;}
 .m_right .btop{line-height:18px;}
 </style>
 <div class="title"></div>
-	<div class="m_left" style="margin-top:8px;text-align:left;padding:4px 4px;height:440px;">
+	<div class="m_left" style="margin-top:8px;text-align:left;padding:4px 4px;height:440px;width:24%">
 		<table border="0" width="100%">
 			<tr>
 				<th width="55%">{L:server_time}:</th><td>{$data['time']}</td>
@@ -71,7 +64,7 @@ h3{margin:4px 0 2px 0;}
 		</table>
 	</div>
 	
-	<div class="m_right" style="width:680px;border:none;text-align:left;padding:4px 4px">
+	<div class="m_right" style="width:70%;border:none;text-align:left;padding:4px 4px">
 		<h3>{L:click} - Top 5</h3>
 		<table border="0" width="100%">
 			{foreach $clicklist as $v}

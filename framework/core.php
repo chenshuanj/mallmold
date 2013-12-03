@@ -37,12 +37,14 @@ function error_404($msg)
 	if(file_exists($script)){
 		require($script);
 		$run = new errorAction();
-		if(method_exists($run, '_404')){
-			$run->_404();
+		if(method_exists($run, '__404')){
+			$run->__404();
 		}else{
+			header("HTTP/1.1 404 Not Found");
 			error($msg);
 		}
 	}else{
+		header("HTTP/1.1 404 Not Found");
 		error($msg);
 	}
 }
@@ -54,11 +56,11 @@ function loadclass($class, $path, $args=null)
 	if (isset($_classes[$class])){
 		return $_classes[$class];
 	}else{
-		$script = ($path ? $path.'/' : '').$class.'.php';
-		if(!file_exists(APP_PATH .$script)){
-			error('Can not find the file '. APP_PATH .$script.'.php');
+		$script = ($path ? '/'.$path.'/' : '').$class.'.php';
+		if(!file_exists(BASE_PATH .$script)){
+			error('Can not find the file '. BASE_PATH .$script.'.php');
 		}else{
-			require(APP_PATH .$script);
+			require(BASE_PATH .$script);
 			if (class_exists($class) === FALSE){
 				error('Can not find the class '.$class.' in the file '.$script.'.php');
 			}else{
@@ -117,16 +119,28 @@ function lang($word)
 function router($router)
 {
 	if(isset($router['type']) && $router['type'] > 0){
-		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
-		if(strpos($path, '?') > 0){
-			$uri = explode('?', $path);
-			$path = $uri[0];
-		}
-		$request = explode('/', $path);
-		$_GET['c'] = $request[1];
-		$_GET['a'] = $request[2];
-		for($i=3; $i<count($request); $i++){
-			$_GET[$request[$i]] = $request[++$i];
+		$path = preg_replace("'^".PHP_PATH."'", '', $_SERVER['REQUEST_URI']);
+		$path = preg_replace("'^".PHP_NAME."'", '', $path);
+		if($path){
+			if(strpos($path, '?') !== false){
+				$uri = explode('?', $path);
+				$path = $uri[0];
+				if($uri[1]){
+					parse_str($uri[1], $para);
+					$_GET = array_merge($_GET, $para);
+				}
+			}
+			if($path){
+				if($path[0] == '/'){
+					$path = substr($path, 1);
+				}
+				$request = explode('/', $path);
+				$_GET['c'] = $request[0];
+				$_GET['a'] = $request[1];
+				for($i=2; $i<count($request); $i++){
+					$_GET[$request[$i]] = $request[++$i];
+				}
+			}
 		}
 	}
 	
@@ -216,7 +230,7 @@ class core
 	
 	public function model($name)
     {
-		return loadclass($name, 'model');
+		return loadclass($name, APP_NAME.'/model');
 	}
 	
 	public function load($file, $args=null)
@@ -284,13 +298,12 @@ class action extends core
     {
 		if(!$this->tpl){
 			require(CORE_PATH .'/template.php');
-			$script_path = str_replace('\\', '/', pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME));
-			$this->tpl = new template();
 			
+			$this->tpl = new template();
 			$this->tpl->tpl_dir = APP_PATH .'template/';
 			$this->tpl->tpl_default = 'default';
 			$this->tpl->tpl_name = $this->tpl_name;
-			$this->tpl->tpl_path = $script_path.APP_NAME.'/template/'.$this->tpl_name.'/';
+			$this->tpl->tpl_path = PHP_PATH.APP_NAME.'/template/'.$this->tpl_name.'/';
 			$this->tpl->cache_path = APP_PATH .'cache/template/';
 			$this->config['TPL_CACHE'] && $this->tpl->cache = 1;
 		}

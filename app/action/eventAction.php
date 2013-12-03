@@ -22,7 +22,7 @@ class eventAction extends action
 		
 		ignore_user_abort(true);
 		set_time_limit(0);
-		require(APP_PATH .'lib/common.php');
+		require(APP_PATH .'model/functions.php');
 	}
 	
 	public function index()
@@ -125,6 +125,19 @@ class eventAction extends action
 					$res = $this->model('notice')->mail($coupon['email'], $mail['title'], $content);
 					if($res){
 						$this->db->table('coupon')->where("id=$gift_id")->update(array('send'=>1));
+					}
+				}
+				break;
+			case 'helpdesk.post':
+				$id = intval($e['id']);
+				if($id > 0){
+					$mail = $this->model('helpdesk')->email_tpl($id);
+					$emails = explode(',', $setting['admin_helpdesk_notice_email']);
+					foreach($emails as $email){
+						$email = trim($email);
+						if($email){
+							$this->model('notice')->mail($email, $mail['title'], $mail['content']);
+						}
 					}
 				}
 				break;

@@ -2,31 +2,7 @@
 <div class="box">
 	{include map.html}
 	<div class="fleft" id="left">
-		<h3>{L:Category}</h3>
-		<ul>
-		{foreach $catalogs as $v}
-		<li><a href="{:url($v['url'])}"{if $v['id']==$id} class="hover"{/if}>{$v['name']}</a></li>
-			{if $v['childnum']>0}
-				{foreach $v['child'] as $val}
-				<li>
-				<a href="{:url($val['url'])}" class="child {if $val['id']==$id} hover{/if}">
-				&nbsp;&nbsp;&nbsp;&nbsp;{$val['name']}
-				</a>
-				</li>
-					{if $val['childnum']>0}
-						{foreach $val['child'] as $val2}
-						<li>
-						<a href="{:url($val2['url'])}" class="child {if $val2['id']==$id} hover{/if}">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$val2['name']}
-						</a>
-						</li>
-						{/foreach}
-					{/if}
-				{/foreach}
-			{/if}
-		{/foreach}
-		</ul>
-		
+		{include catalog/catalogs.html}
 	</div>
 	<div class="fright" id="right">
 		<div class="attr">
@@ -51,17 +27,18 @@
 		</div>
 		<div class="page_top">{include pager.html}</div>
 		<div class="list">
-			{foreach $list as $v}
+			{foreach $list as $goods}
 			<div class="goods">
 				<div class="fleft img">
-				<a href="{:url($v['url'])}"><img src="{$v['image'][$img_sign]}"/></a>
+				<a href="{:url($goods['url'])}"><img src="{$goods['image'][$img_sign]}"/></a>
 				</div>
 				<div class="fright detail">
-				<p class="name"><a href="{:url($v['url'])}">{$v['title']}</a></p>
-				<p>{L:Origin price}: <del>{$v['price_origin']}</del></p>
-				<p>{L:Special price}: {$v['price']}</p>
-				<p>{$v['brief']}</p>
-				<p><a class="abutton" href="{:url($v['url'])}">{L:Show details}</a></p>
+				<p class="name"><a href="{:url($goods['url'])}">{$goods['title']}</a></p>
+				{include goods/rating.html}
+				<p>{L:Origin price}: <del>{$goods['price_origin']}</del></p>
+				<p>{L:Special price}: {$goods['price']}</p>
+				<p>{$goods['brief']}</p>
+				<p><a class="abutton" href="{:url($goods['url'])}">{L:Show details}</a></p>
 				</div>
 				<div class="clear"></div>
 			</div>

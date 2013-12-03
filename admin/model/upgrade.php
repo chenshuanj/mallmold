@@ -16,14 +16,15 @@
 
 class upgrade extends model
 {
-	private $backup_dir = '/backup';
+	public $backup_dir = '/backup';
 	private $server = 'http://www.mallmold.com/upgrade/';
 	public $versions = array();
 	public $local_version = 0;
+	public $error = array();
 	
 	public function get_update()
 	{
-		$file = BASE_PATH .'/'.APP_NAME.'/version.php';
+		$file = BASE_PATH .'/version.php';
 		if(!file_exists($file)){
 			return 0;
 		}
@@ -68,6 +69,7 @@ class upgrade extends model
 		$url = $this->server.'upgrade.php?type=database&version='.$version;
 		$str = $this->load('lib/http')->http_file_get($url);
 		if(!$str || $str == 'Error'){
+			$this->error[] = array('version'=>$version, 'file'=>'database', 'url'=>$url);
 			return null;
 		}else{
 			return $str;
@@ -137,6 +139,11 @@ class upgrade extends model
 	{
 		$path = BASE_PATH .'/'.$file;
 		$str = $this->getfile($version, $file);
+		if(!$str){
+			$url = $this->server.'upgrade.php?type=getfile&version='.$version.'&file='.$file;
+			$this->error[] = array('version'=>$version, 'file'=>$file, 'url'=>$url);
+			$str = 'Error: Please visit '.$url.' to get this file content';
+		}
 		return file_put_contents($path, $str);
 	}
 	

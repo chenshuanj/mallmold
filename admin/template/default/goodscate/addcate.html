@@ -53,10 +53,10 @@
 		<select name="pid">
 			<option value="0">{L:root_cate}</option>
 			{foreach $catelist as $v}
-			<option value="{$v['id']}">{$v['name']}</option>
+			<option value="{$v['id']}"{if $v['id']==$data['pid']} selected{/if}>{$v['name']}</option>
 				{if $v['childnum']>0}
 					{foreach $v['child'] as $val}
-						<option value="{$val['id']}">&nbsp;&nbsp;|-{$val['name']}</option>
+						<option value="{$val['id']}"{if $val['id']==$data['pid']} selected{/if}>&nbsp;&nbsp;|-{$val['name']}</option>
 					{/foreach}
 				{/if}
 			{/foreach}

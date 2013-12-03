@@ -147,5 +147,13 @@ return array (
   'Billing address' => 'Billing address',
   'View order' => 'View order',
   'Forgot your password?' => 'Forgot your password?',
+  'Contact Us' => 'Contact Us',
+  'Department' => 'Department',
+  'Priority' => 'Priority',
+  'Title' => 'Title',
+  'Message' => 'Message',
+  'Please fill in the required fields' => 'Please fill in the required fields',
+  'Your form has been submitted, we will contact you soon!' => 'Your form has been submitted, we will contact you soon!',
+  'Submit failed' => 'Submit failed',
 )
 ?>

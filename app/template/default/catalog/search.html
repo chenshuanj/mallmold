@@ -20,28 +20,24 @@
 			{/if}
 		{/foreach}
 		
-		<h3>Category</h3>
-		<ul>
-		{foreach $catelist as $v}
-		<li><a href="{:url('catalog/index?id='.$v['id'])}">{$v['name']}</a></li>
-		{/foreach}
-		</ul>
+		{include catalog/catalogs.html}
 	</div>
 	<div class="fright" id="right">
 		<h3>{L:Search}: {$html_title}</h3>
 		<div class="page_top">{include pager.html}</div>
 		<div class="list">
-			{foreach $list as $v}
+			{foreach $list as $goods}
 			<div class="goods">
 				<div class="fleft img">
-				<a href="{:url('goods/index?goods_id='.$v['goods_id'])}"><img src="{$v['image'][$img_sign]}"/></a>
+				<a href="{:url($goods['url'])}"><img src="{$goods['image'][$img_sign]}"/></a>
 				</div>
 				<div class="fright detail">
-				<p class="name"><a href="{:url($v['url'])}">{$v['title']}</a></p>
-				<p>{L:Origin price}: <del>{$v['price_origin']}</del></p>
-				<p>{L:Special price}: {$v['price']}</p>
-				<p>{$v['brief']}</p>
-				<p><a class="abutton" href="{:url('goods/index?goods_id='.$v['goods_id'])}">{L:Show details}</a></p>
+				<p class="name"><a href="{:url($goods['url'])}">{$goods['title']}</a></p>
+				{include goods/rating.html}
+				<p>{L:Origin price}: <del>{$goods['price_origin']}</del></p>
+				<p>{L:Special price}: {$goods['price']}</p>
+				<p>{$goods['brief']}</p>
+				<p><a class="abutton" href="{:url($goods['url'])}">{L:Show details}</a></p>
 				</div>
 				<div class="clear"></div>
 			</div>

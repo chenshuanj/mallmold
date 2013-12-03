@@ -22,8 +22,8 @@
   </tr>
   {foreach $list as $v}
   <tr>
-	<td>{$v['username']}</td>
-	<td style="text-align:left" width="45%">{$v['content']}</td>
+	<td class="pleft">{$v['username']}</td>
+	<td class="pleft" width="45%">{$v['content']}</td>
 	<td>{$v['score']}</td>
 	<td>{$v['time']}</td>
 	<td>{if $v['status']==1}{L:yes}{else}{L:no}{/if}</td>

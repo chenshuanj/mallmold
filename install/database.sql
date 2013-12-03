@@ -1,6 +1,4 @@
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}admin` (
   `id` tinyint(2) NOT NULL auto_increment,
   `group_id` int(2) NOT NULL,
@@ -9,8 +7,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}admin` (
   `salt` char(2) default NULL,
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}article` (
   `article_id` int(10) NOT NULL auto_increment,
   `cate_id` int(4) NOT NULL,
@@ -23,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}article` (
   PRIMARY KEY  (`article_id`),
   KEY `cate_id` (`cate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}article_cate` (
   `cate_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -33,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}article_cate` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`cate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}attribute` (
   `attr_id` int(4) NOT NULL auto_increment,
   `code` varchar(32) NOT NULL,
@@ -44,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}attribute` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY  (`attr_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}attribute_value` (
   `av_id` int(8) NOT NULL auto_increment,
   `attr_id` int(4) NOT NULL,
@@ -52,14 +46,12 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}attribute_value` (
   `sort_order` int(8) NOT NULL default '0',
   PRIMARY KEY  (`av_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}block` (
   `id` int(4) NOT NULL auto_increment,
   `code` varchar(32) NOT NULL,
   `content_txtkey_` varchar(10) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}cart` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` int(10) NOT NULL default '0',
@@ -73,7 +65,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}cart` (
   PRIMARY KEY  (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}checkout` (
   `id` int(10) NOT NULL auto_increment,
   `address_id` int(10) NOT NULL default '0',
@@ -104,7 +95,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}checkout` (
   `time` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}comments` (
   `id` int(10) NOT NULL auto_increment,
   `goods_id` int(10) NOT NULL,
@@ -116,14 +106,12 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}comments` (
   PRIMARY KEY  (`id`),
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}comments_summary` (
   `comments_id` int(10) NOT NULL,
   `summary_id` int(2) NOT NULL,
   `score` int(11) NOT NULL,
   KEY `comments_id` (`comments_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}country` (
   `id` int(4) NOT NULL auto_increment,
   `code` char(2) NOT NULL,
@@ -133,10 +121,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}country` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}country` (`id`, `code`, `name`, `phone_code`, `time_zone`, `status`) VALUES
 (1, 'US', 'United States', '1', -8.0, 1);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}coupon` (
   `id` int(10) NOT NULL auto_increment,
   `code` char(12) NOT NULL,
@@ -151,7 +137,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}coupon` (
   `usetime` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}currency` (
   `id` int(2) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -163,18 +148,15 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}currency` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}currency` (`id`, `name_key_`, `code`, `rate`, `symbol`, `is_main`, `sort_order`, `status`) VALUES
 (1, 'k_1', 'USD', 1.0000, '$', 0, 1, 1);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict` (
   `id` int(10) NOT NULL auto_increment,
   `dict_key` char(10) NOT NULL,
   `dict_val_en` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `dict_key` (`dict_key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='dictionary' AUTO_INCREMENT=22 ;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='dictionary' AUTO_INCREMENT=24 ;
 INSERT INTO `{PREFIX}dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (1, 'k_1', 'U.S. dollar'),
 (2, 'k_2', 'Goods main image'),
@@ -196,13 +178,13 @@ INSERT INTO `{PREFIX}dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (18, 'k_26', 'Error Reporting'),
 (19, 'k_28', 'New order notification'),
 (20, 'k_30', 'Successful payment, thank patrons'),
-(21, 'k_32', 'You order has been refunded');
-
+(21, 'k_32', 'You order has been refunded'),
+(22, 'k_34', 'Home'),
+(23, 'k_36', 'Mallmold Ecommerce System');
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_keys` (
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
 INSERT INTO `{PREFIX}dict_keys` (`id`) VALUES
 (1),
 (2),
@@ -236,8 +218,12 @@ INSERT INTO `{PREFIX}dict_keys` (`id`) VALUES
 (30),
 (31),
 (32),
-(33);
-
+(33),
+(34),
+(35),
+(36),
+(37),
+(38);
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text` (
   `id` int(10) NOT NULL auto_increment,
   `text_key` char(10) NOT NULL,
@@ -245,15 +231,13 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text` (
   PRIMARY KEY  (`id`),
   KEY `test_key` (`text_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='text dictionary' AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text_en` (
   `id` int(10) NOT NULL auto_increment,
   `text_key` char(10) NOT NULL,
   `content` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `test_key` (`text_key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 INSERT INTO `{PREFIX}dict_text_en` (`id`, `text_key`, `content`) VALUES
 (1, 'k_11', 'Mallmold'),
 (2, 'k_13', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been shiped.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Shipping method: {$order[''shipping_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Payment method: {$order[''payment_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Shipping address:&nbsp; {$order[''shipping_address''][''firstname'']} {$order[''shipping_address''][''lastname'']} <br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''postcode'']} {$order[''shipping_address''][''address'']}{$order[''shipping_address''][''address2'']}<br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''city'']} {$order[''shipping_address''][''state'']} {$order[''shipping_address''][''country'']}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\n&nbsp;&nbsp; &nbsp;Order goods:<br />\r\n&nbsp;&nbsp; &nbsp;{foreach $order[''goods''] as $order}<br />\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{$goods[''goods_name'']} {$goods[''price'']} {$goods[''quantity'']} {$goods[''subtotal'']}<br />\r\n&nbsp;&nbsp; &nbsp;{/foreach}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
@@ -266,8 +250,10 @@ INSERT INTO `{PREFIX}dict_text_en` (`id`, `text_key`, `content`) VALUES
 (9, 'k_27', '<table cellpadding="2" cellspacing="0" border="1">\r\n	<tbody>\r\n		<tr>\r\n			<td>\r\n				Model:<br />\r\n			</td>\r\n			<td>\r\n				{$report[''type'']}<br />\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Message<br />\r\n			</td>\r\n			<td>\r\n				{$report[''message'']}<br />\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				URL:<br />\r\n			</td>\r\n			<td>\r\n				{$report[''uri'']}<br />\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Time:<br />\r\n			</td>\r\n			<td>\r\n				{$report[''time'']}\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>'),
 (10, 'k_29', '<table cellpadding="2" cellspacing="0" border="1">\r\n	<tbody>\r\n		<tr>\r\n			<td>\r\n				OrderID:\r\n			</td>\r\n			<td>\r\n				{$order[''order_sn'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods amount:\r\n			</td>\r\n			<td>\r\n				{$order[''goods_amount'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_fee'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Tax:\r\n			</td>\r\n			<td>\r\n				{$order[''tax_fee'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Grand total:\r\n			</td>\r\n			<td>\r\n				{$order[''total_amount'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Order time:\r\n			</td>\r\n			<td>\r\n				{$order[''time'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Currency:\r\n			</td>\r\n			<td>\r\n				{$order[''currency'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Currency symbol:\r\n			</td>\r\n			<td>\r\n				{$order[''symbol'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping method:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_method'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Payment method:\r\n			</td>\r\n			<td>\r\n				{$order[''payment_method'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping country:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''country'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping state:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''state'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping firstname:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''firstname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping lastname:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''lastname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping city:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''city'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping address:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''address'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping address2:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''address2'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping ZIP:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''postcode'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Shipping phone:\r\n			</td>\r\n			<td>\r\n				{$order[''shipping_address''][''phone'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing country:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''country'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing state:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''state'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing firstname:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''firstname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing lastname:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''lastname'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing city:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''city'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing address:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''address'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing address2:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''address2'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing ZIP:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''postcode'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Billing phone:\r\n			</td>\r\n			<td>\r\n				{$order[''billing_address''][''phone'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Order goods(array):\r\n			</td>\r\n			<td>\r\n				{$order[''goods'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods name:\r\n			</td>\r\n			<td>\r\n				{$goods[''goods_name'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods options:\r\n			</td>\r\n			<td>\r\n				{$goods[''options'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods price:\r\n			</td>\r\n			<td>\r\n				{$goods[''price'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods quantity:\r\n			</td>\r\n			<td>\r\n				{$goods[''quantity'']}\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n				Goods subtotal:\r\n			</td>\r\n			<td>\r\n				{$goods[''subtotal'']}\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>'),
 (11, 'k_31', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been paid Successful.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Shipping method: {$order[''shipping_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Payment method: {$order[''payment_method'']}<br />\r\n&nbsp;&nbsp; &nbsp;Shipping address:&nbsp; {$order[''shipping_address''][''firstname'']} {$order[''shipping_address''][''lastname'']} <br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''postcode'']} {$order[''shipping_address''][''address'']}{$order[''shipping_address''][''address2'']}<br />\r\n&nbsp;&nbsp; &nbsp;{$order[''shipping_address''][''city'']} {$order[''shipping_address''][''state'']} {$order[''shipping_address''][''country'']}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\n&nbsp;&nbsp; &nbsp;Order goods:<br />\r\n&nbsp;&nbsp; &nbsp;{foreach $order[''goods''] as $order}<br />\r\n&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;{$goods[''goods_name'']} {$goods[''price'']} {$goods[''quantity'']} {$goods[''subtotal'']}<br />\r\n&nbsp;&nbsp; &nbsp;{/foreach}<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
-(12, 'k_33', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been refunded.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.');
-
+(12, 'k_33', 'Dear {$order[''shipping_address''][''firstname'']},<br />\r\n&nbsp;&nbsp;&nbsp; You order has been refunded.<br />\r\n&nbsp;&nbsp; &nbsp;Order ID: {$order[''order_sn'']}.<br />\r\n&nbsp;&nbsp; &nbsp;Order Total: {$order[''symbol'']}{$order[''total_amount'']}.<br />\r\n&nbsp;&nbsp; &nbsp;<br />\r\nKind Regards.'),
+(13, 'k_35', '{tag type="slider" id="index" tpl="tag/slider.html"}\r\n<div class="box mtop">\r\n	<div class="title">\r\n		New Goods\r\n	</div>\r\n{tag type="goods/list" where="" limit="5" order="addtime desc" tpl="tag/index_goods.html"}\r\n</div>\r\n<div class="box mtop">\r\n	<div class="title">\r\n		Hot Goods\r\n	</div>\r\n{tag type="goods/list" where="" limit="5" order="sold_num desc" tpl="tag/index_goods.html"}\r\n</div>'),
+(14, 'k_37', 'Mallmold, Ecommerce'),
+(15, 'k_38', 'Mallmold ecommerce system');
 CREATE TABLE IF NOT EXISTS `{PREFIX}discount` (
   `id` int(4) NOT NULL auto_increment,
   `title_key_` varchar(10) NOT NULL,
@@ -280,7 +266,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}discount` (
   `status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}discount_set` (
   `id` int(8) NOT NULL auto_increment,
   `discount_id` int(4) NOT NULL,
@@ -289,7 +274,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}discount_set` (
   `item_val` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}email_log` (
   `id` int(10) NOT NULL auto_increment,
   `email` varchar(32) NOT NULL,
@@ -300,7 +284,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}email_log` (
   `error` varchar(128) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}email_template` (
   `name` varchar(32) NOT NULL,
   `type` varchar(8) NOT NULL default 'backend',
@@ -309,7 +292,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}email_template` (
   `content_txtkey_` varchar(10) NOT NULL,
   KEY `name` (`name`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 INSERT INTO `{PREFIX}email_template` (`name`, `type`, `path`, `title_key_`, `content_txtkey_`) VALUES
 ('order_ship', 'backend', 'order_ship.html', 'k_12', 'k_13'),
 ('order_update', 'backend', 'order_update.html', 'k_14', 'k_15'),
@@ -322,7 +304,6 @@ INSERT INTO `{PREFIX}email_template` (`name`, `type`, `path`, `title_key_`, `con
 ('new_order_admin', 'frontend', 'new_order_admin.html', 'k_28', 'k_29'),
 ('order_pay', 'frontend', 'order_pay.html', 'k_30', 'k_31'),
 ('order_refund', 'backend', 'order_refund.html', 'k_32', 'k_33');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}error_report` (
   `id` int(10) NOT NULL auto_increment,
   `type` varchar(16) NOT NULL,
@@ -332,7 +313,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}error_report` (
   `status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}extend` (
   `extend_id` int(4) NOT NULL auto_increment,
   `code` varchar(32) NOT NULL,
@@ -342,7 +322,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}extend` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`extend_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}extend_val` (
   `id` int(6) NOT NULL auto_increment,
   `extend_id` int(4) NOT NULL,
@@ -351,7 +330,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}extend_val` (
   PRIMARY KEY  (`id`),
   KEY `extend_id` (`extend_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods` (
   `goods_id` int(8) NOT NULL auto_increment,
   `group_id` int(4) NOT NULL default '0',
@@ -376,14 +354,12 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_attr` (
   `goods_id` int(8) NOT NULL,
   `attr_id` int(4) NOT NULL,
   `av_id` int(8) NOT NULL,
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_cate` (
   `id` int(4) NOT NULL auto_increment,
   `pid` int(4) NOT NULL default '0',
@@ -397,27 +373,28 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods_cate` (
   `sort_order` int(4) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_cate_val` (
   `goods_id` int(8) NOT NULL,
   `cate_id` int(4) NOT NULL,
   KEY `goods_id` (`goods_id`,`cate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+CREATE TABLE IF NOT EXISTS `{PREFIX}goods_crosssell` (
+  `goods_id` int(8) NOT NULL,
+  `relate_ids` varchar(128) default NULL,
+  KEY `goods_id` (`goods_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_extend` (
   `goods_id` int(8) NOT NULL,
   `extend_id` int(4) NOT NULL,
   `val` varchar(128) NOT NULL,
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_image` (
   `id` int(10) NOT NULL auto_increment,
   `goods_id` int(8) NOT NULL,
   `image` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_option` (
   `id` int(8) NOT NULL auto_increment,
   `goods_id` int(8) NOT NULL,
@@ -429,7 +406,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods_option` (
   `sort_order` int(8) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_statistic` (
   `goods_id` int(8) NOT NULL,
   `click` int(10) NOT NULL default '0',
@@ -439,44 +415,72 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods_statistic` (
   `refund` int(10) NOT NULL default '0',
   KEY `goods_id` (`goods_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}group` (
   `id` int(4) NOT NULL auto_increment,
   `name_key_` char(10) NOT NULL,
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}group_attr` (
   `group_id` int(4) NOT NULL,
   `attr_id` int(4) NOT NULL,
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}group_cate` (
   `group_id` int(4) NOT NULL,
   `cate_id` int(4) NOT NULL,
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}group_extend` (
   `group_id` int(4) NOT NULL,
   `extend_id` int(4) NOT NULL,
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}group_option` (
   `group_id` int(4) NOT NULL,
   `op_id` int(8) NOT NULL,
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}group_summary` (
   `group_id` int(4) NOT NULL,
   `summary_id` int(4) NOT NULL,
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+CREATE TABLE IF NOT EXISTS `{PREFIX}helpdesk` (
+  `id` int(10) NOT NULL auto_increment,
+  `user_id` int(10) NOT NULL default '0',
+  `department_id` int(4) NOT NULL,
+  `language` varchar(8) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `phone` varchar(32) default NULL,
+  `priority` tinyint(1) NOT NULL default '2',
+  `title` varchar(1024) NOT NULL,
+  `message` text NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `{PREFIX}helpdesk_department` (
+  `id` int(4) NOT NULL auto_increment,
+  `name_key_` char(10) NOT NULL,
+  `sort_order` int(4) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '1',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `{PREFIX}helpdesk_reply` (
+  `ticket_id` int(10) NOT NULL,
+  `message` text NOT NULL,
+  `mail` tinyint(1) NOT NULL default '0',
+  `time` int(11) NOT NULL,
+  KEY `ticket_id` (`ticket_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `{PREFIX}helpdesk_response` (
+  `id` int(4) NOT NULL auto_increment,
+  `title_key_` char(10) NOT NULL,
+  `content_txtkey_` char(10) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}host` (
   `id` int(4) NOT NULL auto_increment,
   `host` varchar(32) NOT NULL,
@@ -486,7 +490,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}host` (
   `bind_currency` char(4) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}images` (
   `id` int(10) NOT NULL auto_increment,
   `type` varchar(16) NOT NULL,
@@ -494,10 +497,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}images` (
   `addtime` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}images` (`id`, `type`, `dir`, `addtime`) VALUES
 (1, 'other', '/upload/image/201308/17130509_58243.png', 1376744709);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}image_setting` (
   `id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -515,7 +516,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}image_setting` (
   PRIMARY KEY  (`id`),
   KEY `type` (`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
 INSERT INTO `{PREFIX}image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbnails`, `width`, `height`, `watermark`, `watermark_img`, `watermark_pos`, `watermark_alpha`, `if_sys`, `status`) VALUES
 (1, 'k_2', 'goods_img', 'goods_main_img', 1, 300, 320, 0, '', 1, 0, 1, 1),
 (2, 'k_3', 'goods_img_slider', 'goods_imgs', 1, 300, 320, 0, '', 1, 0, 1, 1),
@@ -523,14 +523,12 @@ INSERT INTO `{PREFIX}image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbna
 (4, 'k_5', 'goods_cate', 'goods_cate', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (5, 'k_6', 'article_img', 'article_img', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (6, 'k_7', 'article_desc', 'article_desc', 0, 0, 0, 0, '', 1, 0, 1, 1);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}keywords` (
   `id` int(10) NOT NULL auto_increment,
   `keyword` varchar(32) NOT NULL,
   `search_num` int(10) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}language` (
   `id` int(2) NOT NULL auto_increment,
   `code` varchar(8) NOT NULL,
@@ -538,17 +536,14 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}language` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}language` (`id`, `code`, `name`, `status`) VALUES
 (1, 'en', 'English', 1);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}language_code` (
   `id` int(4) NOT NULL auto_increment,
   `code` varchar(8) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
-
 INSERT INTO `{PREFIX}language_code` (`id`, `code`, `name`) VALUES
 (1, 'af', 'Afrikaans'),
 (2, 'ar', 'العربية'),
@@ -614,7 +609,6 @@ INSERT INTO `{PREFIX}language_code` (`id`, `code`, `name`) VALUES
 (77, 'vi', 'tiếng Việt'),
 (79, 'zh_cn', '中文(简体)'),
 (80, 'zh_tw', '中文(繁体)');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}nav` (
   `id` int(4) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '2',
@@ -624,7 +618,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}nav` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}option` (
   `op_id` int(8) NOT NULL auto_increment,
   `name_key_` varchar(10) default NULL,
@@ -632,10 +625,10 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}option` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`op_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order` (
   `order_id` int(10) NOT NULL auto_increment,
   `order_sn` varchar(16) NOT NULL,
+  `invoice` varchar(32) NOT NULL,
   `user_id` int(10) NOT NULL,
   `email` varchar(32) NOT NULL,
   `shipping_id` int(4) NOT NULL,
@@ -655,7 +648,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order` (
   PRIMARY KEY  (`order_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_billing_address` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -670,7 +662,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_billing_address` (
   `phone` varchar(24) default NULL,
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_goods` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL,
@@ -684,7 +675,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_goods` (
   PRIMARY KEY  (`id`),
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_ship` (
   `id` int(10) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '1',
@@ -694,7 +684,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_ship` (
   `time` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_shipping_address` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -709,7 +698,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_shipping_address` (
   `phone` varchar(24) default NULL,
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_ship_goods` (
   `ship_id` int(10) NOT NULL,
   `goods_id` int(10) NOT NULL,
@@ -719,15 +707,13 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_ship_goods` (
   `quantity` int(8) NOT NULL,
   KEY `ship_id` (`ship_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_sn` (
   `sn` int(8) NOT NULL default '1000000',
+  `invoice` int(8) NOT NULL default '1',
   KEY `sn` (`sn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-INSERT INTO `{PREFIX}order_sn` (`sn`) VALUES
-(1000000);
-
+INSERT INTO `{PREFIX}order_sn` (`sn`, `invoice`) VALUES
+(1000000, 1);
 CREATE TABLE IF NOT EXISTS `{PREFIX}order_status` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL,
@@ -738,7 +724,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}order_status` (
   PRIMARY KEY  (`id`),
   KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}pages` (
   `id` int(4) NOT NULL auto_increment,
   `urlkey` varchar(64) NOT NULL,
@@ -746,9 +731,13 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}pages` (
   `content_txtkey_` varchar(10) NOT NULL,
   `image` varchar(64) NOT NULL,
   `sort_order` int(4) NOT NULL default '0',
+  `meta_title_key_` char(10) default NULL,
+  `meta_keywords_txtkey_` char(10) default NULL,
+  `meta_description_txtkey_` char(10) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+INSERT INTO `{PREFIX}pages` (`id`, `urlkey`, `title_key_`, `content_txtkey_`, `image`, `sort_order`, `meta_title_key_`, `meta_keywords_txtkey_`, `meta_description_txtkey_`) VALUES
+(1, 'home', 'k_34', 'k_35', '', 1, 'k_36', 'k_37', 'k_38');
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment` (
   `id` int(2) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
@@ -759,14 +748,12 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment` (
   `status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
-
 INSERT INTO `{PREFIX}payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES
 (1, 'Paypal', 'Paypal Website Payments Standard', 'paypal', 1, 0, 1),
 (2, 'Credit card(Paypal)', 'Paypal Website Payments Pro(Direct Payment)', 'paypal_pro', 2, 0, 1),
 (3, 'Paypal Express Checkout', 'Paypal Express Checkout', 'paypal_express', 3, 0, 1),
 (4, 'Credit card(Authorize.net)', 'Authorize.net(Advanced Integration Method)', 'authorize', 4, 0, 1),
 (5, 'MoneyBookers', 'MoneyBookers(Skrill)', 'moneybookers', 5, 0, 0);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -774,16 +761,13 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
   `api_key` varchar(32) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}payment_authorize` (`id`, `test_mode`, `api_id`, `api_key`) VALUES
 (1, 1, '6nrM7QzAM6z', '2Z3kT2wmLW62dB6t');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_bind` (
   `payment_id` int(2) NOT NULL,
   `country_id` int(4) NOT NULL,
   KEY `country_id` (`country_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_error` (
   `id` int(10) NOT NULL auto_increment,
   `order_id` int(10) NOT NULL default '0',
@@ -792,7 +776,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_error` (
   `time` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_log` (
   `id` int(10) NOT NULL auto_increment,
   `type` tinyint(1) NOT NULL default '1',
@@ -805,7 +788,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_log` (
   `time` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_moneybookers` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -813,10 +795,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_moneybookers` (
   `secret` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}payment_moneybookers` (`id`, `test_mode`, `pay_to_email`, `secret`) VALUES
 (1, 1, 'merchant-email@example.com', '123456');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -829,10 +809,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal` (
   `my_private_key_pswd` varchar(32) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}payment_paypal` (`id`, `test_mode`, `email`, `type`, `paypal_cert_id`, `paypal_cert_file`, `my_public_cert_file`, `my_private_key_file`, `my_private_key_pswd`) VALUES
 (1, 1, 'merchant-email@example.com', 1, '', '', '', '', '');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal_express` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -841,10 +819,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal_express` (
   `signature` varchar(64) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}payment_paypal_express` (`id`, `test_mode`, `user`, `password`, `signature`) VALUES
 (1, 1, 'platfo_1255077030_biz_api1.gmail.com', '1255077037', 'Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal_pro` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -853,10 +829,8 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment_paypal_pro` (
   `signature` varchar(64) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}payment_paypal_pro` (`id`, `test_mode`, `user`, `password`, `signature`) VALUES
 (1, 1, 'platfo_1255077030_biz_api1.gmail.com', '1255077037', 'Abg0gYcQyxQvnf2HDJkKtA-p6pqhA1k-KTYE0Gcy1diujFio4io5Vqjf');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}region` (
   `region_id` int(8) NOT NULL auto_increment,
   `country_id` int(4) NOT NULL default '1',
@@ -865,7 +839,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}region` (
   `sort_order` int(8) NOT NULL default '0',
   PRIMARY KEY  (`region_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=67 ;
-
 INSERT INTO `{PREFIX}region` (`region_id`, `country_id`, `code`, `name`, `sort_order`) VALUES
 (1, 1, 'AL', 'Alabama', 0),
 (2, 1, 'AK', 'Alaska', 0),
@@ -933,7 +906,6 @@ INSERT INTO `{PREFIX}region` (`region_id`, `country_id`, `code`, `name`, `sort_o
 (64, 1, 'WI', 'Wisconsin', 0),
 (65, 1, 'WY', 'Wyoming', 0),
 (66, 1, 'AL', 'Alabama', 0);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}region_city` (
   `city_id` int(10) NOT NULL auto_increment,
   `region_id` int(8) NOT NULL,
@@ -943,7 +915,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}region_city` (
   PRIMARY KEY  (`city_id`),
   KEY `region_id` (`region_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}region_city_us` (
   `city_id` int(10) NOT NULL auto_increment,
   `region_id` int(8) NOT NULL,
@@ -953,7 +924,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}region_city_us` (
   PRIMARY KEY  (`city_id`),
   KEY `region_id` (`region_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=41339 ;
-
 INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (1, 1, 'Acmar', '35004', 0),
 (2, 1, 'Adamsville', '35005', 0),
@@ -16810,9 +16780,9 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (15843, 31, 'Chaptico', '20621', 0),
 (15844, 31, 'Charlotte Hall', '20622', 0),
 (15845, 31, 'Cheltenham', '20623', 0),
-(15846, 31, 'Clements', '20624', 0);
+(15846, 31, 'Clements', '20624', 0),
+(15847, 31, 'Cobb Island', '20625', 0);
 INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
-(15847, 31, 'Cobb Island', '20625', 0),
 (15848, 31, 'Coltons Point', '20626', 0),
 (15849, 31, 'Compton', '20627', 0),
 (15850, 31, 'Dameron', '20628', 0),
@@ -18194,10 +18164,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (17226, 33, 'Dearborn', '48124', 0),
 (17227, 33, 'Dearborn Heights', '48125', 0),
 (17228, 33, 'Dearborn', '48126', 0),
-(17229, 33, 'Dearborn Heights', '48127', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(17229, 33, 'Dearborn Heights', '48127', 0),
 (17230, 33, 'Dearborn', '48128', 0),
-(17231, 33, 'Dexter', '48130', 0),
+(17231, 33, 'Dexter', '48130', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (17232, 33, 'Dundee', '48131', 0),
 (17233, 33, 'Erie', '48133', 0),
 (17234, 33, 'Brownstown', '48134', 0),
@@ -19602,10 +19572,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (18633, 34, 'Little Marais', '55614', 0),
 (18634, 34, 'Tofte', '55615', 0),
 (18635, 34, 'Two Harbors', '55616', 0),
-(18636, 34, 'Adolph', '55701', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(18636, 34, 'Adolph', '55701', 0),
 (18637, 34, 'Alborn', '55702', 0),
-(18638, 34, 'Angora', '55703', 0),
+(18638, 34, 'Angora', '55703', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (18639, 34, 'Askov', '55704', 0),
 (18640, 34, 'Aurora', '55705', 0),
 (18641, 34, 'Babbitt', '55706', 0),
@@ -21024,10 +20994,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (20054, 36, 'Newark', '63458', 0),
 (20055, 36, 'New London', '63459', 0),
 (20056, 36, 'Novelty', '63460', 0),
-(20057, 36, 'Palmyra', '63461', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(20057, 36, 'Palmyra', '63461', 0),
 (20058, 36, 'Perry', '63462', 0),
-(20059, 36, 'Philadelphia', '63463', 0),
+(20059, 36, 'Philadelphia', '63463', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (20060, 36, 'Plevna', '63464', 0),
 (20061, 36, 'Revere', '63465', 0),
 (20062, 36, 'Saint Patrick', '63466', 0),
@@ -22441,10 +22411,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (21470, 38, 'Omaha', '68107', 0),
 (21471, 38, 'Omaha', '68108', 0),
 (21472, 38, 'Omaha', '68109', 0),
-(21473, 38, 'Omaha', '68110', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(21473, 38, 'Omaha', '68110', 0),
 (21474, 38, 'Omaha', '68111', 0),
-(21475, 38, 'Omaha', '68112', 0),
+(21475, 38, 'Omaha', '68112', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (21476, 38, 'Omaha', '68113', 0),
 (21477, 38, 'Omaha', '68114', 0),
 (21478, 38, 'Omaha', '68116', 0),
@@ -23861,10 +23831,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (22889, 41, 'Sparta', '07871', 0),
 (22890, 41, 'Stanhope', '07874', 0),
 (22891, 41, 'Stillwater', '07875', 0),
-(22892, 41, 'Succasunna', '07876', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(22892, 41, 'Succasunna', '07876', 0),
 (22893, 41, 'Swartswood', '07877', 0),
-(22894, 41, 'Mount Tabor', '07878', 0),
+(22894, 41, 'Mount Tabor', '07878', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (22895, 41, 'Tranquility', '07879', 0),
 (22896, 41, 'Vienna', '07880', 0),
 (22897, 41, 'Wallpack Center', '07881', 0),
@@ -25254,10 +25224,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (24281, 43, 'Farmingdale', '11736', 0),
 (24282, 43, 'Farmingdale', '11737', 0),
 (24283, 43, 'Farmingville', '11738', 0),
-(24284, 43, 'Great River', '11739', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(24284, 43, 'Great River', '11739', 0),
 (24285, 43, 'Greenlawn', '11740', 0),
-(24286, 43, 'Holbrook', '11741', 0),
+(24286, 43, 'Holbrook', '11741', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (24287, 43, 'Holtsville', '11742', 0),
 (24288, 43, 'Huntington', '11743', 0),
 (24289, 43, 'Dix Hills', '11746', 0),
@@ -26631,10 +26601,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (25657, 43, 'Sodus Point', '14555', 0),
 (25658, 43, 'Sonyea', '14556', 0),
 (25659, 43, 'South Byron', '14557', 0),
-(25660, 43, 'South Lima', '14558', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(25660, 43, 'South Lima', '14558', 0),
 (25661, 43, 'Spencerport', '14559', 0),
-(25662, 43, 'Springwater', '14560', 0),
+(25662, 43, 'Springwater', '14560', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (25663, 43, 'Stanley', '14561', 0),
 (25664, 43, 'Union Hill', '14563', 0),
 (25665, 43, 'Victor', '14564', 0),
@@ -28033,11 +28003,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (27058, 45, 'Hensel', '58241', 0),
 (27059, 45, 'Hoople', '58243', 0),
 (27060, 45, 'Inkster', '58244', 0),
-(27061, 45, 'Langdon', '58249', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(27061, 45, 'Langdon', '58249', 0),
 (27062, 45, 'Lankin', '58250', 0),
 (27063, 45, 'Larimore', '58251', 0),
-(27064, 45, 'Kloten', '58254', 0),
+(27064, 45, 'Kloten', '58254', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (27065, 45, 'Maida', '58255', 0),
 (27066, 45, 'Manvel', '58256', 0),
 (27067, 45, 'Mayville', '58257', 0),
@@ -29445,11 +29415,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (28469, 47, 'Eldorado', '45321', 0),
 (28470, 47, 'Englewood', '45322', 0),
 (28471, 47, 'Enon', '45323', 0),
-(28472, 47, 'Beavercreek', '45324', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(28472, 47, 'Beavercreek', '45324', 0),
 (28473, 47, 'Farmersville', '45325', 0),
 (28474, 47, 'Fletcher', '45326', 0),
-(28475, 47, 'Germantown', '45327', 0),
+(28475, 47, 'Germantown', '45327', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (28476, 47, 'Gettysburg', '45328', 0),
 (28477, 47, 'Gratis', '45330', 0),
 (28478, 47, 'Greenville', '45331', 0),
@@ -30881,11 +30851,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (29904, 49, 'Crater Lake', '97604', 0),
 (29905, 49, 'Adel', '97620', 0),
 (29906, 49, 'Beatty', '97621', 0),
-(29907, 49, 'Bly', '97622', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(29907, 49, 'Bly', '97622', 0),
 (29908, 49, 'Bonanza', '97623', 0),
 (29909, 49, 'Chiloquin', '97624', 0),
-(29910, 49, 'Dairy', '97625', 0),
+(29910, 49, 'Dairy', '97625', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (29911, 49, 'Fort Klamath', '97626', 0),
 (29912, 49, 'Keno', '97627', 0),
 (29913, 49, 'Lakeview', '97630', 0),
@@ -32273,10 +32243,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (31295, 51, 'Millersville', '17551', 0),
 (31296, 51, 'Florin', '17552', 0),
 (31297, 51, 'Mountville', '17554', 0),
-(31298, 51, 'Narvon', '17555', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(31298, 51, 'Narvon', '17555', 0),
 (31299, 51, 'New Holland', '17557', 0),
-(31300, 51, 'New Providence', '17560', 0),
+(31300, 51, 'New Providence', '17560', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (31301, 51, 'Paradise', '17562', 0),
 (31302, 51, 'Peach Bottom', '17563', 0),
 (31303, 51, 'Penryn', '17564', 0),
@@ -33654,10 +33624,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (32675, 54, 'Charleston', '29402', 0),
 (32676, 54, 'Charleston', '29403', 0),
 (32677, 54, 'Charleston', '29404', 0),
-(32678, 54, 'Charleston', '29405', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(32678, 54, 'Charleston', '29405', 0),
 (32679, 54, 'Charleston', '29406', 0),
-(32680, 54, 'Charleston', '29407', 0),
+(32680, 54, 'Charleston', '29407', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (32681, 54, 'Charleston', '29409', 0),
 (32682, 54, 'Charleston', '29410', 0),
 (32683, 54, 'Charleston', '29412', 0),
@@ -35063,10 +35033,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (34083, 56, 'Reagan', '38368', 0),
 (34084, 56, 'Rutherford', '38369', 0),
 (34085, 56, 'Saltillo', '38370', 0),
-(34086, 56, 'Sardis', '38371', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(34086, 56, 'Sardis', '38371', 0),
 (34087, 56, 'Savannah', '38372', 0),
-(34088, 56, 'Scotts Hill', '38374', 0),
+(34088, 56, 'Scotts Hill', '38374', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (34089, 56, 'Selmer', '38375', 0),
 (34090, 56, 'Shiloh', '38376', 0),
 (34091, 56, 'Silerton', '38377', 0),
@@ -36505,10 +36475,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (35524, 57, 'Sugar Land', '77479', 0),
 (35525, 57, 'Sweeny', '77480', 0),
 (35526, 57, 'Thompsons', '77481', 0),
-(35527, 57, 'Van Vleck', '77482', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(35527, 57, 'Van Vleck', '77482', 0),
 (35528, 57, 'Wadsworth', '77483', 0),
-(35529, 57, 'Waller', '77484', 0),
+(35529, 57, 'Waller', '77484', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (35530, 57, 'Wallis', '77485', 0),
 (35531, 57, 'West Columbia', '77486', 0),
 (35532, 57, 'Sugar Land', '77487', 0),
@@ -37925,11 +37895,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (36943, 58, 'Clarkston', '84305', 0),
 (36944, 58, 'Beaverdam', '84306', 0),
 (36945, 58, 'Corinne', '84307', 0),
-(36946, 58, 'Cornish', '84308', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(36946, 58, 'Cornish', '84308', 0),
 (36947, 58, 'Deweyville', '84309', 0),
 (36948, 58, 'Eden', '84310', 0),
-(36949, 58, 'Fielding', '84311', 0),
+(36949, 58, 'Fielding', '84311', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (36950, 58, 'Garland', '84312', 0),
 (36951, 58, 'Grouse Creek', '84313', 0),
 (36952, 58, 'Honeyville', '84314', 0),
@@ -39310,11 +39280,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (38327, 61, 'Roanoke', '24011', 0),
 (38328, 61, 'Roanoke', '24012', 0),
 (38329, 61, 'Roanoke', '24013', 0),
-(38330, 61, 'Roanoke', '24014', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(38330, 61, 'Roanoke', '24014', 0),
 (38331, 61, 'Roanoke', '24015', 0),
 (38332, 61, 'Roanoke', '24016', 0),
-(38333, 61, 'Roanoke', '24017', 0),
+(38333, 61, 'Roanoke', '24017', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (38334, 61, 'Roanoke', '24018', 0),
 (38335, 61, 'Hollins', '24019', 0),
 (38336, 61, 'Roanoke', '24020', 0),
@@ -40736,11 +40706,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (39752, 63, 'Cove Gap', '25534', 0),
 (39753, 63, 'Lavalette', '25535', 0),
 (39754, 63, 'Lesage', '25537', 0),
-(39755, 63, 'Midkiff', '25540', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(39755, 63, 'Midkiff', '25540', 0),
 (39756, 63, 'Milton', '25541', 0),
 (39757, 63, 'Myra', '25544', 0),
-(39758, 63, 'Ona', '25545', 0),
+(39758, 63, 'Ona', '25545', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (39759, 63, 'Pecks Mill', '25547', 0),
 (39760, 63, 'Point Pleasant', '25550', 0),
 (39761, 63, 'Prichard', '25555', 0),
@@ -42150,11 +42120,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (41165, 65, 'Laramie', '82071', 0),
 (41166, 65, 'Foxpark', '82072', 0),
 (41167, 65, 'Laramie', '82073', 0),
-(41168, 65, 'Meriden', '82081', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(41168, 65, 'Meriden', '82081', 0),
 (41169, 65, 'Pine Bluffs', '82082', 0),
 (41170, 65, 'McFadden', '82083', 0),
-(41171, 65, 'Tie Siding', '82084', 0),
+(41171, 65, 'Tie Siding', '82084', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (41172, 65, 'Mammoth', '82190', 0),
 (41173, 65, 'Slater', '82201', 0),
 (41174, 65, 'Chugwater', '82210', 0),
@@ -42322,13 +42292,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (41336, 65, 'Thayne', '83127', 0),
 (41337, 65, 'Alpine', '83128', 0),
 (41338, 65, 'Alta', '83414', 0);
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}setting` (
   `name` varchar(32) NOT NULL,
   `val` varchar(128) default NULL,
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('web_name_key_', 'k_9'),
 ('default_host', '127.0.01'),
@@ -42385,7 +42353,6 @@ INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('memcache_port', ''),
 ('web_logo', '/upload/image/201308/17130509_58243.png'),
 ('btm_logo', '/upload/image/201308/17130509_58243.png');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}shipping` (
   `shipping_id` int(4) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
@@ -42398,7 +42365,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shipping` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`shipping_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}shipping_set` (
   `id` int(8) NOT NULL auto_increment,
   `shipping_id` int(4) NOT NULL,
@@ -42407,13 +42373,11 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shipping_set` (
   `step_fee` float(8,2) NOT NULL default '0.00',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}sitemap` (
   `name` varchar(32) NOT NULL,
   `val` varchar(32) default NULL,
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 INSERT INTO `{PREFIX}sitemap` (`name`, `val`) VALUES
 ('updatetime', '0'),
 ('index_frequency', 'weekly'),
@@ -42426,7 +42390,6 @@ INSERT INTO `{PREFIX}sitemap` (`name`, `val`) VALUES
 ('page_priority', '0.5'),
 ('article_frequency', 'monthly'),
 ('article_priority', '0.5');
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}slider` (
   `slider_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -42434,7 +42397,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}slider` (
   `setting_id` varchar(32) NOT NULL default '0',
   PRIMARY KEY  (`slider_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}slider_image` (
   `id` int(4) NOT NULL auto_increment,
   `slider_id` int(4) NOT NULL,
@@ -42445,14 +42407,12 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}slider_image` (
   PRIMARY KEY  (`id`),
   KEY `siler_id` (`slider_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}summary` (
   `id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}tax` (
   `id` int(4) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
@@ -42461,7 +42421,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}tax` (
   `status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}tax_set` (
   `id` int(8) NOT NULL auto_increment,
   `tax_id` int(4) NOT NULL,
@@ -42469,15 +42428,15 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}tax_set` (
   `tax` decimal(6,4) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}urlkey` (
   `id` int(10) NOT NULL auto_increment,
   `model` varchar(16) NOT NULL,
   `item_id` int(10) NOT NULL,
   `urlkey` varchar(1024) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+INSERT INTO `{PREFIX}urlkey` (`id`, `model`, `item_id`, `urlkey`) VALUES
+(1, 'page', 1, 'home');
 CREATE TABLE IF NOT EXISTS `{PREFIX}user` (
   `user_id` int(10) NOT NULL auto_increment,
   `group_id` int(4) NOT NULL,
@@ -42494,7 +42453,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}user` (
   PRIMARY KEY  (`user_id`),
   KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}user_address` (
   `id` int(10) NOT NULL auto_increment,
   `user_id` int(10) NOT NULL,
@@ -42520,7 +42478,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}user_address` (
   PRIMARY KEY  (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `{PREFIX}user_group` (
   `group_id` int(4) NOT NULL auto_increment,
   `name_key_` varchar(10) NOT NULL,
@@ -42528,6 +42485,5 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}user_group` (
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
 INSERT INTO `{PREFIX}user_group` (`group_id`, `name_key_`, `spending`, `status`) VALUES
 (1, 'k_8', 0.00, 1);

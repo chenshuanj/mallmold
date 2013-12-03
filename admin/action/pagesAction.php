@@ -51,7 +51,13 @@ class pagesAction extends commonAction
 				'content_txtkey_' => trim($_POST['content_txtkey_']),
 				'content' => $_POST['content'],
 				'sort_order' => intval($_POST['sort_order']),
-				'image' => trim($_POST['image'])
+				'image' => trim($_POST['image']),
+				'meta_title_key_' => $_POST['meta_title_key_'],
+				'meta_title' => trim($_POST['meta_title']),
+				'meta_keywords_txtkey_' => $_POST['meta_keywords_txtkey_'],
+				'meta_keywords' => trim($_POST['meta_keywords']),
+				'meta_description_txtkey_' => $_POST['meta_description_txtkey_'],
+				'meta_description' => trim($_POST['meta_description']),
 			);
 			
 			if($_POST['id']){

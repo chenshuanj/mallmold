@@ -28,6 +28,7 @@
 			<a href="{:url('order/ship?order_id='.$order['order_id'])}" class="aborder">{L:ship}</a> 
 			<a href="{:url('order/refund?order_id='.$order['order_id'])}" class="aborder">{L:refund}</a> 
 			{/if}
+			<a href="{:url('order/invoice?order_id='.$order['order_id'])}" target="_blank" class="aborder">{L:invoice}</a> 
 			<a href="{:url('order/print_order?order_id='.$order['order_id'])}" target="_blank" class="aborder">{L:print}</a> 
 			<a href="{:url('order/index')}" class="aborder">{L:back}</a>
 		</div>
@@ -135,7 +136,7 @@
 			<tr>
 				<th></th>
 				<td>
-				<label><input type="checkbox" name="notice" value="1">{L:notice_customer}</label>
+				<label><input type="checkbox" name="notice" value="1">{L:send_email}</label>
 				</td>
 			</tr>
 			<tr>

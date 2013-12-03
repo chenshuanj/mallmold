@@ -82,7 +82,7 @@
 		</div>
 		<div class="memubox">
 			<ul id="menu">
-				<li><a href="javascript:;">{L:home}</a>
+				<li class="first"><a href="javascript:;">{L:home}</a>
 					<div>
 					<a href="{:url('index/index')}">{L:welcome_page}</a>
 					<a href="{:url('batch/index')}">{L:batch_action}</a>
@@ -123,6 +123,13 @@
 					<a href="{:url('article/index')}">{L:articlelist}</a>
 					<a href="{:url('article/edit')}">{L:addarticle}</a>
 					<a href="{:url('article/cate')}">{L:articlecate}</a>
+					</div>
+				</li>
+				<li><a href="javascript:;">{L:helpdesk}</a>
+					<div>
+					<a href="{:url('helpdesk/index')}">{L:View tickets}</a>
+					<a href="{:url('helpdesk/department')}">{L:Manage departments}</a>
+					<a href="{:url('helpdesk/responses')}">{L:Quick Responses}</a>
 					</div>
 				</li>
 				<li><a href="javascript:;">{L:module}</a>

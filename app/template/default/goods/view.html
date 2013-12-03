@@ -2,26 +2,8 @@
 <div class="box">
 	{include map.html}
 	<div class="fleft" id="left">
-		<h3>{L:Category}</h3>
-		<ul>
-		{foreach $catelist as $v}
-		<li><a href="{:url('catalog/index?id='.$v['id'])}">{$v['name']}</a></li>
-		{/foreach}
-		</ul>
-		{foreach $attributes as $v}
-			{if $v['can_filter']==1}
-			<h3>{$v['name']}</h3>
-			<ul>
-				{foreach $v['values'] as $val}
-				<li>
-				<a rel="nofollow" href="{:url('catalog/search?attr_'.$val['attr_id'].'='.$val['av_id'])}">
-				{$val['title']}
-				</a>
-				</li>
-				{/foreach}
-			</ul>
-			{/if}
-		{/foreach}
+		{include catalog/catalogs.html}
+		{include catalog/attributes.html}
 	</div>
 	<div class="fright" id="right">
 		<div class="info">
@@ -47,15 +29,15 @@
 			</div>
 			<div class="fright detail">
 			<h1>{$goods['title']}</h1>
-			{if $goods['score']}
-			<div class="rating">{L:Score}: {$goods['score']}</div>
-			{/if}
+			
+			{include goods/rating.html}
+			
 			<div class="extend">
 			{foreach $goods['attr'] as $v}
-				<div class="row">{$v['name']}: {$v['value']}</div>
+				<div class="row"><span>{$v['name']}</span>: {$v['value']}</div>
 			{/foreach}
 			{foreach $goods['extend'] as $v}
-				<div class="row">{$v['name']}: {$v['value']}</div>
+				<div class="row"><span>{$v['name']}</span>: {$v['value']}</div>
 			{/foreach}
 				<div class="clear"></div>
 			</div>
@@ -137,15 +119,34 @@
 			<div id="content">
 				<div>{$goods['description']}</div>
 				<div style="display:none;">
-					{if $comments}
-						{foreach $comments as $com}
-						<div class="review">
-						<p>{$com['content']}</p>
-						<p class="review_time">{$com['time']} by {$com['username']}</p>
-						</div>
-						{/foreach}
+					{include goods/comments.html}
+					{if $comments_num > 9}
+					<div id="more_comments"><input type="button" class="abutton" id="ajax_comments" value="More"/></div>
+					<script type="text/javascript">
+					var comments_page = 2;
+					$(document).ready(function(){
+						$('#ajax_comments').click(function(){
+							$.ajax({
+								url:"{:url('goods/ajax_get_comment')}",   
+								type:"POST",
+								dataType:"html",
+								data:{goods_id:{$goods['goods_id']}, page:comments_page},
+								success:function(res)
+								{
+									if(res == 0){
+										alert('No more reviews');
+										$("#more_comments").remove();
+									}else{
+										$(res).insertBefore("#more_comments");
+										comments_page++;
+									}
+								}
+							});
+							
+						});
+					});
+					</script>
 					{/if}
-					
 					<div class="addcomment">
 					<form action="{:url('goods/comment?goods_id='.$goods['goods_id'])}" method="post">
 						<div class="fleft summary">
@@ -163,7 +164,7 @@
 						<div class="fright comment">
 							<table border=0>
 							<tr>
-							<td>{L:Username}: </td><td><input type="text" value="" name="username"></td>
+							<td>{L:Fullname}: </td><td><input type="text" value="" name="username"></td>
 							</tr>
 							<tr>
 							<td valign="top">{L:Content}: </td><td><textarea name="content" rows="3" cols="20"></textarea></td>
@@ -174,9 +175,22 @@
 							</table>
 						</div>
 					</form>
+					<div class="clear"></div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="cross_sell">
+			<div class="cross_sell_title">You may like</div>
+			<ul class="cross_sell_list">
+			{foreach $cross_sell as $v}
+				<li>
+					<a href="{:url($v['url'])}"><img src="{$v['image'][$img_sign]}"/></a>
+					<p class="name"><a href="{:url($v['url'])}">{$v['title']}</a></p>
+					<p><del>{$v['price_origin']}</del> {$v['price']}</p>
+				</li>
+			{/foreach}
+			</ul>
 		</div>
 	</div>
 	<div class="clear"></div>

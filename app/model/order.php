@@ -53,6 +53,7 @@ class order extends model
 		
 		$data = array(
 			'order_sn' => $order_sn,
+			'invoice' => $this->get_invoice_id(),
 			'user_id' => $address['user_id'],
 			'email' => $address['email'],
 			'shipping_id' => $order_data['shipping_id'],
@@ -154,6 +155,17 @@ class order extends model
 		$sn++;
 		$this->db->table('order_sn')->update(array('sn' => $sn));
 		return $order_prefix.$sn;
+	}
+	
+	public function get_invoice_id()
+	{
+		$setting = &$this->model('common')->setting();
+		$invoice_prefix = $setting['invoice_prefix'];
+		
+		$invoice = $this->db->table('order_sn')->getval('invoice');
+		$invoice++;
+		$this->db->table('order_sn')->update(array('invoice' => $invoice));
+		return $invoice_prefix.$invoice;
 	}
 	
 	public function order_list($user_id)

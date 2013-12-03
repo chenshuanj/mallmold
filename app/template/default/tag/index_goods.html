@@ -1,0 +1,14 @@
+<div class="list">
+	<ul>
+	{foreach $tag_list as $k=>$goods}
+		<li{if ($k+1)%5 == 0} class="last"{/if}>
+			<a href="{:url($goods['url'])}" title="{$goods['title']}">
+				<img src="{$goods['image']['goods_img']}"/>
+			</a>
+			<a class="goods_name" href="{:url($goods['url'])}">{$goods['title']}</a>
+			{include goods/rating.html}
+		</li>
+	{/foreach}
+	</ul>
+</div>
+<div class="clear"></div>

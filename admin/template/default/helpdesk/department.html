@@ -1,0 +1,30 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('helpdesk/index')}">{L:helpdesk}</a> > {L:Manage departments}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:name}</th>
+	<th>{L:sortorder}</th>
+	<th>{L:enable}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $department as $v}
+  <tr>
+	<td class="pleft">{$v['name']}</td>
+	<td>{$v['sort_order']}</td>
+	<td>{if $v['status']==1}{L:yes}{else}{L:no}{/if}</td>
+	<td>
+		<a href="{:url('helpdesk/department_edit?id='.$v['id'])}">{L:edit}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="4">
+  <div class="d_bottom">
+	<a class="aborder" href="{:url('helpdesk/department_edit')}">{L:add}</a> 
+	</div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

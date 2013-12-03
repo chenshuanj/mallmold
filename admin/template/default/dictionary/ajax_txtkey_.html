@@ -1,0 +1,69 @@
+<input id="t_type" type="hidden" value="{$type}">
+<input id="t_key" type="hidden" value="{$key}">
+<table width="100%" class="r_table" id="t_table">
+  {foreach $data as $l}
+  <tr>
+    <th valign="top">{$l['name']}:</th>
+	<td class="tleft">
+		<textarea id="txt_v_{$l['code']}" name="{$l['code']}" cols="38" rows="2">{$l['value']}</textarea> 
+	</td>
+  </tr>
+  {/foreach}
+</table>
+<div style="text-align:center;">
+<script type="text/javascript">
+	var t_type = $("#t_type").val();
+	var t_key = $("#t_key").val();
+	{foreach $data as $l}
+	var t_{$l['code']} = '';
+	var editer_{$l['code']} = KindEditor.create("#txt_v_{$l['code']}", {
+				langType : "{$l['code']}",
+				themeType : "simple",
+				width : "98%",
+				filterMode : false,
+				designMode : false,
+				uploadJson : "{:url('upload/image?type='.$editor_imgtype.'&session_id='.$session_id)}",
+				fileManagerJson : "{:url('upload/select')}",
+				allowFileManager : true,
+				items : [
+					'source', 'fullscreen', '|',
+					'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 
+					'link', 'unlink', 'justifyleft', 'justifycenter', 'justifyright', 'table',
+					'image', 'multiimage', 'about']
+			});
+	{/foreach}
+	
+	$('#t_save').click(function(){
+		$('#t_loading').show();
+		{foreach $data as $l}
+		t_{$l['code']} = editer_{$l['code']}.html();
+		{/foreach}
+		$.ajax({ 
+			type:"post",
+			url:'{:url('dictionary/ajaxsave')}',   
+			dataType:"html",
+			data:{
+				{foreach $data as $l}
+				{$l['code']}: t_{$l['code']},
+				{/foreach}
+				type: t_type,
+				key: t_key
+			},
+			success:function(res)
+			{
+				$('#t_loading').hide();
+				if(res == '1'){
+					alert('update success');
+					editor.html(t_{$lang});
+					$('#t_box').hide();
+				}else{
+					alert('update failed');
+				}
+			}
+		});
+	});
+</script>
+	<br/>
+	<span id="t_loading" style="display:none;"><img src="{TPL_PATH}images/loading.gif"></span>
+	<input id="t_save" type="button" class="aborder" name="submit" value="{L:save}">
+</div>

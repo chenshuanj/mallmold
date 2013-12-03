@@ -56,6 +56,7 @@ class goods extends model
 			$list[$k]['price'] = $this->model('common')->current_price($v['price']);
 			$list[$k]['price_origin'] = $this->model('common')->current_price($v['price_origin']);
 			$list[$k]['url'] = $this->model('urlkey')->geturl('goods_id', $v['goods_id'], $v['urlkey']);
+			$list[$k]['score'] = $this->model('comment')->get_score($v['goods_id']);
 			//$list[$k]['extend'] = $this->get_goods_extend($v['goods_id']);
 		}
 		
@@ -69,12 +70,14 @@ class goods extends model
 		
 		$data = $this->model('mdata')->table('goods')->where("goods_id=$goods_id")->get();
 		$data['price_origin'] = $this->model('common')->current_price($data['price_origin'], 0);
+		//$data['url'] = $this->model('urlkey')->geturl('goods_id', $data['goods_id'], $data['urlkey']);
 		$data['price'] = $this->model('common')->current_price($data['price'], 0);
 		$data['image'] = $this->model('image')->getimgbytype('goods_main_img', $data['image']);
 		$data['img_more'] = $this->goods_img_more($data['goods_id']);
 		$data['extend'] = $this->get_goods_extend($data['goods_id']);
 		$data['attr'] = $this->get_goods_attr($data['goods_id']);
 		$data['option'] = $this->get_price_option($data['goods_id']);
+		$data['score'] = $this->model('comment')->get_score($goods_id);
 		return $data;
 	}
 	
@@ -181,6 +184,25 @@ class goods extends model
 			}
 		}
 		return $options;
+	}
+	
+	public function get_cross_sell($good_ids)
+	{
+		if(!$good_ids){
+			return null;
+		}
+		
+		$list = $this->db->table('goods_crosssell')->where("goods_id in ($good_ids)")->getlist();
+		$relate_ids = '';
+		foreach($list as $v){
+			$relate_ids .= ($relate_ids ? ',' : '').$v['relate_ids'];
+		}
+		
+		if($relate_ids){
+			return $this->getlist("goods_id in ($relate_ids)");
+		}else{
+			return array();
+		}
 	}
 	
 	public function save_keywords(array $keywords)

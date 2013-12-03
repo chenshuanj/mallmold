@@ -1,0 +1,40 @@
+{include comm_header.html}
+<div class="main">
+<div class="title"><a href="{:url('helpdesk/index')}">{L:helpdesk}</a> > <a href="{:url('helpdesk/responses')}">{L:Quick Responses}</a> > {L:edit}</div>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('helpdesk/response_edit')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:title}:</th>
+	<td class="tleft">
+		<input name="title_key_" type="hidden" value="{$data['title_key_']}">
+		<input class="len2" name="title" type="text" value="{$data['title']}">
+		{if $data['title_key_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$data['title_key_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if} 
+		*</td>
+  </tr>
+  <tr>
+    <th valign="top">{L:content}:</th>
+	<td class="tleft">
+		{include editor/editor.html}
+	</td>
+  </tr>
+</table>
+
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+</div>
+</div>
+{include comm_footer.html}

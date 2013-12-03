@@ -24,6 +24,33 @@ class upgradeAction extends commonAction
 			$this->error('No need to update');
 		}
 		$dif = $this->model('upgrade')->dif_versions();
+		$update_files = $update_sqls = $update_time = array();
+		$ver = $this->model('upgrade')->local_version;
+		foreach($dif as $version){
+			$num = trim($version[1]);
+			$v = trim($version[0]);
+			$update_time[$num] = $ver;
+			$ver = $v;
+			$update_files[$num] = $this->model('upgrade')->get_files($v);
+			
+			$sqls = $this->model('upgrade')->get_database($v);
+			$update_sqls[$num] = str_replace(";\r\n", ";\r\n<br/><br/>", $sqls);
+		}
+		
+		$this->view['update_files'] = $update_files;
+		$this->view['update_sqls'] = $update_sqls;
+		$this->view['update_time'] = $update_time;
+		$this->view['backup_dir'] =$this->model('upgrade')->backup_dir;
+		$this->view['title'] = lang('Upgrade');
+		$this->view('upgrade.html');
+	}
+	
+	public function update()
+	{
+		if($this->check() == 0){
+			$this->error('No need to update');
+		}
+		$dif = $this->model('upgrade')->dif_versions();
 		
 		foreach($dif as $version){
 			$num = trim($version[1]);
@@ -57,7 +84,16 @@ class upgradeAction extends commonAction
 			$this->model('upgrade')->local_version = $v;
 		}
 		
-		$this->ok('Upgrade success', url('index/index'));
+		if($this->model('upgrade')->error){
+			echo '<h2>Upgrade Error:</h2>';
+			foreach($this->model('upgrade')->error as $v){
+				echo 'version: '.$v['version'].' File: '.$v['file'].':<br/>';
+				echo '----Please visit '.$v['url'].' to get this file content<br/><br/>';
+			}
+			exit;
+		}else{
+			$this->ok('Upgrade success', url('index/index'));
+		}
 	}
 	
 	public function ajax()

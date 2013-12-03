@@ -149,5 +149,13 @@ return array (
   'Billing address' => '賬單地址',
   'View order' => '查看訂單',
   'Forgot your password?' => '忘記密碼？',
+  'Contact Us' => '聯系我們',
+  'Department' => '類別',
+  'Priority' => '優先級',
+  'Title' => '標題',
+  'Message' => '信息',
+  'Please fill in the required fields' => '請填寫必填選項',
+  'Your form has been submitted, we will contact you soon!' => '您的表單已提交，我們將馬上聯系您！',
+  'Submit failed' => '提交失敗',
 )
 ?>

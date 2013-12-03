@@ -34,15 +34,6 @@
 				$(this).children().eq(1).hide();
 			});
 		});
-		function savepage(){
-			var title = document.title;
-			var url = location.href;
-			if(window.sidebar){
-				window.sidebar.addPanel(title, url, "");
-			}else if(document.all){
-				window.external.AddFavorite(url, title);
-			}
-		}
 	</script>
 </head>
 <body>
@@ -65,7 +56,7 @@
 			{foreach $top_nav as $v}
 			<a href="{$v['url']}">{$v['title']}</a> | 
 			{/foreach}
-			<a href="javascript:savepage();">{L:Add to Wishlist}</a></div>
+			<a href="{:url('helpdesk/form')}">{L:Contact Us}</a></div>
 		</div>
 	</div>
 	<div class="box">

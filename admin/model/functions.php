@@ -1,6 +1,6 @@
 <?php
 /*
-*	@commonfunc.php
+*	@functions.php
 *	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	

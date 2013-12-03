@@ -16,6 +16,8 @@
 
 class urlkey extends model
 {
+	public $extension = '.html';
+	
 	public function model_keys()
 	{
 		return array(
@@ -36,7 +38,7 @@ class urlkey extends model
 		if($type == 0){
 			return "$model/index?$item_key=$item_id";
 		}else{
-			return "$model/".($urlkey ? $urlkey : "index/$item_key/$item_id");
+			return "$model/".($urlkey ? $urlkey : "index/$item_key/$item_id").$this->extension;
 		}
 	}
 	
@@ -49,6 +51,7 @@ class urlkey extends model
 		$model_keys = $this->model_keys();
 		$model = $model_keys[$item_key];
 		$urlkey = preg_replace("/\W/", '-', trim($_GET['a']));
+		$urlkey = preg_replace('/'.$this->extension.'$/i', '', $urlkey);
 		$item_id = $this->db->table('urlkey')->where("model='$model' and urlkey='$urlkey'")->getval('item_id');
 		return $item_id ? $item_id : 0;
 	}

@@ -19,7 +19,7 @@ class adminAction extends action
 	public function __construct()
     {
 		parent::__construct();
-		require(APP_PATH .'lib/commonfunc.php');
+		require(APP_PATH .'model/functions.php');
 	}
 	
 	public function login()

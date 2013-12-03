@@ -1,0 +1,24 @@
+<h3>{L:Category}</h3>
+	<ul>
+	{foreach $catalogs as $v}
+	<li><a href="{:url($v['url'])}"{if $v['id']==$id} class="hover"{/if}>{$v['name']}</a></li>
+		{if $v['childnum']>0}
+		{foreach $v['child'] as $val}
+		<li>
+		<a href="{:url($val['url'])}" class="child {if $val['id']==$id} hover{/if}">
+		&nbsp;&nbsp;&nbsp;&nbsp;{$val['name']}
+		</a>
+		</li>
+			{if $val['childnum']>0}
+			{foreach $val['child'] as $val2}
+			<li>
+			<a href="{:url($val2['url'])}" class="child {if $val2['id']==$id} hover{/if}">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$val2['name']}
+			</a>
+			</li>
+			{/foreach}
+			{/if}
+		{/foreach}
+		{/if}
+	{/foreach}
+</ul>

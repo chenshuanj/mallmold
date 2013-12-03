@@ -31,7 +31,7 @@
   <tr>
     <th>{L:country}:</th>
 	<td class="tleft">
-	<select class="len2" name="country_id">
+	<select class="len2" name="country_id"{if $data['country_id']>0} disabled="disabled"{/if}>
 		<option value="0">--{L:select}--</option>
 		{foreach $country_list as $v}
 		<option value="{$v['id']}"{if $v['id']==$data['country_id']} selected{/if}>{$v['name']}</option>

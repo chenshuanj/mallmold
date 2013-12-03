@@ -67,8 +67,10 @@ class cart extends model
 		$list = $this->db->table('cart')->where($where)->getlist();
 		foreach($list as $k=>$v){
 			$goods_id = $v['goods_id'];
-			$list[$k]['goods'] = $this->model('mdata')->table('goods')->where("goods_id=$goods_id")->get();
-			$list[$k]['price'] = $list[$k]['goods']['price'];
+			$goods = $this->model('mdata')->table('goods')->where("goods_id=$goods_id")->get();
+			$goods['url'] = $this->model('urlkey')->geturl('goods_id', $goods['goods_id'], $goods['urlkey']);
+			$list[$k]['goods'] = $goods;
+			$list[$k]['price'] = $goods['price'];
 			$options = $v['options'];
 			if($options){
 				$options_list = $this->model('goods')->get_price_option($goods_id);

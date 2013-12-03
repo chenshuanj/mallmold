@@ -195,7 +195,7 @@ class dictionaryAction extends commonAction
 			$this->view['type'] = $type;
 			$this->view['key'] = $key;
 			$this->view['data'] = $this->model('dict')->get_vals($type, $key);
-			$this->view('dictionary/ajax.html');
+			$this->view('dictionary/ajax'.$type.'.html');
 		}
 	}
 	

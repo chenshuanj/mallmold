@@ -16,6 +16,8 @@
 
 class comment extends model
 {
+	public $list_num = 10;
+	
 	public function get_num($goods_id)
 	{
 		if(!$goods_id){
@@ -28,8 +30,14 @@ class comment extends model
 	
 	public function get_score($goods_id)
 	{
+		$score = array(
+			'score' => 5,
+			'number' => 0,
+			'percent' => 100,
+		);
+		
 		if(!$goods_id){
-			return false;
+			return $score;
 		}
 		
 		$field = "count(*) as num, sum(score) as scores";
@@ -37,21 +45,43 @@ class comment extends model
 					select id from ".$this->db->tbname('comments')." where goods_id=$goods_id and status=1
 				)";
 		$row = $this->db->table('comments_summary')->field($field)->where($where)->get();
-		if($row['num'] == 0){
-			return 0;
-		}else{
-			return round($row['scores']/$row['num'], 1);
+		if($row['num'] > 0){
+			$score['score'] = round($row['scores']/$row['num'], 1);
+			$score['number'] = $row['num'];
+			$score['percent'] = ($score['score']/5)*100;
 		}
+		
+		return $score;
 	}
 	
-	public function get_comments($goods_id)
+	public function get_comments($goods_id, $limit=0)
 	{
-		$list = $this->db->table('comments')->where("goods_id=$goods_id and status=1")->getlist();
+		if(!$limit){
+			$limit = $this->list_num;
+		}
+		
+		$summarys = array();
+		$summarys_list = $this->get_summarys();
+		foreach($summarys_list as $v){
+			$summarys[$v['id']] = $v['name'];
+		}
+		
+		$list = $this->db->table('comments')->where("goods_id=$goods_id and status=1")->limit($limit)->getlist();
 		foreach($list as $k=>$v){
-			$list[$k]['time'] = date('Y-m-d', $v['time']);
-			$list[$k]['scores'] = $this->db->table('comments_summary')
-											->where("comments_id=".$v['id'])
-											->getlist();
+			$list[$k]['time'] = $this->model('common')->date_format($v['time']);
+			
+			$scores = array();
+			$comments_summary = $this->db->table('comments_summary')->where("comments_id=".$v['id'])->getlist();
+			foreach($comments_summary as $v){
+				$summary_id = $v['summary_id'];
+				$scores[] = array(
+					'name' => $summarys[$summary_id],
+					'score' => $v['score'],
+					'percent' => ($v['score']/5)*100,
+				);
+			}
+			
+			$list[$k]['scores'] = $scores;
 		}
 		return $list;
 	}

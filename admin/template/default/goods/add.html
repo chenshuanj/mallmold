@@ -23,6 +23,7 @@
 		<li style="border-top:none" onclick="m(4)">{L:picinfo}</li>
 		<li style="border-top:none" onclick="m(5)">{L:price_option}</li>
 		<li style="border-top:none" onclick="m(6)">{L:seo_mata}</li>
+		<li style="border-top:none" onclick="m(7)">{L:cross_sell}</li>
 	</ul>
 </div>
 <div class="m_right">
@@ -292,6 +293,70 @@
 	</td>
   </tr>
 </table>
+
+<table width="100%" id="c_7" style="display:none">
+  <tr>
+    <th width="15%" style="text-align:left">SKU</th>
+	<th width="75%" style="text-align:left">{L:product_name}</th>
+	<th style="text-align:left">{L:action}</th>
+  </tr>
+  {if $cross_sell}
+	  {foreach $cross_sell as $v}
+	  <tr class="cross_sell" id="cs_{$v['goods_id']}">
+		<input type="hidden" class="cross_sell_id" name="cross_sell[]" value="{$v['goods_id']}">
+		<td class="tleft">{$v['sku']}</td>
+		<td class="tleft">{$v['title']}</td>
+		<td class="tleft"><a href="javascript:cs_remove({$v['goods_id']})">{L:remove}</a></td>
+	  </tr>
+	  {/foreach}
+  {/if}
+  
+  <tr id="cs_box">
+	<td colspan="3" class="tleft l_hover" style="border-top:1px solid #ccc;">
+		{L:Search sku to add}: <input id="cs_key" name="cs_name" type="text" style="background:#fff;"> 
+		<input type="button" value="{L:search}" onclick="cs_search();" style="background:#fff;">
+	</td>
+  </tr>
+
+</table>
+<script type="text/javascript">
+function cs_search(){
+	$('.cs_row').remove();
+	var ids = get_cs_ids();
+	var kwd = $('#cs_key').val();
+	$.ajax({
+		url:"{:url('goods/crosssell_search')}",
+		type:"POST",
+		data:{keyword:kwd,ids:ids},
+		dataType:"html",
+		success:function(res)
+		{
+			$('#cs_box').after(res);
+		}
+	});
+}
+function get_cs_ids(){
+	var ids = "{if $data['goods_id']}{$data['goods_id']}{else}0{/if}";
+	$('.cross_sell_id').each(function(){
+		ids += ','+ $(this).val().toString();
+	});
+	return ids;
+}
+function cs_add(id){
+	var sku = $('#cs_s_sku_' + id).html();
+	var title = $('#cs_s_title_' + id).html();
+	var html = '<tr class="cross_sell" id="cs_'+ id +'">';
+	html += '<input type="hidden" class="cross_sell_id" name="cross_sell[]" value="'+ id +'">';
+	html += '<td class="tleft">'+ sku +'</td>';
+	html += '<td class="tleft">'+ title +'</td>';
+	html += '<td class="tleft"><a href="javascript:cs_remove('+ id +')">{L:remove}</a></td></tr>';
+	$('#cs_box').before($(html));
+	$('#cs_s_' + id).remove();
+}
+function cs_remove(id){
+	$('#cs_' + id).remove();
+}
+</script>
 
 <div class="r_bottom">
 	<input type="submit" name="submit" value="{L:submit}"> 

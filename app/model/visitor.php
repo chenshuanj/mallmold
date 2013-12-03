@@ -34,7 +34,9 @@ class visitor extends model
 			$template = $set['template'];
 		}else{
 			$setting = &$this->model('common')->setting();
-			if(!empty($setting['default_tpl'])){
+			if($setting['mobile_mode'] == 1 && $this->is_mobile() && !empty($setting['mobile_tpl'])){
+				$template = $setting['mobile_tpl'];
+			}elseif(!empty($setting['default_tpl'])){
 				$template = $setting['default_tpl'];
 			}
 		}
@@ -152,6 +154,28 @@ class visitor extends model
 			}
 		}
 		return $is_spider;
+	}
+	
+	public function is_mobile()
+	{
+		static $is_mobile = null;
+		if($is_mobile == null){
+			$is_mobile = false;
+			$setting = &$this->model('common')->setting();
+			if(!$setting['mobile_mode']){
+				return $is_mobile;
+			}
+			
+			$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+			$keyswords = explode('|', $setting['mobile_mode']);
+			foreach($keyswords as $code){
+				if(strpos($ua, strtolower($code)) !== false){
+					$is_mobile = true;
+					return $is_mobile;
+				}
+			}
+		}
+		return $is_mobile;
 	}
 	
 	public function get_ualang()

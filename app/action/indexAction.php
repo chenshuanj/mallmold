@@ -20,8 +20,17 @@ class indexAction extends commonAction
 {
 	public function index()
 	{
-		$goods_index_sid = $this->setting['goods_index_sid'];
-		$this->view['img_sign'] = $this->model('image')->getsignbyid($goods_index_sid);
+		//	rewrite to page/home
+		
+		//	see app/router.php
+		//	'index/index' => array (
+		//		'query' => 'page_id=3',
+		//		'rewrite' => 'page/index',
+		//	),
+		
+		
+		/*
+		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_index_sid');
 		
 		//slider
 		$this->view['slider_index'] = $this->model('slider')->get('index');
@@ -35,6 +44,7 @@ class indexAction extends commonAction
 		$this->view['meta_description'] = $this->setting['meta_description'];
 		$this->view['meta_keywords'] = $this->setting['meta_keywords'];
 		$this->view('index.html');
+		*/
 	}
 }
 

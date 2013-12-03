@@ -20,8 +20,14 @@ class goodsAction extends commonAction
 {
 	public function index()
 	{
+		if(isset($_POST['sku'])){
+			$sku = trim($_POST['sku']);
+			$_SESSION['goods_index_sku'] = $sku;
+		}else{
+			$sku = $_SESSION['goods_index_sku'];
+		}
+		
 		$where = '';
-		$sku = trim($_POST['sku']);
 		if($sku){
 			$where = "sku like '%$sku%'";
 		}
@@ -38,6 +44,7 @@ class goodsAction extends commonAction
 			$group[$v['id']] = $v['name'];
 		}
 		
+		$this->view['sku'] = $sku;
 		$this->view['group'] = $group;
 		$this->view['list'] = $this->mdata('goods')->where($where)->order('addtime desc')->limit($limit)->getlist();
 		$this->view['sku'] = $sku;
@@ -96,6 +103,12 @@ class goodsAction extends commonAction
 				}
 			}
 			$data['option'] = $option;
+			
+			$cs_ids = $this->db->table('goods_crosssell')->where("goods_id=$goods_id")->getval('relate_ids');
+			if($cs_ids){
+				$this->view['cross_sell'] = $this->mdata('goods')->where("goods_id in ($cs_ids)")->getlist();
+			}
+			
 		}else{
 			$data['images'] = array();
 			$data['group_id'] = $group_id;
@@ -370,6 +383,21 @@ class goodsAction extends commonAction
 			}
 		}
 		
+		//cross sell
+		$cross_sell = $_POST['cross_sell'];
+		if($cross_sell && is_array($cross_sell)){
+			$cs_ids = implode(',', $cross_sell);
+			$n = $this->db->table('goods_crosssell')->where("goods_id=$goods_id")->count();
+			if($n > 0){
+				$this->db->table('goods_crosssell')
+						->where("goods_id=$goods_id")
+						->update(array('relate_ids' => $cs_ids));
+			}else{
+				$data = array('goods_id'=>$goods_id, 'relate_ids'=>$cs_ids);
+				$this->db->table('goods_crosssell')->insert($data);
+			}
+		}
+		
 		$this->ok('edit_success', url('goods/index'));
 	}
 	
@@ -388,6 +416,27 @@ class goodsAction extends commonAction
 		$this->model('urlkey')->del_goods($goods_id);
 		
 		$this->ok('delete_done', url('goods/index'));
+	}
+	
+	public function crosssell_search()
+	{
+		$sku = trim($_POST['keyword']);
+		$ids = trim($_POST['ids']);
+		$where = "goods_id not in ($ids)";
+		if($sku){
+			$where .= "sku like '%$sku%'";
+		}
+		
+		$list = $this->mdata('goods')->where($where)->order('addtime desc')->limit(50)->getlist();
+		$html = '';
+		foreach($list as $v){
+			$html .= '<tr id="cs_s_'.$v['goods_id'].'" class="cs_row">
+		<td class="tleft" id="cs_s_sku_'.$v['goods_id'].'">'.$v['sku'].'</td>
+		<td class="tleft" id="cs_s_title_'.$v['goods_id'].'">'.$v['title'].'</td>
+		<td class="tleft"><a href="javascript:cs_add('.$v['goods_id'].')">'.lang('add').'</a></td>
+	  </tr>';
+		}
+		echo $html;
 	}
 }
 

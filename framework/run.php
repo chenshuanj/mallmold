@@ -44,6 +44,8 @@ if(isset($config['TIMEZONE']))
 	date_default_timezone_set($config['TIMEZONE']);
 }
 
+define('PHP_NAME', substr(strrchr($_SERVER['SCRIPT_NAME'], '/'), 1));
+define('PHP_PATH', str_replace(PHP_NAME, '', $_SERVER['SCRIPT_NAME']));
 define('CORE_PATH', str_replace('\\','/',dirname(__FILE__)));
 require(CORE_PATH .'/core.php');
 
@@ -107,7 +109,7 @@ else
 	}
 	else
 	{
-		error_404("The action name($method) must be not the same as the module name($class)");
+		error("The action name($method) must be not the same as the module name($class)");
 	}
 }
 

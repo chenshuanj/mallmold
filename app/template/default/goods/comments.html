@@ -1,0 +1,25 @@
+{if $comments}
+	{foreach $comments as $com}
+	<div class="review">
+		<div class="review_score">
+		<table border=0>
+		{foreach $com['scores'] as $score}
+		<tr>
+			<td>{$score['name']}: </td>
+			<td>
+				<div class="rating">
+					<div class="score" style="width:{$score['percent']}%;"></div>
+				</div>
+			</td>
+		</tr>
+		{/foreach}
+		</table>
+		</div>
+		<div class="review_comment">
+			{$com['content']}
+			<div class="review_time">{$com['time']} by {$com['username']}</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	{/foreach}
+{/if}
