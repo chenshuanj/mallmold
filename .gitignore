@@ -1,0 +1,12 @@
+.buildpath
+.project
+.settings/*
+admin/cache/*
+admin/config.php
+app/cache/*
+app/config.php
+*.log
+cscope.*
+install.php.default
+install/cache/*
+tags
