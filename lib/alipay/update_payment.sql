@@ -5,8 +5,8 @@ INSERT INTO `mallmold`.`mm_payment` VALUES (NULL,'Alipay Bankpay','支付宝网�
 INSERT INTO `mallmold`.`mm_payment` VALUES (NULL,'Tenpay','财付通','tenpay',9,0,1);
 
 INSERT INTO `mm_payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES (NULL, '支付宝', '支付宝即时到帐', 'alipay', 6, 0, 1),
-(NULL, '财付通', '财付通支付', 'tenpay', 7, 0, 1),
-(NULL, '银联在线支付', '银联在线快速支付', 'unionpay', 8, 0, 1);
+INSERT INTO `mm_payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES(NULL, '财付通', '财付通支付', 'tenpay', 7, 0, 1),
+INSERT INTO `mm_payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES(NULL, '银联在线支付', '银联在线快速支付', 'unionpay', 8, 0, 1);
 
 CREATE TABLE IF NOT EXISTS `mm_payment_alipay` (
   `id` tinyint(1) NOT NULL auto_increment,
