@@ -1,0 +1,19 @@
+<tr>
+	<th>Test Mode:</th>
+	<td class="tleft">
+		<label><input name="test_mode" type="radio" value="1" {if $setting['test_mode']==1} checked{/if}>{L:yes}</label> 
+		<label><input name="test_mode" type="radio" value="0" {if $setting['test_mode']==0} checked{/if}>{L:no}</label>
+	</td>
+</tr>
+<tr>
+	<th>Appid:</th>
+	<td class="tleft">
+		<input class="len2" name="appid" type="text" value="{$setting['appid']}">
+	</td>
+</tr>
+<tr>
+	<th>密钥(Key):</th>
+	<td class="tleft">
+		<input class="len2" name="key" type="text" value="{$setting['key']}">
+	</td>
+</tr>

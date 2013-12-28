@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{$current_lang}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{$html_title}</title>
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+<input type="button" value="跳转到财付通 ..." onclick="gotopay();">
+<script type="text/javascript">
+function gotopay(){
+	window.location = '{$data}';
+}
+$(document).ready(function(){
+	gotopay();
+});
+</script>
+</body>
+</html>
