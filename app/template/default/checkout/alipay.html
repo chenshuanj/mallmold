@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{$current_lang}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{$html_title}</title>
+	<script type="text/javascript" src="{TPL_PATH}js/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+	<form id="paypalform" action="{$data['action']}" method="post">
+	{foreach $data['data'] as $k=>$v}
+	<input type="hidden" name="{$k}" value="{$v}">
+	{/foreach}
+	<input type="submit" value="跳转到支付宝 ...">
+	</form>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#paypalform').submit();
+});
+</script>
+</body>
+</html>
