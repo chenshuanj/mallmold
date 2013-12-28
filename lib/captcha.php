@@ -34,7 +34,7 @@ class captcha
 	public function set_captcha()
 	{
 		$str = "ABCDEFGHIJKMNOPQRSTUVWXYZabcdefghkmnopqrstuvwsyz123456789";
-		$len = rand(4, 6);
+		$len = rand(5, 7);
 		$n = strlen($str);
 		$code = '';
 		for($i=0; $i<$len; $i++){
@@ -47,7 +47,7 @@ class captcha
 	
 	public function getcode()
 	{
-		return $_SESSION['captcha_code'];
+		return $_SESSION['captcha_code'] ? $_SESSION['captcha_code'] : '';
 	}
 	
 	public function putimg($code)
