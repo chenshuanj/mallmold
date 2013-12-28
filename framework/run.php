@@ -72,7 +72,7 @@ $_uri = router($router);
 define('MODULE', $_uri['module']);
 define('ACTION', $_uri['action']);
 
-require(CORE_PATH .'/db.php');
+require(CORE_PATH .'/mysqli_db.php');
 $db = new db();
 if(isset($config['DB_HOST']) && isset($config['DB_USER']) && isset($config['DB_PSWD']))
 {
