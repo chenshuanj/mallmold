@@ -154,8 +154,6 @@ class db
 	
 	public function count()
     {
-		//$query = $this->query($this->getsql());
-		//return $this->num_rows($query);
 		$rs = $this->field('count(*) as count_num')->get();
 		return $rs['count_num'];
     }
