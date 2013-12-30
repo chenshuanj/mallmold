@@ -10,3 +10,4 @@ cscope.*
 install.php.default
 install/cache/*
 tags
+images/*
