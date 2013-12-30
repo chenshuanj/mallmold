@@ -52,27 +52,7 @@ class pageAction extends commonAction
 	*/
 	private function parse($str)
 	{
-		//$str = preg_replace("/\{tag\s+(.+?)\}/ies", "\$this->build('\\1');", $str);
-		
-		$str = preg_replace_callback("/\{tag\s+(.+?)\}/is",
-		
-		function($m) {
-			$tag = trim(stripslashes($tag));
-			if(!$tag)
-				return null;
-			
-			preg_match_all('/\s(.+?)="(|.+?)"/is', ' '.$tag, $rs);
-			$args = array();
-			foreach($rs[1] as $k=>$v){
-				$v = trim($v);
-				$args[$v] = trim($rs[2][$k]);
-			}
-			
-			return $this->convert($args);
-		},	 
-	
-		$str);
-		
+		$str = preg_replace("/\{tag\s+(.+?)\}/ies", "\$this->build('\\1');", $str);
 		return $str;
 	}
 	
