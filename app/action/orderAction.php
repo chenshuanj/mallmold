@@ -46,6 +46,48 @@ class orderAction extends commonAction
 		return $this->$model($order);
 	}
 	
+	private function alipay($order)
+	{
+		$status = $this->model('alipay')->set_pay_params($order);
+		if(!$status){
+			$this->model('payment')->error_log($order['order_id'], 'alipay');
+			$this->error($this->model('payment')->error_msg);
+			return;
+		}
+		
+		$this->view['data'] = $this->model('alipay')->get_form();
+		$this->view['html_title'] = 'Redirect to Alipay';
+		$this->view('checkout/alipay.html');
+	}
+	
+	private function tenpay($order)
+	{
+		$status = $this->model('tenpay')->set_pay_params($order);
+		if(!$status){
+			$this->model('payment')->error_log($order['order_id'], 'tenpay');
+			$this->error($this->model('payment')->error_msg);
+			return;
+		}
+		
+		$this->view['data'] = $this->model('tenpay')->get_form();
+		$this->view['html_title'] = 'Redirect to tenpay';
+		$this->view('checkout/tenpay.html');
+	}
+	
+	private function unionpay($order)
+	{
+		$status = $this->model('unionpay')->set_pay_params($order);
+		if(!$status){
+			$this->model('payment')->error_log($order['order_id'], 'unionpay');
+			$this->error($this->model('payment')->error_msg);
+			return;
+		}
+		
+		$this->view['data'] = $this->model('unionpay')->get_form();
+		$this->view['html_title'] = 'Redirect to unionpay';
+		$this->view('checkout/unionpay.html');
+	}
+	
 	private function paypal($order)
 	{
 		$status = $this->model('paypal')->set_pay_params($order);
