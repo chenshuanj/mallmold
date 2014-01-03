@@ -104,6 +104,7 @@ class upgradeAction extends commonAction
 	
 	private function check()
 	{
+		return 0;
 		$versions = $this->model('upgrade')->get_update();
 		if(!$versions){
 			return 0;
