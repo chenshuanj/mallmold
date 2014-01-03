@@ -1,18 +1,5 @@
 <?php
-/*
-*	@core.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited.
-*	
-*	This library is free software; you can redistribute it and/or
-*	modify it under the terms of the GNU Lesser General Public
-*	License as published by the Free Software Foundation; either
-*	version 2.1 of the License, or (at your option) any later version.
 
-*	This library is distributed in the hope that it will be useful,
-*	but WITHOUT ANY WARRANTY; without even the implied warranty of
-*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
-*	GNU Lesser General Public License for more details.
-*/
 
 function addslashes_deep($var)
 {
@@ -147,8 +134,7 @@ function router($router)
 	$module = !empty($_GET['c']) ? trim($_GET['c']) : 'index';
 	$action = !empty($_GET['a']) ? trim($_GET['a']) : 'index';
 	$rule = array();
-	if(isset($router['*/*'])){
-		$rule = $router['*/*'];
+	if(isset($router['**'];
 	}
 	if(isset($router["$module/*"])){
 		$rule = array_merge($rule, $router["$module/*"]);
