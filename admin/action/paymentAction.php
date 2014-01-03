@@ -81,6 +81,36 @@ class paymentAction extends commonAction
 			$this->ok('edit_success', url('payment/index'));
 		}
 	}
+
+	private function save_alipay()
+	{
+		$setting = $this->db->table('payment_alipay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['seller_email'] = trim($_POST['seller_email']);
+		$setting['partner'] = trim($_POST['partner']);
+		$setting['key'] = trim($_POST['key']);
+		$this->db->table('payment_alipay')->update($setting);
+	}
+	
+	private function save_tenpay()
+	{
+		$setting = $this->db->table('payment_tenpay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['appid'] = trim($_POST['appid']);
+		$setting['key'] = trim($_POST['key']);
+		$this->db->table('payment_tenpay')->update($setting);
+	}
+	
+	private function save_unionpay()
+	{
+		$setting = $this->db->table('payment_unionpay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['merid'] = trim($_POST['merid']);
+		$setting['mercode'] = trim($_POST['mercode']);
+		$setting['merabbr'] = trim($_POST['merabbr']);
+		$setting['security_key'] = trim($_POST['security_key']);
+		$this->db->table('payment_unionpay')->update($setting);
+	}
 	
 	private function save_paypal()
 	{
