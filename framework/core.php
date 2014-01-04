@@ -1,6 +1,5 @@
 <?php
 
-
 function addslashes_deep($var)
 {
 	if(is_array($var)){
@@ -134,7 +133,8 @@ function router($router)
 	$module = !empty($_GET['c']) ? trim($_GET['c']) : 'index';
 	$action = !empty($_GET['a']) ? trim($_GET['a']) : 'index';
 	$rule = array();
-	if(isset($router['**'];
+	if(isset($router['*/*'])){
+		$rule = $router['*/*'];
 	}
 	if(isset($router["$module/*"])){
 		$rule = array_merge($rule, $router["$module/*"]);

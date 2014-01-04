@@ -1,6 +1,5 @@
 <?php
 
-
 require Action('common');
 
 class routerAction extends commonAction
@@ -19,7 +18,10 @@ class routerAction extends commonAction
 			$router = include $file;
 			$data = array();
 			$data['type'] = $router['type'];
-			$data['default'] = $router['**'){
+			$data['default'] = $router['*/*'];
+			$data['router'] = array();
+			foreach($router as $k=>$v){
+				if($k != 'type' && $k != '*/*'){
 					$data['router'][] = array(
 						'key' => $k,
 						'router' => $v,
@@ -46,7 +48,10 @@ class routerAction extends commonAction
 			$router = include $file;
 			$data = array();
 			$data['type'] = $router['type'];
-			$data['default'] = $router['**'){
+			$data['default'] = $router['*/*'];
+			$data['router'] = array();
+			foreach($router as $k=>$v){
+				if($k != 'type' && $k != '*/*'){
 					$data['router'][] = array(
 						'key' => $k,
 						'router' => $v,
