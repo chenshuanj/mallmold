@@ -1,11 +1,11 @@
 $(document).ready(function(){
 	$('#select_lang').change(function(){
 		var code = $(this).val();
-		window.location = '{$current_url_lang}' + code;
+		window.location = '/?set_lang=' + code;
 	});
 	$('#select_cur').change(function(){
 		var code = $(this).val();
-		window.location = '{$current_url_cur}' + code;
+		window.location = '/?set_cur=' + code;
 	});
 	$('#catalogs').hover(function(){
 		var list = $(this).children().eq(1);
