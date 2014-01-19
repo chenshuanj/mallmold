@@ -42527,3 +42527,17 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}user_group` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 INSERT INTO `{PREFIX}user_group` (`group_id`, `name_key_`, `spending`, `status`) VALUES
 (1, 'k_8', 0.00, 1);
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}oauth` (
+  `id` smallint NOT NULL auto_increment,
+  `type` varchar(32) NOT NULL,
+  `key` varchar(256) NOT NULL,
+  `secret` varchar(256) NOT NULL,
+  PRIMARY KEY  (`id`)
+);
+
+INSERT INTO `{PREFIX}oauth` (`id`, `type`, `key`, `secret`) VALUES
+(NULL, 'qq', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd'),
+(NULL, 'weibo', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd'),
+(NULL, 'kaixin', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd'),
+(NULL, 'taobao', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd');
