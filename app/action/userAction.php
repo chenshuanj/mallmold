@@ -28,19 +28,49 @@ class userAction extends commonAction
 		$this->view('user/login.html');
 	}
 	
+	public function oauth() 
+	{
+		if($this->model('user')->is_login())
+		{
+			header('Location: '.url('index/index'));
+			return;
+		}
+		
+		$OauthType = $this->getOauthType();
+		
+		if(!$OauthType) 
+		{
+			$this->error('Invalid Param!');
+		}
+		
+		$OauthConfig = $this->getOauthConfig($OauthType);
+
+		if(empty($OauthConfig)) 
+		{
+			$this->error('Invalid Oauth Type!');
+		}
+		
+		$Oauth = $this->load('lib/oauth2')->getInstance($OauthConfig, $OauthType);
+		
+		$Oauth->redirect($Oauth->getRequestCodeURL());
+	}
+	
 	public function register()
 	{
-		if($this->model('user')->is_login()){
+		if($this->model('user')->is_login())
+		{
 			header('Location: '.url('index/index'));
 			return;
 		}
 		
 		$back_url = $this->model('common')->back_url();
-		if($this->is_noback_url($back_url)){
+		if($this->is_noback_url($back_url))
+		{
 			$back_url = url('index/index');
 		}
 		
-		if($this->setting['register_verify'] == 1){
+		if($this->setting['register_verify'] == 1)
+		{
 			$this->load('lib/captcha')->set_captcha();
 		}
 		
@@ -214,6 +244,23 @@ class userAction extends commonAction
 			return false;
 		}
 	}
+	
+	private function getOauthType() 
+	{
+		$Req = array_keys($_GET);
+		if(sizeof($Req) === 4) 
+		{
+			return (String)$Req[3];
+		}
+		return false;
+	}
+	
+	private function getOauthConfig($type) 
+	{
+		$config = &$this->model('oauth')->getConfig($type);
+		return $config ? $config : array();
+	}
+	
 }
 
 ?>
