@@ -1,7 +1,7 @@
 <?php
 
 
-require Action('common');
+require_once Action('common');
 
 class userAction extends commonAction
 {
