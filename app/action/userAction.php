@@ -1,23 +1,12 @@
 <?php
-/*
-*	@userAction.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
-*	http://www.mallmold.com/
-*	
-*	This program is free software; you can redistribute it and/or
-*	modify it under the terms of the GNU General Public License
-*	as published by the Free Software Foundation; either version 2
-*	of the License, or (at your option) any later version.
-*	More details please see: http://www.gnu.org/licenses/gpl.html
-*	
-*	If you want to get an unlimited version of the program or want to obtain
-*	additional services, please send an email to <service@mallmold.com>.
-*/
 
-require Action('common');
+
+require_once Action('common');
 
 class userAction extends commonAction
 {
+	private $_oauthCallback = '';
+	
 	public function login()
 	{
 		if($this->model('user')->is_login()){
@@ -41,19 +30,55 @@ class userAction extends commonAction
 		$this->view('user/login.html');
 	}
 	
+	public function oauth() 
+	{
+		$this->_oauthCallback = $_SERVER['HTTP_HOST'] . '/user/oauth_callback';
+		
+		if($this->model('user')->is_login())
+		{
+			header('Location: '.url('index/index'));
+			return;
+		}
+		
+		$OauthType = $this->getOauthType();
+		
+		if(!$OauthType) 
+		{
+			$this->error('Invalid Param!');
+		}
+		
+		$OauthConfig = $this->getOauthConfig($OauthType);
+
+		if(empty($OauthConfig)) 
+		{
+			$this->error('Invalid Oauth Type!');
+		}
+		
+		$Oauth = $this->load('lib/oauth2')->getInstance($OauthConfig, $OauthType);
+		
+		$Oauth->redirect($Oauth->getRequestCodeURL());
+	}
+	
+	public function oauth_callback() {
+		echo 'call back ok';
+	}
+	
 	public function register()
 	{
-		if($this->model('user')->is_login()){
+		if($this->model('user')->is_login())
+		{
 			header('Location: '.url('index/index'));
 			return;
 		}
 		
 		$back_url = $this->model('common')->back_url();
-		if($this->is_noback_url($back_url)){
+		if($this->is_noback_url($back_url))
+		{
 			$back_url = url('index/index');
 		}
 		
-		if($this->setting['register_verify'] == 1){
+		if($this->setting['register_verify'] == 1)
+		{
 			$this->load('lib/captcha')->set_captcha();
 		}
 		
@@ -227,6 +252,27 @@ class userAction extends commonAction
 			return false;
 		}
 	}
+	
+	private function getOauthType() 
+	{
+		$Req = array_keys($_GET);
+		if(sizeof($Req) === 4) 
+		{
+			return (String)$Req[3];
+		}
+		return false;
+	}
+	
+	private function getOauthConfig($type) 
+	{
+		$config = $this->model('oauth')->getConfig($type);
+		if($config) {
+			$config['callback'] = $this->_oauthCallback;
+			return $config;
+		}
+		return array();
+	}
+	
 }
 
 ?>

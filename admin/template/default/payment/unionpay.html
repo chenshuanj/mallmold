@@ -1,0 +1,31 @@
+<tr>
+	<th>Test Mode:</th>
+	<td class="tleft">
+		<label><input name="test_mode" type="radio" value="1" {if $setting['test_mode']==1} checked{/if}>{L:yes}</label> 
+		<label><input name="test_mode" type="radio" value="0" {if $setting['test_mode']==0} checked{/if}>{L:no}</label>
+	</td>
+</tr>
+<tr>
+	<th>商户代码(merid):</th>
+	<td class="tleft">
+		<input class="len2" name="merid" type="text" value="{$setting['merid']}">
+	</td>
+</tr>
+<tr>
+	<th>商户类别(mercode):</th>
+	<td class="tleft">
+		<input class="len2" name="mercode" type="text" value="{$setting['mercode']}">
+	</td>
+</tr>
+<tr>
+	<th>商户简称(merabbr):</th>
+	<td class="tleft">
+		<input class="len2" name="merabbr" type="text" value="{$setting['merabbr']}">
+	</td>
+</tr>
+<tr>
+	<th>密钥(security_key):</th>
+	<td class="tleft">
+		<input class="len2" name="security_key" type="text" value="{$setting['security_key']}">
+	</td>
+</tr>

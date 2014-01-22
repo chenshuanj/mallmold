@@ -753,7 +753,47 @@ INSERT INTO `{PREFIX}payment` (`id`, `name`, `description`, `model`, `sort_order
 (2, 'Credit card(Paypal)', 'Paypal Website Payments Pro(Direct Payment)', 'paypal_pro', 2, 0, 1),
 (3, 'Paypal Express Checkout', 'Paypal Express Checkout', 'paypal_express', 3, 0, 1),
 (4, 'Credit card(Authorize.net)', 'Authorize.net(Advanced Integration Method)', 'authorize', 4, 0, 1),
-(5, 'MoneyBookers', 'MoneyBookers(Skrill)', 'moneybookers', 5, 0, 0);
+(5, 'MoneyBookers', 'MoneyBookers(Skrill)', 'moneybookers', 5, 0, 0),
+(6, '支付宝', '支付宝即时到帐', 'alipay', 6, 0, 1),
+(7, '财付通', '财付通支付', 'tenpay', 7, 0, 1),
+(8, '银联在线支付', '银联在线快速支付', 'unionpay', 8, 0, 1);
+
+CREATE TABLE IF NOT EXISTS `mm_payment_alipay` (
+  `id` tinyint(1) NOT NULL auto_increment,
+  `test_mode` tinyint(1) NOT NULL default '0',
+  `seller_email` varchar(32) NOT NULL,
+  `partner` varchar(16) default NULL,
+  `key` varchar(32) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `mm_payment_alipay` (`id`, `test_mode`, `seller_email`, `partner`, `key`) VALUES
+(1, 0, 'test@mallmold.com', '12345678', 'ffmhdgrdggg');
+
+CREATE TABLE IF NOT EXISTS `mm_payment_tenpay` (
+  `id` tinyint(1) NOT NULL auto_increment,
+  `test_mode` tinyint(1) NOT NULL default '0',
+  `appid` varchar(16) default NULL,
+  `key` varchar(32) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `mm_payment_tenpay` (`id`, `test_mode`, `appid`, `key`) VALUES
+(1, 0, '1234', '3564353777');
+
+CREATE TABLE IF NOT EXISTS `mm_payment_unionpay` (
+  `id` tinyint(1) NOT NULL auto_increment,
+  `test_mode` tinyint(1) NOT NULL default '0',
+  `merid` varchar(32) default NULL,
+  `mercode` varchar(16) default NULL,
+  `merabbr` varchar(256) NOT NULL,
+  `security_key` varchar(32) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `mm_payment_unionpay` (`id`, `test_mode`, `merid`, `mercode`, `merabbr`, `security_key`) VALUES
+(1, 1, '105550149170027', '', '香港摩登电子商务有限公司', '88888888');
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
   `id` tinyint(1) NOT NULL auto_increment,
   `test_mode` tinyint(1) NOT NULL default '0',
@@ -42487,3 +42527,17 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}user_group` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 INSERT INTO `{PREFIX}user_group` (`group_id`, `name_key_`, `spending`, `status`) VALUES
 (1, 'k_8', 0.00, 1);
+
+CREATE TABLE IF NOT EXISTS `{PREFIX}oauth` (
+  `id` smallint NOT NULL auto_increment,
+  `type` varchar(32) NOT NULL,
+  `key` varchar(256) NOT NULL,
+  `secret` varchar(256) NOT NULL,
+  PRIMARY KEY  (`id`)
+);
+
+INSERT INTO `{PREFIX}oauth` (`id`, `type`, `key`, `secret`) VALUES
+(NULL, 'qq', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd'),
+(NULL, 'weibo', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd'),
+(NULL, 'kaixin', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd'),
+(NULL, 'taobao', 'dkfjkdjfkdjkfjkdjfkjdf', 'dfdfdfdfdfdfdfd');

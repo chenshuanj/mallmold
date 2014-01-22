@@ -1,18 +1,5 @@
 <?php
-/*
-*	@captcha.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
-*	http://www.mallmold.com/
-*	
-*	This program is free software; you can redistribute it and/or
-*	modify it under the terms of the GNU General Public License
-*	as published by the Free Software Foundation; either version 2
-*	of the License, or (at your option) any later version.
-*	More details please see: http://www.gnu.org/licenses/gpl.html
-*	
-*	If you want to get an unlimited version of the program or want to obtain
-*	additional services, please send an email to <service@mallmold.com>.
-*/
+
 
 class captcha
 {
@@ -34,7 +21,7 @@ class captcha
 	public function set_captcha()
 	{
 		$str = "ABCDEFGHIJKMNOPQRSTUVWXYZabcdefghkmnopqrstuvwsyz123456789";
-		$len = rand(4, 6);
+		$len = rand(5, 7);
 		$n = strlen($str);
 		$code = '';
 		for($i=0; $i<$len; $i++){
@@ -47,7 +34,7 @@ class captcha
 	
 	public function getcode()
 	{
-		return $_SESSION['captcha_code'];
+		return $_SESSION['captcha_code'] ? $_SESSION['captcha_code'] : '';
 	}
 	
 	public function putimg($code)

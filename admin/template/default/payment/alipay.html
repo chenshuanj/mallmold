@@ -1,0 +1,26 @@
+<tr>
+	<th>Test Mode:</th>
+	<td class="tleft">
+		<label><input name="test_mode" type="radio" value="1" {if $setting['test_mode']==1} checked{/if}>{L:yes}</label> 
+		<label><input name="test_mode" type="radio" value="0" {if $setting['test_mode']==0} checked{/if}>{L:no}</label>
+	</td>
+</tr>
+<tr>
+	<th>卖家支付宝帐户:</th>
+	<td class="tleft">
+		<input class="len2" name="seller_email" type="text" value="{$setting['seller_email']}"> *
+	</td>
+</tr>
+
+<tr>
+	<th>合作者身份(pid):</th>
+	<td class="tleft">
+		<input class="len2" name="partner" type="text" value="{$setting['partner']}">
+	</td>
+</tr>
+<tr>
+	<th>安全校验码(key):</th>
+	<td class="tleft">
+		<input class="len2" name="key" type="text" value="{$setting['key']}">
+	</td>
+</tr>

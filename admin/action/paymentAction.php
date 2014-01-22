@@ -1,18 +1,5 @@
 <?php
-/*
-*	@paymentAction.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
-*	http://www.mallmold.com/
-*	
-*	This program is free software; you can redistribute it and/or
-*	modify it under the terms of the GNU General Public License
-*	as published by the Free Software Foundation; either version 2
-*	of the License, or (at your option) any later version.
-*	More details please see: http://www.gnu.org/licenses/gpl.html
-*	
-*	If you want to get an unlimited version of the program or want to obtain
-*	additional services, please send an email to <service@mallmold.com>.
-*/
+
 
 require Action('common');
 
@@ -80,6 +67,36 @@ class paymentAction extends commonAction
 			
 			$this->ok('edit_success', url('payment/index'));
 		}
+	}
+
+	private function save_alipay()
+	{
+		$setting = $this->db->table('payment_alipay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['seller_email'] = trim($_POST['seller_email']);
+		$setting['partner'] = trim($_POST['partner']);
+		$setting['key'] = trim($_POST['key']);
+		$this->db->table('payment_alipay')->update($setting);
+	}
+	
+	private function save_tenpay()
+	{
+		$setting = $this->db->table('payment_tenpay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['appid'] = trim($_POST['appid']);
+		$setting['key'] = trim($_POST['key']);
+		$this->db->table('payment_tenpay')->update($setting);
+	}
+	
+	private function save_unionpay()
+	{
+		$setting = $this->db->table('payment_unionpay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['merid'] = trim($_POST['merid']);
+		$setting['mercode'] = trim($_POST['mercode']);
+		$setting['merabbr'] = trim($_POST['merabbr']);
+		$setting['security_key'] = trim($_POST['security_key']);
+		$this->db->table('payment_unionpay')->update($setting);
 	}
 	
 	private function save_paypal()

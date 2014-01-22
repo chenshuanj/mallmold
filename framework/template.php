@@ -1,18 +1,5 @@
 <?php
-/*
-*	@template.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited.
-*	
-*	This library is free software; you can redistribute it and/or
-*	modify it under the terms of the GNU Lesser General Public
-*	License as published by the Free Software Foundation; either
-*	version 2.1 of the License, or (at your option) any later version.
 
-*	This library is distributed in the hope that it will be useful,
-*	but WITHOUT ANY WARRANTY; without even the implied warranty of
-*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
-*	GNU Lesser General Public License for more details.
-*/
 
 class template
 {
@@ -26,7 +13,7 @@ class template
 	public function parse($str)
 	{
 		$str = str_replace('{TPL_PATH}', $this->tpl_path, $str);
-		$str = preg_replace("/\{include\s+(.+?)\}/ies", "\$this->build('\\1');", $str);
+		$str = preg_replace("/\{include\s+(.+?)\}/ies", "\$this->build('\\1');", $str);		
 		$str = preg_replace("/\{if\s+(.+?)\}/is", "<?php if(\\1) { ?>", $str);
 		$str = preg_replace("/\{elseif\s+(.+?)\}/is", "<?php } elseif(\\1) { ?>", $str);
 		$str = preg_replace("/\{else\}/i", "<?php } else { ?>", $str);
