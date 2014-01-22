@@ -127,8 +127,8 @@ abstract class ThinkOauth{
 		$config = $this->Configs;
 		if(!empty($config['AUTHORIZE']))
 			$this->Authorize = $config['AUTHORIZE'];
-		if(!empty($config['CALLBACK']))
-			$this->Callback = $config['CALLBACK'];
+		if(!empty($config['callback']))
+			$this->Callback = $config['callback'];
 		else
 			throw new Exception('请配置回调页面地址');
 	}

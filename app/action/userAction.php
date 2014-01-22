@@ -5,6 +5,8 @@ require Action('common');
 
 class userAction extends commonAction
 {
+	private $_oauthCallback = '';
+	
 	public function login()
 	{
 		if($this->model('user')->is_login()){
@@ -30,6 +32,8 @@ class userAction extends commonAction
 	
 	public function oauth() 
 	{
+		$this->_oauthCallback = $_SERVER['HTTP_HOST'] . '/user/oauth_callback';
+		
 		if($this->model('user')->is_login())
 		{
 			header('Location: '.url('index/index'));
@@ -53,6 +57,10 @@ class userAction extends commonAction
 		$Oauth = $this->load('lib/oauth2')->getInstance($OauthConfig, $OauthType);
 		
 		$Oauth->redirect($Oauth->getRequestCodeURL());
+	}
+	
+	public function oauth_callback() {
+		echo 'call back ok';
 	}
 	
 	public function register()
@@ -257,8 +265,12 @@ class userAction extends commonAction
 	
 	private function getOauthConfig($type) 
 	{
-		$config = &$this->model('oauth')->getConfig($type);
-		return $config ? $config : array();
+		$config = $this->model('oauth')->getConfig($type);
+		if($config) {
+			$config['callback'] = $this->_oauthCallback;
+			return $config;
+		}
+		return array();
 	}
 	
 }
