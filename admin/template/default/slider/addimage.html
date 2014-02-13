@@ -30,6 +30,22 @@
 	</td>
   </tr>
   <tr>
+    <th valign="top">{L:description}:</th>
+	<td class="tleft">
+		<input name="description_txtkey_" value="{$data['description_txtkey_']}" type="hidden">
+		<textarea rows="4" cols="48" name="description">{$data['description']}</textarea>
+		{if $data['description_txtkey_']}
+		<a class="t" href="{:url('dictionary/ajax?type=_txtkey_&key='.$data['description_txtkey_'])}">
+		<img src="{TPL_PATH}images/t.png">
+		</a>
+		{/if}
+	</td>
+  </tr>
+  <tr>
+    <th>{L:Link}:</th>
+	<td class="tleft"><input class="len2" name="link" type="text" value="{$data['link']}"></td>
+  </tr>
+  <tr>
     <th>{L:sortorder}:</th>
 	<td class="tleft"><input class="len2" name="sort_order" type="text" value="{$data['sort_order']}"></td>
   </tr>

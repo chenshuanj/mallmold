@@ -79,6 +79,7 @@ class order extends model
 			$goods_data = array(
 				'order_id' => $order_id,
 				'goods_id' => $v['goods_id'],
+				'goods_sku' => $v['goods']['sku'],
 				'goods_name' => addslashes($v['goods']['title']),
 				'options' => addslashes(json_encode($v['options_name'])),
 				'price' => $v['subtotal']/$v['quantity'],

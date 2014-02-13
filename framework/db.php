@@ -146,7 +146,7 @@ class db
 		$this->check();
 		
 		$sql = 'select '.($this->fields ? $this->fields : '*')
-				.' from '.$this->table
+				.' from `'.$this->table.'`'
 				.($this->where ? ' where '.$this->where : '')
 				.($this->group ? ' group by '.$this->group : '')
 				.($this->order ? ' order by '.$this->order : '')
@@ -195,7 +195,7 @@ class db
 			$fields .= ($fields ? "," : "").$k;
 			$values .= ($values ? "," : "")."'$v'";
 		}
-		$sql = 'insert into '.$this->table." ($fields) values ($values)";
+		$sql = 'insert into `'.$this->table."` ($fields) values ($values)";
 		$this->query($sql);
 		return $this->insert_id();
 	}
@@ -210,7 +210,7 @@ class db
 		foreach($data as $k=>$v){
 			$str .= ($str ? "," : "")."`$k`='$v'";
 		}
-		$sql = 'update '.$this->table." set $str".($this->where ? ' where '.$this->where : '');
+		$sql = 'update `'.$this->table."` set $str".($this->where ? ' where '.$this->where : '');
 		$this->query($sql);
 		return mysql_affected_rows($this->conn);
 	}
@@ -222,13 +222,16 @@ class db
 		if(!$field || $num == 0){
 			return 0;
 		}
-		$sql = 'update '.$this->table." set ";
+		$sql = 'update `'.$this->table."` set ";
 		if($num > 0){
 			$sql .= "`$field` = `$field` + $num";
 		}else{
 			$num = 0 - $num;
 			$sql .= "`$field` = `$field` - $num";
 		}
+		$sql .= ($this->where ? ' where '.$this->where : '');
+		$sql .= ($this->limit ? ' limit '.$this->limit : '');
+		
 		$this->query($sql);
 		return mysql_affected_rows($this->conn);
 	}
@@ -236,7 +239,7 @@ class db
 	public function delete()
     {
 		$this->check(1);
-		$sql = 'delete from '.$this->table.' where '.$this->where
+		$sql = 'delete from `'.$this->table.'` where '.$this->where
 				.($this->group ? ' group by '.$this->group : '')
 				.($this->order ? ' order by '.$this->order : '')
 				.($this->limit ? ' limit '.$this->limit : '');

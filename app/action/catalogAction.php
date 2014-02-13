@@ -32,15 +32,7 @@ class catalogAction extends commonAction
 			return;
 		}
 		
-		$attr_args = array();
-		foreach($_GET as $k=>$v){
-			if(stripos($k, 'attr_') === 0){
-				$attr_id = intval(substr($k, 5));
-				$attr_args[$attr_id] = intval($v);
-				
-				$this->model('statistic')->add_attr_click($attr_id);
-			}
-		}
+		$attr_args = $this->attributes_args();
 		
 		$where = "goods_id in (select goods_id from ".$this->db->tbname('goods_cate_val')." where cate_id=$id)";
 		if($attr_args){
@@ -56,28 +48,11 @@ class catalogAction extends commonAction
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		$list = $this->model('goods')->getlist($where, null, $limit);
 		
-		$attributes = $this->model('catalog')->get_attributes();
-		foreach($attributes as $k=>$v){
-			$args = $attr_args;
-			$urlargs= "id=$id";
-			$attr_id = $v['attr_id'];
-			unset($args[$attr_id]);
-			if($args){
-				foreach($args as $key=>$val){
-					$urlargs .= '&attr_'.$key.'='.$val;
-				}
-			}
-			$attributes[$k]['base_args'] = $urlargs;
-		}
-		
-		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_list_sid');
-		
 		$this->view['id'] = $id;
 		$this->view['list'] = $list;
+		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_list_sid');
 		$this->view['pager'] = $pager;
 		$this->view['cate'] = $cate;
-		$this->view['attributes'] = $attributes;
-		$this->view['attr_args'] = $attr_args;
 		$this->view['html_title'] = $cate['meta_title'] ? $cate['meta_title'] : $cate['name'];
 		$this->view['meta_description'] = $cate['meta_description'];
 		$this->view['meta_keywords'] = $cate['meta_keywords'];
@@ -87,18 +62,8 @@ class catalogAction extends commonAction
 	
 	public function search()
 	{
-		$keyword = trim($_REQUEST['keyword']);
-		
-		$attr_args = array();
-		foreach($_GET as $k=>$v){
-			if(stripos($k, 'attr_') === 0){
-				$attr_id = intval(substr($k, 5));
-				$attr_args[$attr_id] = intval($v);
-				
-				$this->model('statistic')->add_attr_click($attr_id);
-			}
-		}
-		
+		$keyword = $_POST['keyword'] ? trim($_POST['keyword']) : trim(urldecode($_GET['keyword']));
+		$attr_args = $this->attributes_args($keyword);
 		$where = '1=1';
 		$list = array();
 		if($keyword){
@@ -139,24 +104,7 @@ class catalogAction extends commonAction
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		$list = $this->model('goods')->getlist($where, null, $limit);
 		
-		$title = $keyword;
-		$attributes = $this->model('catalog')->get_attributes();
-		foreach($attributes as $k=>$v){
-			$args = $attr_args;
-			$urlargs = $keyword ? "keyword=$keyword" : '';
-			$attr_id = $v['attr_id'];
-			if($args[$attr_id]){
-				$av_id = $args[$attr_id];
-				$title .= ($title ? ' + ' : '').'['.$v['values'][$av_id]['title'].']';
-				unset($args[$attr_id]);
-			}
-			if($args){
-				foreach($args as $key=>$val){
-					$urlargs .= '&attr_'.$key.'='.$val;
-				}
-			}
-			$attributes[$k]['base_args'] = $urlargs;
-		}
+		$title = lang('Search'). ': '.$this->view['filter_title'];
 		
 		$this->view['img_sign'] = $this->model('image')->getsignbyid('goods_list_sid');
 		$this->view['keyword'] = $keyword;
@@ -165,9 +113,50 @@ class catalogAction extends commonAction
 		$this->view['list'] = $list;
 		$this->view['pager'] = $pager;
 		$this->view['catelist'] = $this->model('catalog')->get_catelist(0);
-		$this->view['attributes'] = $attributes;
-		$this->view['attr_args'] = $attr_args;
 		$this->view('catalog/search.html');
+	}
+	
+	private function attributes_args($keyword = '')
+	{
+		$attributes = $this->model('catalog')->get_attributes();
+		
+		$attr_args = array();
+		foreach($attributes as $v){
+			$code = $v['code'];
+			if($_GET[$code]){
+				$attr_args[$code] = intval($_GET[$code]);
+				$this->model('statistic')->add_attr_click($v['attr_id']);
+			}
+		}
+		
+		$base_url = $this->model('urlkey')->getaction('id');
+		$filter_title = $keyword;
+		foreach($attributes as $k=>$v){
+			$code = $v['code'];
+			$args = $attr_args;
+			if($args[$code]){
+				$av_id = $args[$code];
+				$filter_title .= ($filter_title ? ' + ' : '').'['.$v['values'][$av_id]['title'].']';
+				unset($args[$code]);
+			}
+			
+			$urlargs = array();
+			if($args){
+				foreach($args as $key=>$val){
+					$urlargs[] = "$key=$val";
+				}
+			}
+			
+			if($keyword){
+				$urlargs[] = "keyword=$keyword";
+			}
+			$attributes[$k]['base_args'] = $base_url.($urlargs ? '?'.implode('&', $urlargs).'&' : '?');
+		}
+		
+		$this->view['attr_args'] = $attr_args;
+		$this->view['filter_title'] = $filter_title;
+		$this->view['attributes'] = $attributes;
+		return $attr_args;
 	}
 }
 

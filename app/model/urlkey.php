@@ -55,5 +55,13 @@ class urlkey extends model
 		$item_id = $this->db->table('urlkey')->where("model='$model' and urlkey='$urlkey'")->getval('item_id');
 		return $item_id ? $item_id : 0;
 	}
+	
+	public function getaction($item_key)
+	{
+		$model_keys = $this->model_keys();
+		$model = $model_keys[$item_key];
+		$action = $_GET['a'] ? preg_replace('/'.$this->extension.'$/i', '', trim($_GET['a'])) : 'index';
+		return "$model/$action";
+	}
 }
 ?>

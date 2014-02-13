@@ -1,6 +1,6 @@
 <?php
 /*
-*	@stmp.php
+*	@smtp.php
 *	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
@@ -14,7 +14,7 @@
 *	additional services, please send an email to <service@mallmold.com>.
 */
 
-class stmp
+class smtp
 {
 	private $fp;
 	public $error;

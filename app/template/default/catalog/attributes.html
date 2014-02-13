@@ -4,7 +4,7 @@
 		<ul>
 			{foreach $v['values'] as $val}
 			<li>
-			<a rel="nofollow" href="{:url('catalog/search?attr_'.$val['attr_id'].'='.$val['av_id'])}">
+			<a rel="nofollow" href="{:url('catalog/search?'.$v['code'].'='.$val['av_id'])}">
 			{$val['title']}
 			</a>
 			</li>

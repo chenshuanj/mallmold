@@ -41,7 +41,7 @@ class image extends model
 			return $image_setting;
 		}
 		
-		$key = 'image_setting'.($type ? '_'.$type : '');
+		$key = 'image_setting';
 		$image_setting = $this->cache($key, null, 0);
 		if(!$image_setting){
 			$list = $this->db->table('image_setting')->where('status=1')->getlist();
@@ -157,6 +157,7 @@ class image extends model
 				$images[$sign] = $img;
 			}
 		}
+		$images['origin'] = $img = $this->upload_path.'/'.$filename;
 		return $images;
 	}
 	

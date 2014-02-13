@@ -34,6 +34,13 @@
 		*</td>
   </tr>
   <tr>
+    <th>{L:type}:</th>
+	<td class="tleft">
+		<label><input name="type" type="radio" value="1" {if $data['type'] == 1}checked{/if}>{L:Single}</label>
+		<label><input name="type" type="radio" value="2" {if $data['type'] == 2}checked{/if}>{L:Multiple}</label>
+	</td>
+  </tr>
+  <tr>
     <th>{L:if_filter}:</th>
 	<td class="tleft">
 		<label><input name="can_filter" type="radio" value="1" {if $data['can_filter'] == 1}checked{/if}>{L:yes}</label>

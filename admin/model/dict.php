@@ -160,7 +160,7 @@ class dict extends model
 				if($keytype){
 					$newkey = str_replace($keytype, '', $key);
 					if(isset($data[$newkey])){
-						if(!$data[$newkey]){
+						if(!$data[$newkey] && !$data[$key]){
 							unset($data[$newkey]);
 							continue;
 						}
@@ -244,7 +244,12 @@ class dict extends model
 		}elseif($type == '_txtkey_'){
 			foreach($langs as $k=>$v){
 				$table = 'dict_text_'.$k;
-				$this->db->table($table)->where("text_key='$sign'")->update(array('content' => $data[$k]));
+				$n = $this->db->table($table)->where("text_key='$sign'")->count();
+				if($n > 0){
+					$this->db->table($table)->where("text_key='$sign'")->update(array('content' => $data[$k]));
+				}else{
+					$this->db->table($table)->insert(array('text_key' => $sign, 'content' => $data[$k]));
+				}
 			}
 		}
 		return true;

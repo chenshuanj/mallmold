@@ -147,6 +147,9 @@ class sliderAction extends commonAction
 				'slider_id' => intval($_POST['slider_id']),
 				'title_key_' => trim($_POST['title_key_']),
 				'title' => trim($_POST['title']),
+				'description_txtkey_' => trim($_POST['description_txtkey_']),
+				'description' => $_POST['description'],
+				'link' => trim($_POST['link']),
 				'src' => trim($_POST['src']),
 				'sort_order' => intval($_POST['sort_order']),
 				'status' => intval($_POST['status'])

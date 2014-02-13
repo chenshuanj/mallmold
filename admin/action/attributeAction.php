@@ -56,6 +56,7 @@ class attributeAction extends commonAction
 				'code' => $code,
 				'name_key_' => trim($_POST['name_key_']),
 				'name' => trim($_POST['name']),
+				'type' => intval($_POST['type']),
 				'can_filter' => intval($_POST['can_filter']),
 				'sort_order' => intval($_POST['sort_order']),
 				'status' => intval($_POST['status'])

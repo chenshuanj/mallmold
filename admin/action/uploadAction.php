@@ -170,8 +170,15 @@ class uploadAction extends commonAction
 				mkdir($save_dir);
 			}
 			
-			$new_file_name = date("dHis") . '_' . rand(10000, 99999) . '.' . $file_ext;
+			$new_file_name = $file_name;
 			$file_path = $save_dir . $new_file_name;
+			$n = 1;
+			while(file_exists($file_path)){
+				$new_file_name = implode('.', $temp_arr).'-'.$n.'.'.$file_ext;
+				$file_path = $save_dir . $new_file_name;
+				$n++;
+			}
+			
 			if (move_uploaded_file($tmp_name, $file_path) === false) {
 				$this->act_error(lang('upload_failed'));
 			}

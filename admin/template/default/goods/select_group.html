@@ -6,7 +6,7 @@
   <th width="200">{L:select_group}</th>
   <td class="tleft">
 	{foreach $group as $k=>$v}
-		<label><input name="group_id" class="group_id" type="radio" value="{$k}">{$v}</label><br/>
+		<label><input name="group_id" class="group_id" type="radio" value="{$k}"{if $k==0} checked{/if}>{$v}</label><br/>
 	{/foreach}
   </td>
   </tr>

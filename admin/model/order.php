@@ -91,12 +91,7 @@ class order extends model
 		
 		$order['address'] = $address;
 		$order['billing_address'] = $billing_address;
-		
-		$goods = $this->db->table('order_goods')->where("order_id=$order_id")->getlist();
-		foreach($goods as $k=>$v){
-			$goods[$k]['goods_sku'] = $this->db->table('goods')->where("goods_id=".$v['goods_id'])->getval('sku');
-		}
-		$order['goods'] = $goods;
+		$order['goods'] = $this->db->table('order_goods')->where("order_id=$order_id")->getlist();
 		
 		$status_list = $this->db->table('order_status')->where("order_id=$order_id")->order('time desc')->getlist();
 		foreach($status_list as $k=>$v){

@@ -1,3 +1,10 @@
+==V2.1 release==
+Improved slider
+Improved attribute
+Improved url or search page
+Improved others
+Fix a framework bug
+
 ==V2.0 release==
 Add Cross-selling
 Add Helpdesk

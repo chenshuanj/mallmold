@@ -118,6 +118,9 @@
   </tr>
 </table>
 
+<style>
+.attr_select{width:150px;}
+</style>
 <table width="100%" class="r_table" id="c_2" style="display:none">
   <tr>
 	<th width="40">{L:select}</th>
@@ -144,9 +147,9 @@
 		{$attr['name']}:
 	</td>
 	<td class="tleft">
-		<select id="av_{$attr['attr_id']}" name="attr_value[{$attr['attr_id']}]" {if !$attr['at']} disabled="disabled"{/if}>
+		<select class="attr_select" id="av_{$attr['attr_id']}"{if $attr['type']==2} multiple="multiple"{/if} name="attr_value[{$attr['attr_id']}][]" {if !$attr['at']} disabled="disabled"{/if}>
 			{foreach $attr['values'] as $v}
-			<option value="{$v['av_id']}" {if $attr['at']==1 && $v['av_id']==$attr_at[$attr['attr_id']]} selected{/if}>{$v['title']}</option>
+			<option value="{$v['av_id']}" {if $attr['at']==1 && in_array($v['av_id'], $attr_at[$attr['attr_id']])} selected{/if}>{$v['title']}</option>
 			{/foreach}
 		</select>
 	</td>

@@ -31,11 +31,11 @@ class notice extends model
 			'title' => $title,
 			'content' => $content,
 		);
-		$res = $this->load('lib/stmp', $email_set)->sendmail($mail);
+		$res = $this->load('lib/smtp', $email_set)->sendmail($mail);
 		
 		if(!$id && !$res && $setting['email_log'] == 1){
 			$status = $res ? 1 : 0;
-			$error = $this->load('lib/stmp')->error;
+			$error = $this->load('lib/smtp')->error;
 			$data = array(
 				'email' => $email,
 				'title' => $title,
@@ -51,7 +51,7 @@ class notice extends model
 			if($res){
 				$this->db->table('email_log')->where("id=$id")->update(array('status'=>1));
 			}else{
-				$error = $this->load('lib/stmp')->error;
+				$error = $this->load('lib/smtp')->error;
 				$data = array(
 					'status' => 0,
 					'error' => $error ? $error : 'Connection timeout',

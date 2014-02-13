@@ -77,7 +77,7 @@ class goodsAction extends commonAction
 			
 			$attrlist = $this->db->table('goods_attr')->where("goods_id=$goods_id")->getlist();
 			foreach($attrlist as $v){
-				$attr[$v['attr_id']] = $v['av_id'];
+				$attr[$v['attr_id']][] = $v['av_id'];
 			}
 			
 			$extendlist = $this->db->table('goods_extend')->where("goods_id=$goods_id")->getlist();
@@ -247,26 +247,14 @@ class goodsAction extends commonAction
 		$attr = $_POST['attr'];
 		$attr_value = $_POST['attr_value'];
 		if($attr && is_array($attr) && $attr_value && is_array($attr_value)){
-			$attrlist = array();
-			$list = $this->db->table('goods_attr')->where("goods_id=$goods_id")->getlist();
-			foreach($list as $v){
-				$attrlist[$v['attr_id']] = $v['av_id'];
-			}
-			
+			$this->db->table('goods_attr')->where("goods_id=$goods_id")->delete();
 			foreach($attr as $aid){
-				if(!$attrlist[$aid] && $attr_value[$aid]){
-					$this->db->table('goods_attr')->insert(array('goods_id'=>$goods_id, 'attr_id'=>$aid, 'av_id'=>$attr_value[$aid]));
-				}else{
-					if($attrlist[$aid] != $attr_value[$aid]){
-						$this->db->table('goods_attr')->where("goods_id=$goods_id and attr_id=$aid")->update(array('av_id'=>$attr_value[$aid]));
+				if($attr_value[$aid]){
+					foreach($attr_value[$aid] as $av_id){
+						$this->db->table('goods_attr')->insert(
+								array('goods_id'=>$goods_id, 'attr_id'=>$aid, 'av_id'=>$av_id)
+						);
 					}
-					unset($attrlist[$aid]);
-				}
-			}
-			
-			if($attrlist){
-				foreach($attrlist as $k=>$v){
-					$this->db->table('goods_attr')->where("goods_id=$goods_id and attr_id=$k")->delete();
 				}
 			}
 		}

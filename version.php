@@ -1,4 +1,4 @@
 <?php
-define('UPDATE', '20131202');
-define('VERSION', '2.0');
+define('UPDATE', '20140214');
+define('VERSION', '2.1');
 ?>

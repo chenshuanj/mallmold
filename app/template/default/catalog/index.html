@@ -12,11 +12,11 @@
 				<dt>{$v['name']}:</dt>
 				{foreach $v['values'] as $val}
 				<dd>
-				<a rel="nofollow" href="{:url('catalog/index?'.$v['base_args'].'&attr_'.$val['attr_id'].'='.$val['av_id'])}"{if $attr_args[$val['attr_id']]==$val['av_id']} class="hover"{/if}>
+				<a rel="nofollow" href="{:url($v['base_args'].$v['code'].'='.$val['av_id'])}"{if $attr_args[$v['code']]==$val['av_id']} class="hover"{/if}>
 				{$val['title']}
 				</a>
-				{if $attr_args[$val['attr_id']]==$val['av_id']}
-				<a rel="nofollow" class="del_s" href="{:url('catalog/index?'.$v['base_args'])}">×</a>
+				{if $attr_args[$v['code']]==$val['av_id']}
+				<a rel="nofollow" class="del_s" href="{:url($v['base_args'])}">×</a>
 				{/if}
 				</dd>
 				{/foreach}

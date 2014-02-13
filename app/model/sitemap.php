@@ -70,7 +70,7 @@ class sitemap extends model
 					</url>';
 		}
 		
-		$page_list = $this->db->table('pages')->getlist();
+		$page_list = $this->db->table('pages')->where("urlkey<>'home'")->getlist();
 		foreach($page_list as $v){
 			$url = $this->model('urlkey')->geturl('page_id', $v['id'], $v['urlkey']);
 			$xml .= '<url>
@@ -82,7 +82,7 @@ class sitemap extends model
 		}
 		
 		$article_list = $this->db->table('article')->where('status=1')->getlist();
-		foreach($page_list as $v){
+		foreach($article_list as $v){
 			$url = $this->model('urlkey')->geturl('article_id', $v['article_id'], $v['urlkey']);
 			$xml .= '<url>
 						<loc>'.htmlspecialchars(url($url)).'</loc>

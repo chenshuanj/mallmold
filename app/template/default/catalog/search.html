@@ -8,11 +8,11 @@
 			<ul>
 				{foreach $v['values'] as $val}
 				<li>
-				<a rel="nofollow" href="{:url('catalog/search?'.$v['base_args'].'&attr_'.$val['attr_id'].'='.$val['av_id'])}"{if $attr_args[$val['attr_id']]==$val['av_id']} class="hover"{/if}>
+				<a rel="nofollow" href="{:url($v['base_args'].$v['code'].'='.$val['av_id'])}"{if $attr_args[$v['code']]==$val['av_id']} class="hover"{/if}>
 				{$val['title']}
 				</a>
-				{if $attr_args[$val['attr_id']]==$val['av_id']}
-				<a rel="nofollow" class="del_s" href="{:url('catalog/search?'.$v['base_args'])}">×</a>
+				{if $attr_args[$v['code']]==$val['av_id']}
+				<a rel="nofollow" class="del_s" href="{:url($v['base_args'])}">×</a>
 				{/if}
 				</li>
 				{/foreach}
@@ -23,7 +23,7 @@
 		{include catalog/catalogs.html}
 	</div>
 	<div class="fright" id="right">
-		<h3>{L:Search}: {$html_title}</h3>
+		<h3>{$html_title}</h3>
 		<div class="page_top">{include pager.html}</div>
 		<div class="list">
 			{foreach $list as $goods}
