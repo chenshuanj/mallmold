@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<th>{L:priority}:</th><td>{$ticket['priority']}</td>
-				<th>{L:time}:</th><td>{$ticket['time']}</td>
+				<th>{L:time}:</th><td>{:date('Y-m-d H:i:s', $ticket['time'])}</td>
 			</tr>
 		</table>
 		<h4></h4>
