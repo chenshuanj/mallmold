@@ -1,0 +1,32 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > {L:Import/Export}</div>
+<table width="100%" class="l_table">
+  <tr>
+	<th>{L:name}</th>
+	<th>{L:type}</th>
+	<th>{L:model}</th>
+	<th>{L:data format}</th>
+	<th>{L:action}</th>
+  </tr>
+  {foreach $list as $v}
+  <tr>
+	<td class="pleft">{$v['name']}</td>
+	<td class="pleft">{if $v['type']==1}{L:Import}{else}{L:Export}{/if}</td>
+	<td class="pleft">{$v['model']}</td>
+	<td class="pleft">{if $v['format'] ==1}{L:By delimiter}{else}{L:By row}{/if}</td>
+	<td>
+	<a href="{:url('im_export/edit?id='.$v['id'])}">{L:edit}</a> 
+	<a href="{:url('im_export/run?id='.$v['id'])}">{L:run}</a> 
+	<a href="{:url('im_export/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 
+	</td>
+  </tr>
+  {/foreach}
+  <tr>
+  <td colspan="5">
+	<div class="d_bottom"><a class="aborder" href="{:url('im_export/edit')}">{L:add}</a> </div>
+  </td>
+  </tr>
+</table>
+</div>
+{include comm_footer.html}

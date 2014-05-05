@@ -23,11 +23,11 @@
   </tr>
   {foreach $list as $v}
   <tr>
-	<td>{if $v['type']==1}{L:Pay}{else}{L:Refund}{/if}</td>
-	<td>{$v['order_sn']}</td>
-	<td>{$v['model']}</td>
+	<td class="pleft">{if $v['type']==1}{L:Pay}{else}{L:Refund}{/if}</td>
+	<td class="pleft">{$v['order_sn']}</td>
+	<td class="pleft">{$v['model']}</td>
 	<td class="pleft">{$v['track_id']}</td>
-	<td>{$symbols[$v['currency']]}{$v['money']}</td>
+	<td class="pleft">{$symbols[$v['currency']]}{$v['money']}</td>
 	<td class="pleft">{$v['remark']}</td>
 	<td>{$v['time']}</td>
   </tr>

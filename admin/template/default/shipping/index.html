@@ -16,7 +16,7 @@
     <td>{$v['shipping_id']}</td>
 	<td class="pleft">{if $v['country_id']>0}{$country[$v['country_id']]}{else}{L:any_country}{/if}</td>
 	<td class="pleft">{$v['name']}</td>
-	<td>{$current_symbol}{$v['base_fee']}</td>
+	<td class="pleft">{$current_symbol}{$v['base_fee']}</td>
 	<td>{$v['sort_order']}</td>
 	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</a></td>
 	<td>

@@ -12,9 +12,8 @@
 			multieditor.loadPlugin('multiimage', function() {
 				multieditor.plugin.multiImageDialog({
 					clickFn : function(urlList) {
-						var div = K('#J_imageView');
 						K.each(urlList, function(i, data) {
-							div.append('<div class="goodsimg" id="multieditor_' + multieditor_n + '"><img src="' + data.url + '"><input type="hidden" name="{$editor_multibutton_name}[]" value="' + data.url + '"/><a href="javascript:e_del(' + multieditor_n + ')">×</a></div>');
+							$('#J_imageView').append('<tr class="goodsimg" id="multieditor_' + multieditor_n + '"><td><img class="img" src="' + data.url + '"></td><td><input type="hidden" name="{$editor_multibutton_name}[]" value="' + data.url + '"/><input name="{editor_multibutton_label_key}[]" type="hidden" value=""><input type="text" name="{$editor_multibutton_label}[]" value="' + data.label + '"/></td><td><a href="javascript:e_del(' + multieditor_n + ')">×</a></td></tr>');
 							multieditor_n++;
 						});
 						multieditor.hideDialog();
@@ -24,15 +23,33 @@
 		});
 	});
 </script>
-<div id="J_imageView" style="overflow:auto;zoom:1;">
+<table class="i_table" style="width:98%;overflow:auto;zoom:1;">
+<thead>
+<tr>
+	<th width="20%">{L:image}</th>
+	<th width="70%">{L:label}</th>
+	<th width="10%">{L:delete}</th>
+</tr>
+</thead>
+<tbody id="J_imageView">
 {if $editor_multibutton_value}
 	{foreach $editor_multibutton_value as $k=>$v}
-		<div class="goodsimg" id="multieditor_{$k}">
-		<img src="{$v['image']}">
-		<input type="hidden" name="{$editor_multibutton_name}[]" value="{$v['image']}"/>
-		<a href="javascript:e_del({$k})" onclick="return confirm('{L:confirm_delete}')">×</a>
-		</div>
+		<tr class="goodsimg" id="multieditor_{$k}">
+			<td><img class="img" src="{$v['image']}"></td>
+			<td>
+				<input type="hidden" name="{$editor_multibutton_name}[]" value="{$v['image']}"/>
+				<input name="{editor_multibutton_label_key}[]" type="hidden" value="{$v['label_key_']}">
+				<input type="text" name="{$editor_multibutton_label}[]" value="{$v['label']}"/>
+				{if $v['label_key_']}
+					<a class="t" href="{:url('dictionary/ajax?type=_key_&key='.$v['label_key_'])}">
+					<img src="{TPL_PATH}images/t.png">
+					</a>
+				{/if}
+			</td>
+			<td><a href="javascript:e_del({$k})" onclick="return confirm('{L:confirm_delete}')">×</a></td>
+		</tr>
 	{/foreach}
 {/if}
-</div>
+</tbody>
+</table>
 <input type="button" id="J_selectImage" value="{L:upload_img}" />

@@ -27,7 +27,7 @@
 	</ul>
 </div>
 <div class="m_right">
-<form  method="post" action="{:url('goods/update')}" >
+<form  method="post" action="{:url('goods/update')}" enctype="multipart/form-data">
 <input name="goods_id" type="hidden" value="{$data['goods_id']}">
 <input name="group_id" type="hidden" value="{$data['group_id']}">
 <table width="100%" class="r_table" id="c_0">
@@ -186,12 +186,14 @@
     <th valign="top" width="10%">{L:product_img}:</th>
 	<td class="tleft">
 		{include editor/multiupload_button.html}
+		<br/><br/>
 	</td>
   </tr>
   <tr>
     <th valign="top">{L:main_img}:</th>
 	<td class="tleft">
 		{include editor/upload_button.html}
+		<br/><br/>
 	</td>
   </tr>
 </table>

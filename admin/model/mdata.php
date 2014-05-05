@@ -17,6 +17,7 @@
 class mdata extends model
 {
 	protected $table;
+	protected $fields;
 	protected $where;
 	protected $order;
 	protected $limit;
@@ -24,9 +25,15 @@ class mdata extends model
 	public function table($table)
 	{
 		$this->table = $table;
-		$this->where = $this->order = $this->limit = '';
+		$this->fields = $this->where = $this->order = $this->limit = '';
 		return $this;
 	}
+	
+	public function field($fields)
+    {
+        $this->fields = $fields;
+		return $this;
+    }
 	
 	public function where($where)
 	{
@@ -49,6 +56,7 @@ class mdata extends model
 	public function getlist()
 	{
 		$list = $this->db->table($this->table)
+						->field($this->fields)
 						->where($this->where)
 						->order($this->order)
 						->limit($this->limit)
@@ -61,7 +69,7 @@ class mdata extends model
 	
 	public function get()
 	{
-		$data = $this->db->table($this->table)->where($this->where)->get();
+		$data = $this->db->table($this->table)->field($this->fields)->where($this->where)->get();
 		if($data){
 			$data = $this->model('dict')->getdict($data);
 		}

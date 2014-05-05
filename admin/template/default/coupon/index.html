@@ -12,9 +12,9 @@
   </tr>
   {foreach $list as $v}
   <tr>
-    <td>{$v['code']}</td>
-	<td>{$v['money']}</td>
-	<td>{$v['time']}</td>
+    <td class="pleft">{$v['code']}</td>
+	<td class="pleft">{$v['money']}</td>
+	<td class="pleft">{$v['time']}</td>
 	<td>{if $v['send'] !=0}{L:had_send}{else}{L:no_send}{/if}</td>
 	<td>{if $v['status'] !=0}{L:used}{else}{L:unused}{/if}</td>
 	<td>

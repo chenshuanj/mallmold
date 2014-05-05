@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}article` (
   `cate_id` int(4) NOT NULL,
   `title_key_` varchar(10) NOT NULL,
   `urlkey` varchar(64) NOT NULL,
-  `image` varchar(64) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `content_txtkey_` varchar(10) NOT NULL,
   `sort_order` int(10) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}article_cate` (
   `cate_id` int(4) NOT NULL AUTO_INCREMENT,
   `name_key_` varchar(10) NOT NULL,
   `urlkey` varchar(32) NOT NULL,
-  `image` varchar(32) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `sort_order` int(4) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`cate_id`)
@@ -345,10 +345,9 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods` (
   `meta_title_key_` varchar(10) DEFAULT NULL,
   `meta_keywords_txtkey_` varchar(10) DEFAULT NULL,
   `meta_description_txtkey_` varchar(10) DEFAULT NULL,
-  `image` varchar(64) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `stock` int(8) NOT NULL DEFAULT '0',
   `sold_num` int(8) NOT NULL DEFAULT '0',
-  `score` tinyint(1) NOT NULL DEFAULT '0',
   `is_sale` tinyint(1) NOT NULL DEFAULT '1',
   `sort_order` int(8) NOT NULL DEFAULT '0',
   `addtime` int(11) NOT NULL,
@@ -393,7 +392,9 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}goods_extend` (
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_image` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `goods_id` int(8) NOT NULL,
-  `image` varchar(64) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `label_key_` varchar(10) DEFAULT NULL,
+  `sort_order` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}goods_option` (
@@ -494,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}host` (
 CREATE TABLE IF NOT EXISTS `{PREFIX}images` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `type` varchar(16) NOT NULL,
-  `dir` varchar(64) NOT NULL,
+  `dir` varchar(255) NOT NULL,
   `addtime` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
@@ -524,6 +525,23 @@ INSERT INTO `{PREFIX}image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbna
 (4, 'k_5', 'goods_cate', 'goods_cate', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (5, 'k_6', 'article_img', 'article_img', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (6, 'k_7', 'article_desc', 'article_desc', 0, 0, 0, 0, '', 1, 0, 1, 1);
+CREATE TABLE IF NOT EXISTS `{PREFIX}importexport` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:import,2:export',
+  `model` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `format` tinyint(1) NOT NULL DEFAULT '1',
+  `delimiter` varchar(8) DEFAULT NULL,
+  `fields` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `{PREFIX}importexport_mapping` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `p_id` int(4) NOT NULL,
+  `field_name` varchar(32) NOT NULL,
+  `mapping_name` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}keywords` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `keyword` varchar(32) NOT NULL,
@@ -731,7 +749,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}pages` (
   `urlkey` varchar(64) NOT NULL,
   `title_key_` varchar(10) NOT NULL,
   `content_txtkey_` varchar(10) NOT NULL,
-  `image` varchar(64) NOT NULL,
+  `image` varchar(255) NOT NULL,
   `sort_order` int(4) NOT NULL DEFAULT '0',
   `meta_title_key_` char(10) DEFAULT NULL,
   `meta_keywords_txtkey_` char(10) DEFAULT NULL,
@@ -16782,9 +16800,9 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (15843, 31, 'Chaptico', '20621', 0),
 (15844, 31, 'Charlotte Hall', '20622', 0),
 (15845, 31, 'Cheltenham', '20623', 0),
-(15846, 31, 'Clements', '20624', 0);
+(15846, 31, 'Clements', '20624', 0),
+(15847, 31, 'Cobb Island', '20625', 0);
 INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
-(15847, 31, 'Cobb Island', '20625', 0),
 (15848, 31, 'Coltons Point', '20626', 0),
 (15849, 31, 'Compton', '20627', 0),
 (15850, 31, 'Dameron', '20628', 0),
@@ -18166,10 +18184,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (17226, 33, 'Dearborn', '48124', 0),
 (17227, 33, 'Dearborn Heights', '48125', 0),
 (17228, 33, 'Dearborn', '48126', 0),
-(17229, 33, 'Dearborn Heights', '48127', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(17229, 33, 'Dearborn Heights', '48127', 0),
 (17230, 33, 'Dearborn', '48128', 0),
-(17231, 33, 'Dexter', '48130', 0),
+(17231, 33, 'Dexter', '48130', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (17232, 33, 'Dundee', '48131', 0),
 (17233, 33, 'Erie', '48133', 0),
 (17234, 33, 'Brownstown', '48134', 0),
@@ -19574,10 +19592,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (18633, 34, 'Little Marais', '55614', 0),
 (18634, 34, 'Tofte', '55615', 0),
 (18635, 34, 'Two Harbors', '55616', 0),
-(18636, 34, 'Adolph', '55701', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(18636, 34, 'Adolph', '55701', 0),
 (18637, 34, 'Alborn', '55702', 0),
-(18638, 34, 'Angora', '55703', 0),
+(18638, 34, 'Angora', '55703', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (18639, 34, 'Askov', '55704', 0),
 (18640, 34, 'Aurora', '55705', 0),
 (18641, 34, 'Babbitt', '55706', 0),
@@ -20996,10 +21014,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (20054, 36, 'Newark', '63458', 0),
 (20055, 36, 'New London', '63459', 0),
 (20056, 36, 'Novelty', '63460', 0),
-(20057, 36, 'Palmyra', '63461', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(20057, 36, 'Palmyra', '63461', 0),
 (20058, 36, 'Perry', '63462', 0),
-(20059, 36, 'Philadelphia', '63463', 0),
+(20059, 36, 'Philadelphia', '63463', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (20060, 36, 'Plevna', '63464', 0),
 (20061, 36, 'Revere', '63465', 0),
 (20062, 36, 'Saint Patrick', '63466', 0),
@@ -22413,10 +22431,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (21470, 38, 'Omaha', '68107', 0),
 (21471, 38, 'Omaha', '68108', 0),
 (21472, 38, 'Omaha', '68109', 0),
-(21473, 38, 'Omaha', '68110', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(21473, 38, 'Omaha', '68110', 0),
 (21474, 38, 'Omaha', '68111', 0),
-(21475, 38, 'Omaha', '68112', 0),
+(21475, 38, 'Omaha', '68112', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (21476, 38, 'Omaha', '68113', 0),
 (21477, 38, 'Omaha', '68114', 0),
 (21478, 38, 'Omaha', '68116', 0),
@@ -23833,10 +23851,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (22889, 41, 'Sparta', '07871', 0),
 (22890, 41, 'Stanhope', '07874', 0),
 (22891, 41, 'Stillwater', '07875', 0),
-(22892, 41, 'Succasunna', '07876', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(22892, 41, 'Succasunna', '07876', 0),
 (22893, 41, 'Swartswood', '07877', 0),
-(22894, 41, 'Mount Tabor', '07878', 0),
+(22894, 41, 'Mount Tabor', '07878', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (22895, 41, 'Tranquility', '07879', 0),
 (22896, 41, 'Vienna', '07880', 0),
 (22897, 41, 'Wallpack Center', '07881', 0),
@@ -25226,10 +25244,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (24281, 43, 'Farmingdale', '11736', 0),
 (24282, 43, 'Farmingdale', '11737', 0),
 (24283, 43, 'Farmingville', '11738', 0),
-(24284, 43, 'Great River', '11739', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(24284, 43, 'Great River', '11739', 0),
 (24285, 43, 'Greenlawn', '11740', 0),
-(24286, 43, 'Holbrook', '11741', 0),
+(24286, 43, 'Holbrook', '11741', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (24287, 43, 'Holtsville', '11742', 0),
 (24288, 43, 'Huntington', '11743', 0),
 (24289, 43, 'Dix Hills', '11746', 0),
@@ -26603,10 +26621,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (25657, 43, 'Sodus Point', '14555', 0),
 (25658, 43, 'Sonyea', '14556', 0),
 (25659, 43, 'South Byron', '14557', 0),
-(25660, 43, 'South Lima', '14558', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(25660, 43, 'South Lima', '14558', 0),
 (25661, 43, 'Spencerport', '14559', 0),
-(25662, 43, 'Springwater', '14560', 0),
+(25662, 43, 'Springwater', '14560', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (25663, 43, 'Stanley', '14561', 0),
 (25664, 43, 'Union Hill', '14563', 0),
 (25665, 43, 'Victor', '14564', 0),
@@ -28005,11 +28023,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (27058, 45, 'Hensel', '58241', 0),
 (27059, 45, 'Hoople', '58243', 0),
 (27060, 45, 'Inkster', '58244', 0),
-(27061, 45, 'Langdon', '58249', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(27061, 45, 'Langdon', '58249', 0),
 (27062, 45, 'Lankin', '58250', 0),
 (27063, 45, 'Larimore', '58251', 0),
-(27064, 45, 'Kloten', '58254', 0),
+(27064, 45, 'Kloten', '58254', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (27065, 45, 'Maida', '58255', 0),
 (27066, 45, 'Manvel', '58256', 0),
 (27067, 45, 'Mayville', '58257', 0),
@@ -29417,11 +29435,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (28469, 47, 'Eldorado', '45321', 0),
 (28470, 47, 'Englewood', '45322', 0),
 (28471, 47, 'Enon', '45323', 0),
-(28472, 47, 'Beavercreek', '45324', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(28472, 47, 'Beavercreek', '45324', 0),
 (28473, 47, 'Farmersville', '45325', 0),
 (28474, 47, 'Fletcher', '45326', 0),
-(28475, 47, 'Germantown', '45327', 0),
+(28475, 47, 'Germantown', '45327', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (28476, 47, 'Gettysburg', '45328', 0),
 (28477, 47, 'Gratis', '45330', 0),
 (28478, 47, 'Greenville', '45331', 0),
@@ -30853,11 +30871,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (29904, 49, 'Crater Lake', '97604', 0),
 (29905, 49, 'Adel', '97620', 0),
 (29906, 49, 'Beatty', '97621', 0),
-(29907, 49, 'Bly', '97622', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(29907, 49, 'Bly', '97622', 0),
 (29908, 49, 'Bonanza', '97623', 0),
 (29909, 49, 'Chiloquin', '97624', 0),
-(29910, 49, 'Dairy', '97625', 0),
+(29910, 49, 'Dairy', '97625', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (29911, 49, 'Fort Klamath', '97626', 0),
 (29912, 49, 'Keno', '97627', 0),
 (29913, 49, 'Lakeview', '97630', 0),
@@ -32245,10 +32263,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (31295, 51, 'Millersville', '17551', 0),
 (31296, 51, 'Florin', '17552', 0),
 (31297, 51, 'Mountville', '17554', 0),
-(31298, 51, 'Narvon', '17555', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(31298, 51, 'Narvon', '17555', 0),
 (31299, 51, 'New Holland', '17557', 0),
-(31300, 51, 'New Providence', '17560', 0),
+(31300, 51, 'New Providence', '17560', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (31301, 51, 'Paradise', '17562', 0),
 (31302, 51, 'Peach Bottom', '17563', 0),
 (31303, 51, 'Penryn', '17564', 0),
@@ -33626,10 +33644,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (32675, 54, 'Charleston', '29402', 0),
 (32676, 54, 'Charleston', '29403', 0),
 (32677, 54, 'Charleston', '29404', 0),
-(32678, 54, 'Charleston', '29405', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(32678, 54, 'Charleston', '29405', 0),
 (32679, 54, 'Charleston', '29406', 0),
-(32680, 54, 'Charleston', '29407', 0),
+(32680, 54, 'Charleston', '29407', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (32681, 54, 'Charleston', '29409', 0),
 (32682, 54, 'Charleston', '29410', 0),
 (32683, 54, 'Charleston', '29412', 0),
@@ -35035,10 +35053,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (34083, 56, 'Reagan', '38368', 0),
 (34084, 56, 'Rutherford', '38369', 0),
 (34085, 56, 'Saltillo', '38370', 0),
-(34086, 56, 'Sardis', '38371', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(34086, 56, 'Sardis', '38371', 0),
 (34087, 56, 'Savannah', '38372', 0),
-(34088, 56, 'Scotts Hill', '38374', 0),
+(34088, 56, 'Scotts Hill', '38374', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (34089, 56, 'Selmer', '38375', 0),
 (34090, 56, 'Shiloh', '38376', 0),
 (34091, 56, 'Silerton', '38377', 0),
@@ -36477,10 +36495,10 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (35524, 57, 'Sugar Land', '77479', 0),
 (35525, 57, 'Sweeny', '77480', 0),
 (35526, 57, 'Thompsons', '77481', 0),
-(35527, 57, 'Van Vleck', '77482', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(35527, 57, 'Van Vleck', '77482', 0),
 (35528, 57, 'Wadsworth', '77483', 0),
-(35529, 57, 'Waller', '77484', 0),
+(35529, 57, 'Waller', '77484', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (35530, 57, 'Wallis', '77485', 0),
 (35531, 57, 'West Columbia', '77486', 0),
 (35532, 57, 'Sugar Land', '77487', 0),
@@ -37897,11 +37915,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (36943, 58, 'Clarkston', '84305', 0),
 (36944, 58, 'Beaverdam', '84306', 0),
 (36945, 58, 'Corinne', '84307', 0),
-(36946, 58, 'Cornish', '84308', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(36946, 58, 'Cornish', '84308', 0),
 (36947, 58, 'Deweyville', '84309', 0),
 (36948, 58, 'Eden', '84310', 0),
-(36949, 58, 'Fielding', '84311', 0),
+(36949, 58, 'Fielding', '84311', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (36950, 58, 'Garland', '84312', 0),
 (36951, 58, 'Grouse Creek', '84313', 0),
 (36952, 58, 'Honeyville', '84314', 0),
@@ -39282,11 +39300,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (38327, 61, 'Roanoke', '24011', 0),
 (38328, 61, 'Roanoke', '24012', 0),
 (38329, 61, 'Roanoke', '24013', 0),
-(38330, 61, 'Roanoke', '24014', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(38330, 61, 'Roanoke', '24014', 0),
 (38331, 61, 'Roanoke', '24015', 0),
 (38332, 61, 'Roanoke', '24016', 0),
-(38333, 61, 'Roanoke', '24017', 0),
+(38333, 61, 'Roanoke', '24017', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (38334, 61, 'Roanoke', '24018', 0),
 (38335, 61, 'Hollins', '24019', 0),
 (38336, 61, 'Roanoke', '24020', 0),
@@ -40708,11 +40726,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (39752, 63, 'Cove Gap', '25534', 0),
 (39753, 63, 'Lavalette', '25535', 0),
 (39754, 63, 'Lesage', '25537', 0),
-(39755, 63, 'Midkiff', '25540', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(39755, 63, 'Midkiff', '25540', 0),
 (39756, 63, 'Milton', '25541', 0),
 (39757, 63, 'Myra', '25544', 0),
-(39758, 63, 'Ona', '25545', 0),
+(39758, 63, 'Ona', '25545', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (39759, 63, 'Pecks Mill', '25547', 0),
 (39760, 63, 'Point Pleasant', '25550', 0),
 (39761, 63, 'Prichard', '25555', 0),
@@ -42122,11 +42140,11 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (41165, 65, 'Laramie', '82071', 0),
 (41166, 65, 'Foxpark', '82072', 0),
 (41167, 65, 'Laramie', '82073', 0),
-(41168, 65, 'Meriden', '82081', 0);
-INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
+(41168, 65, 'Meriden', '82081', 0),
 (41169, 65, 'Pine Bluffs', '82082', 0),
 (41170, 65, 'McFadden', '82083', 0),
-(41171, 65, 'Tie Siding', '82084', 0),
+(41171, 65, 'Tie Siding', '82084', 0);
+INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`, `sort_order`) VALUES
 (41172, 65, 'Mammoth', '82190', 0),
 (41173, 65, 'Slater', '82201', 0),
 (41174, 65, 'Chugwater', '82210', 0),
@@ -42402,7 +42420,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}slider` (
 CREATE TABLE IF NOT EXISTS `{PREFIX}slider_image` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `slider_id` int(4) NOT NULL,
-  `src` varchar(64) NOT NULL,
+  `src` varchar(255) NOT NULL,
   `title_key_` varchar(10) NOT NULL,
   `description_txtkey_` varchar(10) DEFAULT NULL,
   `link` varchar(1024) DEFAULT NULL,

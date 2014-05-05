@@ -87,32 +87,32 @@ class groupAction extends commonAction
 			$op_id = $_POST['op_id'];
 			$summary_id = $_POST['summary_id'];
 			
+			$this->db->table('group_cate')->where("group_id=$id")->delete();
 			if($cate_id){
-				$this->db->table('group_cate')->where("group_id=$id")->delete();
 				foreach($cate_id as $v){
 					$this->db->table('group_cate')->insert(array('group_id'=>$id, 'cate_id'=>$v));
 				}
 			}
+			$this->db->table('group_attr')->where("group_id=$id")->delete();
 			if($attr_id){
-				$this->db->table('group_attr')->where("group_id=$id")->delete();
 				foreach($attr_id as $v){
 					$this->db->table('group_attr')->insert(array('group_id'=>$id, 'attr_id'=>$v));
 				}
 			}
+			$this->db->table('group_extend')->where("group_id=$id")->delete();
 			if($extend_id){
-				$this->db->table('group_extend')->where("group_id=$id")->delete();
 				foreach($extend_id as $v){
 					$this->db->table('group_extend')->insert(array('group_id'=>$id, 'extend_id'=>$v));
 				}
 			}
+			$this->db->table('group_option')->where("group_id=$id")->delete();
 			if($op_id){
-				$this->db->table('group_option')->where("group_id=$id")->delete();
 				foreach($op_id as $v){
 					$this->db->table('group_option')->insert(array('group_id'=>$id, 'op_id'=>$v));
 				}
 			}
+			$this->db->table('group_summary')->where("group_id=$id")->delete();
 			if($summary_id){
-				$this->db->table('group_summary')->where("group_id=$id")->delete();
 				foreach($summary_id as $v){
 					$this->db->table('group_summary')->insert(array('group_id'=>$id, 'summary_id'=>$v));
 				}

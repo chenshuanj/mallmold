@@ -14,9 +14,9 @@
   <tr>
     <td class="pleft">{$v['host']}</td>
 	<td class="pleft">{$v['template']}</td>
-	<td>{$countrys[$v['bind_country']]}</td>
-	<td>{$v['bind_language']}</td>
-	<td>{$v['bind_currency']}</td>
+	<td class="pleft">{$countrys[$v['bind_country']]}</td>
+	<td class="pleft">{$v['bind_language']}</td>
+	<td class="pleft">{$v['bind_currency']}</td>
 	<td>
 	<a href="{:url('host/edit?id='.$v['id'])}">{L:edit}</a> 
 	<a href="{:url('host/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 

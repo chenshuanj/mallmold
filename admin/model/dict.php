@@ -159,7 +159,7 @@ class dict extends model
 				$keytype = $this->checkkey($key);
 				if($keytype){
 					$newkey = str_replace($keytype, '', $key);
-					if(isset($data[$newkey])){
+					if(isset($data[$newkey])){ //is a bug when empty
 						if(!$data[$newkey] && !$data[$key]){
 							unset($data[$newkey]);
 							continue;
@@ -176,8 +176,8 @@ class dict extends model
 							error($this->db->error());
 						}
 						
-						unset($data[$newkey]);
 					}
+					unset($data[$newkey]);
 				}
 			}else{
 				$data[$key] = $this->setdict($val, $code);

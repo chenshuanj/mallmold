@@ -1,0 +1,41 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > <a href="{:url('im_export/index')}">{L:Import/Export}</a> > {L:run}</div>
+<h3 style="text-align:left;">{$data['name']}</h3>
+<div style="text-align:left;">{L:File Format like this}:</div>
+<div style="width:100%;overflow:scroll">
+	<table width="100%" class="l_table">
+	  <tr>
+		{foreach $mapping as $key=>$fiield}
+		<td>{$key}</td>
+		{/foreach}
+	  </tr>
+	</table>
+</div>
+<div class="d_bottom" style="margin:8px 0;text-align:left;">
+	{L:select_lang}: <select id="select_lang_import">
+					{foreach $select_lang as $v}
+					<option value="{$v['code']}" {if $v['code']==$lang} selected{/if}>{$v['name']}</option>
+					{/foreach}
+				</select>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#select_lang_import').change(function(){
+			var code = $(this).val();
+			window.location = '{$current_url_lang}' + code;
+		});
+	});
+	</script>
+	<br/><br/>
+	{if $data['type'] == 1}
+	<form  method="post" action="{:url('im_export/import')}" enctype="multipart/form-data">
+		<input name="id" type="hidden" value="{$data['id']}">
+		{L:Import}: <input name="importfile" type="file">
+		<input type="submit" name="submit" value="{L:submit}">
+	</form>
+	{else}
+	<a class="aborder" href="{:url('im_export/export?id='.$data['id'])}">{L:Export}</a>
+	{/if}
+</div>
+</div>
+{include comm_footer.html}

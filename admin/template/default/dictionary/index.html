@@ -59,7 +59,7 @@
   </tr>
   {foreach $list as $v}
   <tr>
-    <td>{$v['dict_key']}</td>
+    <td class="pleft">{$v['dict_key']}</td>
 	{foreach $language as $l}
 	{eval $key = 'dict_val_'.$l['code'];}
 	<td class="pleft">{$v[$key]}</td>

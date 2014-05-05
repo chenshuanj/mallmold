@@ -110,10 +110,10 @@ class uploadAction extends commonAction
 			$setting_id = '0';
 		}
 		
-		$file_url = $this->upload();
-		$file_url = $this->model('image')->add($file_url, $type, $setting_id);
+		$upload = $this->upload();
+		$url = $this->model('image')->add($upload['url'], $type, $setting_id);
 		header('Content-type: text/html; charset=UTF-8');
-		echo json_encode(array('error' => 0, 'url' => $file_url));
+		echo json_encode(array('error' => 0, 'url' => $url, 'label' => $upload['label']));
 	}
 	
 	protected function upload()
@@ -172,9 +172,10 @@ class uploadAction extends commonAction
 			
 			$new_file_name = $file_name;
 			$file_path = $save_dir . $new_file_name;
+			$name = implode('.', $temp_arr);
 			$n = 1;
 			while(file_exists($file_path)){
-				$new_file_name = implode('.', $temp_arr).'-'.$n.'.'.$file_ext;
+				$new_file_name = $name.'-'.$n.'.'.$file_ext;
 				$file_path = $save_dir . $new_file_name;
 				$n++;
 			}
@@ -185,7 +186,7 @@ class uploadAction extends commonAction
 			@chmod($file_path, 0755);
 			$file_url = $save_url . $new_file_name;
 			
-			return $file_url;
+			return array('url' => $file_url, 'label' => $name);
 		}
 	}
 	

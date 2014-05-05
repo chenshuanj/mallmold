@@ -1,3 +1,10 @@
+==V2.2 release==
+Improved image features
+Improved search features
+Improved extend attribute
+Add import and export
+Fixed some bugs
+
 ==V2.1 release==
 Improved slider
 Improved attribute

@@ -13,7 +13,7 @@
   <tr>
     <td>{$v['group_id']}</td>
 	<td class="pleft">{$v['name']}</td>
-	<td>{$v['spending']}</td>
+	<td class="pleft">{$v['spending']}</td>
 	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
 	<td>
 	<a href="{:url('user/editgroup?group_id='.$v['group_id'])}">{L:edit}</a> 

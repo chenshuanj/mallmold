@@ -13,7 +13,7 @@
   <tr>
 	<td class="pleft">{$country[$v['country_id']]}</td>
 	<td class="pleft">{$v['name']}</td>
-	<td>{$v['defaut_tax']}</td>
+	<td class="pleft">{$v['defaut_tax']}</td>
 	<td>{if $v['status'] !=0}<b>{L:yes}</b>{else}{L:no}{/if}</a></td>
 	<td>
 	<a href="{:url('tax/region?tax_id='.$v['id'])}">{L:set_region}</a> 

@@ -22,9 +22,9 @@
   </tr>
   {foreach $list as $v}
   <tr>
-	<td>{$v['ship_sn']}</td>
-	<td>{if $v['type']==1}{L:ship}{else}{L:return}{/if}</td>
-	<td>{$v['order_sn']}</td>
+	<td class="pleft">{$v['ship_sn']}</td>
+	<td class="pleft">{if $v['type']==1}{L:ship}{else}{L:return}{/if}</td>
+	<td class="pleft">{$v['order_sn']}</td>
 	<td>{$v['time']}</td>
 	<td>
 		<a href="{:url('ship/view_ship?ship_id='.$v['id'])}">{L:view}</a> 

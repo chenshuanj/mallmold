@@ -12,8 +12,8 @@
 				<div class="more_img">
 				{foreach $goods['img_more'] as $v}
 				<div class="slider">
-					<a href="javascript:;" big="{$v['image'][$show_sign_big]}">
-						<img src="{$v['image'][$show_sign]}"/>
+					<a href="javascript:;" big="{$v['image'][$show_sign_big]}" title="{$v['label']}">
+						<img src="{$v['image'][$show_sign]}"/ alt="{$v['label']}">
 					</a>
 				</div>
 				{/foreach}
@@ -148,34 +148,38 @@
 					</script>
 					{/if}
 					<div class="addcomment">
-					<form action="{:url('goods/comment?goods_id='.$goods['goods_id'])}" method="post">
-						<div class="fleft summary">
-						{foreach $summarys as $sum}
-						<div class="score">
-							<span class="summary_name">{$sum['name']}: </span>
-							<label><input type="radio" value="1" name="score[{$sum['id']}]">1</label> 
-							<label><input type="radio" value="2" name="score[{$sum['id']}]">2</label> 
-							<label><input type="radio" value="3" name="score[{$sum['id']}]">3</label> 
-							<label><input type="radio" value="4" name="score[{$sum['id']}]">4</label> 
-							<label><input type="radio" value="5" name="score[{$sum['id']}]">5</label> 
-						</div>
-						{/foreach}
-						</div>
-						<div class="fright comment">
-							<table border=0>
-							<tr>
-							<td>{L:Fullname}: </td><td><input type="text" value="" name="username"></td>
-							</tr>
-							<tr>
-							<td valign="top">{L:Content}: </td><td><textarea name="content" rows="3" cols="20"></textarea></td>
-							</tr>
-							<tr>
-							<td></td><td><input type="submit" value="{L:Submit}"></td>
-							</tr>
-							</table>
-						</div>
-					</form>
-					<div class="clear"></div>
+					{if $is_login}
+						<form action="{:url('goods/comment?goods_id='.$goods['goods_id'])}" method="post">
+							<div class="fleft summary">
+							{foreach $summarys as $sum}
+							<div class="score">
+								<span class="summary_name">{$sum['name']}: </span>
+								<label><input type="radio" value="1" name="score[{$sum['id']}]">1</label> 
+								<label><input type="radio" value="2" name="score[{$sum['id']}]">2</label> 
+								<label><input type="radio" value="3" name="score[{$sum['id']}]">3</label> 
+								<label><input type="radio" value="4" name="score[{$sum['id']}]">4</label> 
+								<label><input type="radio" value="5" name="score[{$sum['id']}]">5</label> 
+							</div>
+							{/foreach}
+							</div>
+							<div class="fright comment">
+								<table border=0>
+								<tr>
+								<td>{L:Fullname}: </td><td><input type="text" value="" name="username"></td>
+								</tr>
+								<tr>
+								<td valign="top">{L:Content}: </td><td><textarea name="content" rows="3" cols="20"></textarea></td>
+								</tr>
+								<tr>
+								<td></td><td><input type="submit" value="{L:Submit}"></td>
+								</tr>
+								</table>
+							</div>
+						</form>
+						<div class="clear"></div>
+					{else}
+						{L:Login to submit a review}, <a href="{:url('user/login')}">{L:Login}</a> / <a href="{:url('user/register')}">{L:Register}</a>
+					{/if}
 					</div>
 				</div>
 			</div>

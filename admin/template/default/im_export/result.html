@@ -1,0 +1,12 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > <a href="{:url('im_export/index')}">{L:Import/Export}</a> > {L:run}</div>
+<div class="success">
+	{foreach $result as $l=>$str}
+		Line {:++$l}: {$str}<br/>
+	{/foreach}
+</div>
+<br/>
+<input type="button" onclick="location='{:url('im_export/run?id='.$id)}';" value="{L:back}">
+</div>
+{include comm_footer.html}

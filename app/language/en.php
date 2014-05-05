@@ -116,7 +116,7 @@ return array (
   'Continue shopping' => 'Continue shopping',
   'Process to checkout' => 'Process to checkout',
   'Update failed' => 'Update failed',
-  'Origin price' => 'Origin price',
+  'Origin price' => 'Original price',
   'Special price' => 'Special price',
   'Show details' => 'View details',
   'Search' => 'Search',
@@ -155,5 +155,6 @@ return array (
   'Please fill in the required fields' => 'Please fill in the required fields',
   'Your form has been submitted, we will contact you soon!' => 'Your form has been submitted, we will contact you soon!',
   'Submit failed' => 'Submit failed',
+  'Login to submit a review' => 'Login to submit a review',
 )
 ?>

@@ -27,6 +27,7 @@ class helpdeskAction extends commonAction
 			$this->view['email'] = $user['email'];
 		}
 		
+		$this->load('lib/captcha')->set_captcha();
 		$this->view['departments'] = $this->model('helpdesk')->department_list();
 		
 		$map[] = array('title'=>lang('Contact Us'));
@@ -37,14 +38,21 @@ class helpdeskAction extends commonAction
 	
 	public function post()
 	{
+		$captcha = strtolower(trim($_POST['captcha']));
+		if(!$captcha ||  $captcha != strtolower($this->load('lib/captcha')->getcode())){
+			$this->load('lib/captcha')->set_captcha();
+			$this->error('Captcha Error');
+			return;
+		}
+		
 		$firstname = trim($_POST['firstname']);
 		$lastname = trim($_POST['lastname']);
 		$email = trim($_POST['email']);
 		$phone = trim($_POST['phone']);
 		$department_id = intval($_POST['department_id']);
 		$priority = intval($_POST['priority']);
-		$title = trim($_POST['title']);
-		$message = trim($_POST['message']);
+		$title = $this->load('lib/filter')->filter_html(trim($_POST['title']));
+		$message = $this->load('lib/filter')->filter_html(trim($_POST['message']));
 		
 		if(!$firstname || !$firstname || !$email || !$title || !$message){
 			$this->error('Please fill in the required fields');

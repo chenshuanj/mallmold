@@ -100,5 +100,54 @@ class order extends model
 		$order['status_list'] = $status_list;
 		return $order;
 	}
+	
+	public function format_options($options)
+	{
+		if(!$options || $options == 'null'){
+			return '';
+		}
+		
+		$options = json_decode($options, true);
+		if($options){
+			$arr = array();
+			foreach($options as $option){
+				$name = $option['name'];
+				$arr[$name] = $option['value'];
+			}
+			return $arr;
+		}else{
+			return '';
+		}
+	}
+	
+	public function shipments()
+	{
+		$shipments = array();
+		$shipment_list = $this->db->table('shipping')->field('shipping_id,name')->getlist();
+		foreach($shipment_list as $v){
+			$shipments[$v['shipping_id']] = $v['name'];
+		}
+		return $shipments;
+	}
+	
+	public function payments()
+	{
+		$payments = array();
+		$payment_list = $this->db->table('payment')->field('id,name')->getlist();
+		foreach($payment_list as $v){
+			$payments[$v['id']] = $v['name'];
+		}
+		return $payments;
+	}
+	
+	public function currencies()
+	{
+		$currencies = array();
+		$currency_list = $this->model('mdata')->table('currency')->getlist();
+		foreach($currency_list as $v){
+			$currencies[$v['code']] = $v['name'];
+		}
+		return $currencies;
+	}
 }
 ?>

@@ -23,6 +23,7 @@ class extend extends model
 			2 => lang('selection'),
 			3 => lang('multiple_selection'),
 			4 => lang('bool_type'),
+			5 => lang('file'),
 		);
 	}
 	
@@ -40,6 +41,45 @@ class extend extends model
 			}
 		}
 		return $list;
+	}
+	
+	public function get_type($extend_id)
+	{
+		return $this->db->table('extend')->where("extend_id=$extend_id")->getval('type');
+	}
+	
+	public function get_file($extend_id)
+	{
+		$file = '';
+		$extend_file = $_FILES['extend_upload'];
+		if($extend_file['tmp_name'][$extend_id]){
+			$file_name = $extend_file['name'][$extend_id];
+			$save_path = '/upload/extend_file/'.$file_name;
+			$this->load('lib/dir')->checkdir(BASE_PATH.$save_path);
+			
+			$temp_arr = explode(".", $file_name);
+			$file_ext = array_pop($temp_arr);
+			$file_ext = strtolower(trim($file_ext));
+			if(strpos($file_ext, 'php') === false){
+				if(move_uploaded_file($extend_file['tmp_name'][$extend_id], BASE_PATH.$save_path)){
+					$file = $save_path;
+				}
+			}
+		}
+		return $file;
+	}
+	
+	public function del_file($goods_id, $extend_id)
+	{
+		$file = $this->db->table('goods_extend')->where("goods_id=$goods_id and extend_id=$extend_id")->getval('val');
+		if(!$file){
+			return false;
+		}
+		$file_path = BASE_PATH.$file;
+		if(file_exists($file_path)){
+			unlink($file_path);
+		}
+		return true;
 	}
 }
 ?>

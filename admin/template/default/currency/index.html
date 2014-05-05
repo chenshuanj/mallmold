@@ -12,10 +12,10 @@
   </tr>
   {foreach $list as $v}
   <tr>
-    <td>{$v['code']}</td>
+    <td class="pleft">{$v['code']}</td>
 	<td class="pleft">{$v['name']}</td>
-	<td>{$v['symbol']}</td>
-	<td>{$v['rate']}</td>
+	<td class="pleft">{$v['symbol']}</td>
+	<td class="pleft">{$v['rate']}</td>
 	<td>{if $v['status'] !=0}{L:yes}{else}{L:no}{/if}</td>
 	<td>
 	<a href="{:url('currency/edit?id='.$v['id'])}">{L:setting}</a> 

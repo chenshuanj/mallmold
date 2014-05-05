@@ -38,14 +38,8 @@ class goodsAction extends commonAction
 		$pager = $this->view['pager'];
 		$limit = ($pager['page'] - 1)*$pager['pagesize'].','.$pager['pagesize'];
 		
-		$group = array(0 => lang('default_group'));
-		$group_list = $this->mdata('group')->getlist();
-		foreach($group_list as $v){
-			$group[$v['id']] = $v['name'];
-		}
-		
 		$this->view['sku'] = $sku;
-		$this->view['group'] = $group;
+		$this->view['group'] = $this->model('goods')->groups();
 		$this->view['list'] = $this->mdata('goods')->where($where)->order('addtime desc')->limit($limit)->getlist();
 		$this->view['sku'] = $sku;
 		$this->view['title'] = lang('product_list');
@@ -56,13 +50,7 @@ class goodsAction extends commonAction
 	{
 		$goods_id = intval($_GET['goods_id']);
 		if(!isset($_GET['group_id']) && !$goods_id){
-			$group = array(0 => lang('default_group'));
-			$group_list = $this->mdata('group')->where('status=1')->getlist();
-			foreach($group_list as $v){
-				$group[$v['id']] = $v['name'];
-			}
-			
-			$this->view['group'] = $group;
+			$this->view['group'] = $this->model('goods')->groups();
 			$this->view['title'] = lang('edit_product');
 			$this->view('goods/select_group.html');
 			return;
@@ -86,7 +74,7 @@ class goodsAction extends commonAction
 			}
 			$data['extend'] = $extend;
 			
-			$data['images'] = $this->db->table('goods_image')->where("goods_id=$goods_id")->getlist();
+			$data['images'] = $this->mdata('goods_image')->where("goods_id=$goods_id")->getlist();
 			
 			$catelist = $this->db->table('goods_cate_val')->where("goods_id=$goods_id")->getlist();
 			if($catelist){
@@ -117,7 +105,7 @@ class goodsAction extends commonAction
 		$this->editor_header();
 		$this->editor('description', $data['description'], 'description_txtkey_', $data['description_txtkey_'], 'goods_desc');
 		$this->editor_uploadbutton('image', $data['image'], 'goods_main_img');
-		$this->editor_multiuploadbutton('imagemore', $data['images'], 'goods_imgs');
+		$this->editor_multiuploadbutton('imagemore', 'imagemore_label', 'imagemore_label_key', $data['images'], 'goods_imgs');
 		
 		if($group_id == 0){
 			$catelist = $this->model('goodscate')->getlist();
@@ -220,27 +208,7 @@ class goodsAction extends commonAction
 		
 		//category
 		if($cate_id && is_array($cate_id)){
-			$cates = array();
-			$catelist = $this->db->table('goods_cate_val')->where("goods_id=$goods_id")->getlist();
-			if($catelist){
-				foreach($catelist as $v){
-					$cates[$v['cate_id']] = $v['cate_id'];
-				}
-			}
-			
-			foreach($cate_id as $id){
-				if(!in_array($id, $cates)){
-					$this->db->table('goods_cate_val')->insert(array('goods_id'=>$goods_id, 'cate_id'=>$id));
-				}else{
-					unset($cates[$id]);
-				}
-			}
-			
-			if($cates){
-				foreach($cates as $v){
-					$this->db->table('goods_cate_val')->where("goods_id=$goods_id and cate_id=$v")->delete();
-				}
-			}
+			$this->model('goods')->update_cate($goods_id, $cate_id);
 		}
 		
 		//attribute
@@ -271,7 +239,17 @@ class goodsAction extends commonAction
 			foreach($extend as $extend_id=>$v){
 				if(is_array($v)){
 					$v = implode(',', $v);
+				}else{
+					//is file
+					$type = $this->model('extend')->get_type($extend_id);
+					if($type == 5){
+						$file = $this->model('extend')->get_file($extend_id);
+						if($file){
+							$v = $file;
+						}
+					}
 				}
+				
 				$v = trim($v);
 				if(!empty($v)){
 					if(!$extend_at[$extend_id]){
@@ -280,6 +258,10 @@ class goodsAction extends commonAction
 						$this->db->table('goods_extend')->where("goods_id=$goods_id and extend_id=$extend_id")->update(array('val'=>$v));
 					}
 				}else{
+					$type = $this->model('extend')->get_type($extend_id);
+					if($type == 5){
+						$this->model('extend')->del_file($goods_id, $extend_id);
+					}
 					$this->db->table('goods_extend')->where("goods_id=$goods_id and extend_id=$extend_id")->delete();
 				}
 			}
@@ -287,6 +269,8 @@ class goodsAction extends commonAction
 		
 		//image
 		$imagemore = $_POST['imagemore'];
+		$imagemore_label = $_POST['imagemore_label'];
+		$imagemore_label_key = $_POST['imagemore_label_key'];
 		if($imagemore && is_array($imagemore)){
 			$imglist = array();
 			$list = $this->db->table('goods_image')->where("goods_id=$goods_id")->getlist();
@@ -295,17 +279,28 @@ class goodsAction extends commonAction
 			}
 			
 			$s_arr = array();
-			foreach($imagemore as $img){
+			foreach($imagemore as $key=>$img){
 				if(!in_array($img, $imglist)){
-					$this->db->table('goods_image')->insert(array('goods_id'=>$goods_id, 'image'=>$img));
+					$goods_image = array(
+						'goods_id'=>$goods_id,
+						'image'=>$img,
+						'label_key_'=> $imagemore_label_key[$key],
+						'label'=> $imagemore_label[$key]
+					);
+					$this->mdata('goods_image')->add($goods_image);
 				}else{
+					$goods_image = array(
+						'label_key_'=> $imagemore_label_key[$key],
+						'label'=> $imagemore_label[$key]
+					);
+					$this->mdata('goods_image')->where("goods_id=$goods_id and image='$img'")->save($goods_image);
 					$s_arr[] = $img;
 				}
 			}
 			$diff_arr = array_diff($imglist, $s_arr);
 			if($diff_arr){
 				foreach($diff_arr as $v){
-					$this->db->table('goods_image')->where("goods_id=$goods_id and image='$v'")->delete();
+					$this->mdata('goods_image')->where("goods_id=$goods_id and image='$v'")->delete();
 				}
 			}
 		}
@@ -336,7 +331,7 @@ class goodsAction extends commonAction
 						$name_key = $op_name_key[$op_id][$k];
 						if($option[$op_id][$oid]){
 							$data = array(
-								'name_key_' => $name_key,
+								'name_key_' => ($name_key ? $name_key : $option[$op_id][$oid]['name_key_']),
 								'name' => $name,
 								'price' => $price,
 								'sort_order' => $n
@@ -412,10 +407,10 @@ class goodsAction extends commonAction
 		$ids = trim($_POST['ids']);
 		$where = "goods_id not in ($ids)";
 		if($sku){
-			$where .= "sku like '%$sku%'";
+			$where .= " and sku like '%$sku%'";
 		}
 		
-		$list = $this->mdata('goods')->where($where)->order('addtime desc')->limit(50)->getlist();
+		$list = $this->mdata('goods')->where($where)->order('addtime desc')->limit(15)->getlist();
 		$html = '';
 		foreach($list as $v){
 			$html .= '<tr id="cs_s_'.$v['goods_id'].'" class="cs_row">

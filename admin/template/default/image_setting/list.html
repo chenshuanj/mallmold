@@ -17,7 +17,7 @@
   {foreach $list as $v}
   <tr>
 	<td class="pleft">{$v['name']}</td>
-	<td>{$types[$v['type']]}</td>
+	<td class="pleft">{$types[$v['type']]}</td>
 	<td class="pleft">{$v['sign']}</td>
 	<td>{if $v['thumbnails']>0}{L:yes}{else}{L:no}{/if}</td>
 	<td>{$v['width']}</td>

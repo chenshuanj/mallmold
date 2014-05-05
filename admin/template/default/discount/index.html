@@ -13,8 +13,8 @@
   {foreach $list as $v}
   <tr>
 	<td class="pleft">{$v['title']}</td>
-	<td>{$v['starttime']}</td>
-	<td>{$v['endtime']}</td>
+	<td class="pleft">{$v['starttime']}</td>
+	<td class="pleft">{$v['endtime']}</td>
 	<td>{$v['priority']}</td>
 	<td>{if $v['status'] !=0}<b>{L:yes}</b>{else}{L:no}{/if}</a></td>
 	<td>

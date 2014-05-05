@@ -52,9 +52,9 @@
   {foreach $list as $v}
   <tr>
     <td><input class="image_id" name="image_id[]" type="checkbox" value="{$v['id']}"></td>
-	<td><a href="{$v['dir']}" target="_blank"><img src="{$v['dir']}" width="60"/></a></td>
-	<td>{$types[$v['type']]}</td>
-	<td>{$v['time']}</td>
+	<td class="pleft"><a href="{$v['dir']}" target="_blank"><img src="{$v['dir']}" width="60"/></a></td>
+	<td class="pleft">{$types[$v['type']]}</td>
+	<td class="pleft">{$v['time']}</td>
 	<td>
 	<a href="{:url('image/edit?id='.$v['id'])}">{L:view}</a> 
 	<a href="{:url('image/del?id='.$v['id'])}" onclick="return confirm('{L:confirm_delete}')">{L:delete}</a> 

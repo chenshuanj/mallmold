@@ -16,7 +16,7 @@
 
 class goods extends model
 {
-	public $list_field = 'goods_id,title_key_,urlkey,sku,price_origin,price,brief_txtkey_,image,score,addtime';
+	public $list_field = 'goods_id,title_key_,urlkey,sku,price_origin,price,brief_txtkey_,image,addtime';
 	
 	public function base_condition()
 	{
@@ -81,25 +81,33 @@ class goods extends model
 		return $data;
 	}
 	
-	public function search_list()
+	public function search_list($keys)
 	{
-		$search_list = $this->cache('goods_search_list');
-		if(!$search_list){
-			$where = $this->base_condition();
-			$search_list = $this->model('mdata')
-						->table('goods')
-						->field('goods_id,title_key_')
-						->where($where)
-						->order('goods_id desc')
-						->getlist();
-			$this->cache('goods_search_list', $search_list);
+		$match_list = array();
+		
+		if(!$keys){
+			return $match_list;
 		}
-		return $search_list;
+		
+		$sql = 'select goods_id,title_key_ from `'.$this->db->tbname('goods').'` 
+				where '.$this->base_condition().' 
+				order by sort_order asc';
+		$query = $this->db->query($sql);
+		while($rs = $this->db->fetch($query)){
+			$rs = $this->model('dictionary')->getdict($rs);
+			foreach($keys as $key){
+				if(stripos($rs['title'], $key) !== false){
+					$match_list[] = $rs['goods_id'];
+					break;
+				}
+			}
+		}
+		return $match_list;
 	}
 	
 	public function goods_img_more($goods_id)
 	{
-		$list = $this->db->table('goods_image')->where("goods_id=$goods_id")->getlist();
+		$list = $this->model('mdata')->table('goods_image')->where("goods_id=$goods_id")->getlist();
 		foreach($list as $k=>$v){
 			$list[$k]['image'] = $this->model('image')->getimgbytype('goods_imgs', $v['image']);
 		}
@@ -153,6 +161,13 @@ class goods extends model
 						break;
 					case 4:
 						$value = $v['val'] ? lang('Yes') : lang('No');
+						break;
+					case 5:
+						if($v['val']){
+							$value = '<a href="'.$v['val'].'">'.basename($v['val']).'</a>';
+						}else{
+							$value = '';
+						}
 						break;
 					default:
 						$value = $v['val'];

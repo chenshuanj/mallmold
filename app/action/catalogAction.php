@@ -63,6 +63,8 @@ class catalogAction extends commonAction
 	public function search()
 	{
 		$keyword = $_POST['keyword'] ? trim($_POST['keyword']) : trim(urldecode($_GET['keyword']));
+		$keyword = strip_tags($keyword);
+		
 		$attr_args = $this->attributes_args($keyword);
 		$where = '1=1';
 		$list = array();
@@ -70,21 +72,9 @@ class catalogAction extends commonAction
 			$keyword = preg_replace('/\s{2,}/', '+', $keyword);
 			$keys = explode('+', $keyword);
 			$this->model('goods')->save_keywords($keys);
-			
-			$match_list = $this->model('goods')->search_list();
-			$match = array();
-			foreach($match_list as $v){
-				foreach($keys as $key){
-					if(strpos($v['title'], $key) !== false){
-						$match[] = $v['goods_id'];
-						break;
-					}
-				}
-			}
-			
-			$total = count($match);
-			if($total > 0){
-				$where .= " and goods_id in (".implode(',', $match).")";
+			$match_list = $this->model('goods')->search_list($keys);
+			if($match_list){
+				$where .= " and goods_id in (".implode(',', $match_list).")";
 			}else{
 				$where = '1=0';
 			}

@@ -16,8 +16,8 @@
   <tr>
     <td>{$v['slider_id']}</td>
 	<td class="pleft">{$v['name']}</td>
-	<td>{$v['sign']}</td>
-	<td>
+	<td class="pleft">{$v['sign']}</td>
+	<td class="pleft">
 		{foreach $v['setting_id'] as $id}
 			{if $id==0}{L:original_picture}{else},{$setting[$id]}{/if}
 		{/foreach}

@@ -157,5 +157,6 @@ return array (
   'Please fill in the required fields' => '请填写必填选项',
   'Your form has been submitted, we will contact you soon!' => '您的表单已提交，我们将马上联系您！',
   'Submit failed' => '提交失败',
+  'Login to submit a review' => '登录后提交评论',
 )
 ?>

@@ -150,10 +150,12 @@ class commonAction extends action
 		$this->view['image_setting_id'][] = $setting_id;
 	}
 	
-	protected function editor_multiuploadbutton($name, array $value, $imgtype)
+	protected function editor_multiuploadbutton($name, $label, $label_key, array $value, $imgtype)
 	{
 		$this->view['editor_multibutton_n'] = $value ? count($value) : 1;
 		$this->view['editor_multibutton_name'] = $name;
+		$this->view['editor_multibutton_label'] = $label;
+		$this->view['editor_multibutton_label_key'] = $label_key;
 		$this->view['editor_multibutton_value'] = $value;
 		$this->view['editor_multibutton_imgtype'] = $imgtype;
 		$this->view['session_id'] = session_id();

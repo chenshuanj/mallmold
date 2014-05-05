@@ -50,6 +50,20 @@
 				<th valign="top">{L:Message}:</th>
 				<td><textarea cols="40" rows="3" name="message"></textarea> *</td>
 				</tr>
+				<tr>
+					<th>{L:Captcha}:</th>
+						<td>
+							<input type="text" style="width:56px;" name="captcha" value="">
+							<a href="javascript:;"><img id="captcha" align="absmiddle" src="{:url('captcha/index')}"/></a>
+							<script type="text/javascript">
+							$(document).ready(function(){
+								$('#captcha').click(function(){
+									$(this).attr('src', "{:url('captcha/index?update=')}" + Math.random());
+								});
+							});
+							</script>
+						</td>
+				</tr>
 				
 				<tr>
 				<th></th>

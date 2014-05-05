@@ -1,0 +1,153 @@
+{include comm_header.html}
+<div class="main">
+<div class="title">{L:module} > <a href="{:url('im_export/index')}">{L:Import/Export}</a> > {L:edit}</div>
+<div class="m_left">
+	<ul id="leftmenu">
+		<li class="l_hover" onclick="m(0)">{L:general}</li>
+	</ul>
+</div>
+<div class="m_right">
+<form  method="post" action="{:url('im_export/edit')}" >
+<input name="id" type="hidden" value="{$data['id']}">
+<table width="100%" class="r_table" id="c_0">
+  <tr>
+    <th>{L:name}:</th>
+	<td class="tleft">
+		<input class="len2" name="name" type="text" value="{$data['name']}"> *</td>
+  </tr>
+  <tr>
+    <th>{L:type}:</th>
+	<td class="tleft">
+		<select name="type">
+			<option value="1" {if $data['type']==1} selected{/if}>{L:Import}</option>
+			<option value="2" {if $data['type']==2} selected{/if}>{L:Export}</option>
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:data format}:</th>
+	<td class="tleft">
+		<select id="format" name="format">
+			<option value="1" {if $data['format']==1} selected{/if}>{L:By delimiter}</option>
+			<option value="2" {if $data['format']==2} selected{/if}>{L:By row}</option>
+		</select>
+	</td>
+  </tr>
+  <tr id="delimiter"{if $data['format']==2} style="display:none"{/if}>
+    <th>{L:delimiter}:</th>
+	<td class="tleft">
+		<input class="len1" name="delimiter" type="text" value="{if $data['delimiter']}{$data['delimiter']}{else}; {/if}"></td>
+  </tr>
+  <tr>
+    <th>{L:model}:</th>
+	<td class="tleft">
+		<select id="model" name="model" {if $data['model']} disabled{/if}>
+			<option value="product" {if $data['model']=='product'} selected{/if}>{L:product}</option>
+			<option value="customer" {if $data['model']=='customer'} selected{/if}>{L:customer}</option>
+			<option value="order" {if $data['model']=='order'} selected{/if}>{L:order}</option>
+			<option value="attribute" {if $data['model']=='attribute'} selected{/if}>{L:filter_attribute}</option>
+			<option value="extend" {if $data['model']=='extend'} selected{/if}>{L:extend_attribute}</option>
+		</select>
+	</td>
+  </tr>
+  <tr>
+    <th>{L:field}:</th>
+	<td class="tleft">
+		<select id="fields" name="fields">
+			<option value="0" {if $data['fields']==0} selected{/if}>{L:all}</option>
+			<option value="1" {if $data['fields']==1} selected{/if}>{L:select}</option>
+		</select>
+	</td>
+  </tr>
+  <tr id="mapping_zone"{if $data['fields']==0} style="display:none"{/if}>
+    <th valign="top">{L:field_mapping}:</th>
+	<td class="tleft" id="mappings">
+		{if $mapping}
+			{foreach $mapping as $map}
+			<div id="more_{$map['id']}">
+				<select name="field_name[]">
+				{foreach $fields as $field}
+					<option value="{$field}"{if $field==$map['field_name']} selected{/if}>{$field}</option>
+				{/if}
+				</select>&nbsp;=>&nbsp;<input name="mapping_name[]" type="text" value="{$map['mapping_name']}">&nbsp;
+				<a href="javascript:delrow({$map['id']})">×</a>
+			</div>
+			{/foreach}
+		{/if}
+		<p id="new_field"><a class="aborder" href="javascript:addrow();">{L:add}</a></p>
+	</td>
+  </tr>
+</table>
+<div class="r_bottom">
+	<input type="submit" name="submit" value="{L:submit}"> 
+	<input type="button" onclick="history.go(-1);" value="{L:back}">
+</div>
+</form>
+<div id="selector" style="display:none;">
+</div>
+<script type="text/javascript">
+var isIE = (document.all && window.ActiveXObject && !window.opera) ? true : false;
+var rn = 1000;
+
+function addrow(){
+	var oNew=document.createElement("div");
+	oNew.id = "more_" + rn;
+	var str = $('#selector').html();
+	str += '&nbsp;=>&nbsp;<input name="mapping_name[]" type="text" value="">&nbsp;<a href="javascript:delrow('+ rn +')">×</a>';
+	oNew.innerHTML  = str;
+	var obj = document.getElementById('new_field');
+	obj.parentNode.insertBefore(oNew, obj);
+	rn++;
+}
+function delrow(id){
+	var obj = document.getElementById("more_" + id);
+	if(!isIE){
+		obj.parentNode.removeChild(obj);
+	}else{
+		obj.removeNode(true);
+	}
+}
+function model_fields(){
+	var model = $('#model').val();
+	$.ajax({
+		url:"{:url('im_export/ajax_fields')}",
+		type:"POST",
+		data:{model:model},
+		dataType:"html",
+		success:function(res)
+		{
+			$('#selector').html(res);
+		}
+	});
+}
+function clear_fields(){
+	$('#mappings').html('<p id="new_field"><a class="aborder" href="javascript:addrow();">{L:add}</a></p>');
+}
+$(document).ready(function(){
+	model_fields();
+	$('#model').change(function(){
+		clear_fields();
+		model_fields();
+	});
+	$('#fields').change(function(){
+		var all = $(this).val();
+		if(all == 0){
+			clear_fields();
+			$('#mapping_zone').hide();
+		}else{
+			$('#mapping_zone').show();
+		}
+	});
+	$('#format').change(function(){
+		var format = $(this).val();
+		if(format == 2){
+			$('#delimiter').hide();
+		}else{
+			$('#delimiter').show();
+		}
+	});
+});
+</script>
+</div>
+</div>
+{include comm_footer.html}

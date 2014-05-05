@@ -104,7 +104,11 @@ class db
 	
 	public function where($where)
     {
-        $this->where = $where;
+        if(is_array($where)){
+			$this->where = implode(' and ', $where);
+		}else{
+			$this->where = $where;
+		}
 		return $this;
     }
 	
@@ -206,10 +210,16 @@ class db
 		if(!$data || !is_array($data)){
 			return 0;
 		}
-		$str = '';
-		foreach($data as $k=>$v){
-			$str .= ($str ? "," : "")."`$k`='$v'";
+		
+		if(is_array($data)){
+			$str = '';
+			foreach($data as $k=>$v){
+				$str .= ($str ? "," : "")."`$k`='$v'";
+			}
+		}else{
+			$str = $data;
 		}
+		
 		$sql = 'update `'.$this->table."` set $str".($this->where ? ' where '.$this->where : '');
 		$this->query($sql);
 		return mysql_affected_rows($this->conn);

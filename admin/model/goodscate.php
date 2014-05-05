@@ -16,6 +16,17 @@
 
 class goodscate extends model
 {
+	public function getcates()
+	{
+		$cates = array();
+		$list = $this->model('mdata')->table('goods_cate')->field('id,name_key_')->getlist();
+		foreach($list as $val){
+			$id = $val['id'];
+			$cates[$id] = $val['name'];
+		}
+		return $cates;
+	}
+	
 	public function getlist($pid = 0)
 	{
 		$list = $this->db->table('goods_cate')->where("pid=$pid")->order('sort_order asc')->getlist();

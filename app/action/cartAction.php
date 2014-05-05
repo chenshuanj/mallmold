@@ -30,7 +30,7 @@ class cartAction extends commonAction
 	public function add()
 	{
 		$goods_id = intval($_POST['goods_id']);
-		$quantity = intval($_POST['quantity']);
+		$quantity = abs(intval($_POST['quantity']));
 		$option = $_POST['option'];
 		
 		if(!$goods_id || !$quantity){
@@ -61,7 +61,7 @@ class cartAction extends commonAction
 	public function ajax_update()
 	{
 		$id = intval($_POST['id']);
-		$quantity = intval($_POST['quantity']);
+		$quantity = abs(intval($_POST['quantity']));
 		if(!$id || !$quantity){
 			echo 0;
 		}else{
