@@ -1,7 +1,7 @@
 <?php
 /*
 *	@run.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited.
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited.
 *	
 *	This library is free software; you can redistribute it and/or
 *	modify it under the terms of the GNU Lesser General Public
@@ -56,7 +56,7 @@ if(!get_magic_quotes_gpc())
 	!empty($_COOKIE) && $_COOKIE = addslashes_deep($_COOKIE);
 }
 
-if($_REQUEST['session_id'])
+if(isset($_REQUEST['session_id']))
 {
 	session_id(trim($_REQUEST['session_id']));
 }

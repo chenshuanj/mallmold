@@ -1,7 +1,7 @@
 <?php
 /*
 *	@smtp.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
 *	This program is free software; you can redistribute it and/or
@@ -22,6 +22,7 @@ class smtp
 	public $port = 25;
 	public $user;
 	public $pswd;
+	public $cmd;
 	
 	public function __construct($setting = array())
     {
@@ -75,30 +76,49 @@ class smtp
 			return false;
 		}
 		//ready
-		if($this->cmd('MAIL FROM:<'.$mail['from'].'>') != 250){
+		if($this->cmd('MAIL FROM: <'.$mail['from'].'>') != 250){
 			return false;
 		}
-		$status = $this->cmd('RCPT TO:<'.$mail['to'].'>');
-		if(!in_array($status, array(250, 251))){
-			return false;
+		
+		$to = is_array($mail['to']) ? $mail['to'] : array($mail['to']);
+		$cc = is_array($mail['cc']) ? $mail['cc'] : ($mail['cc'] ? array($mail['cc']) : array());
+		foreach($to as $email){
+			$status = $this->cmd('RCPT TO: <'.$email.'>');
+			if(!in_array($status, array(250, 251))){
+				return false;
+			}
 		}
+		foreach($cc as $email){
+			$status = $this->cmd('RCPT TO: <'.$email.'>');
+			if(!in_array($status, array(250, 251))){
+				return false;
+			}
+		}
+		
 		if($this->cmd('DATA') != 354){
 			return false;
 		}
 		//send
 		$title = str_replace("\r\n.\r\n", ".", $mail['title']);
 		$content = str_replace("\r\n.\r\n", ".", $mail['content']);
-		$body = '';
-		$body .= "Return-Path: ".$mail['from']."\n";
-		$body .= "From: ".$this->user."<".$mail['from'].">\n";
-		$body .= "Reply-to: ".$this->user."<".$mail['from'].">\n";
-		$body .= "To: <".$mail['to'].">\n";
-		$body .= "Subject: =?UTF-8?B?".base64_encode($title)."?=\n";
-		$body .= "Message-ID: <".base64_encode($this->user)."@".$this->host.">\n";
-		$body .= "X-Priority: 3\n";
-		$body .= "MIME-Version: 1.0\n";
-		$body .= "Content-Type: text/html; charset=utf-8;\n";
-		$body .= "\n";
+		$body = "Date: ".date('r')."\r\n";
+		$body .= "Return-Path: ".$mail['from']."\r\n";
+		$body .= "From: ".$this->user."<".$mail['from'].">\r\n";
+		$body .= "Reply-to: ".$this->user."<".$mail['from'].">\r\n";
+		foreach($to as $email){
+			$body .= "To: <".$email.">\r\n";
+		}
+		foreach($cc as $email){
+			$body .= "Cc: <".$email.">\r\n";
+		}
+		$body .= "Subject: =?UTF-8?B?".base64_encode($title)."?=\r\n";
+		$body .= "Message-ID: <".base64_encode($this->user)."@".$this->host.">\r\n";
+		$body .= "X-Priority: 3\r\n";
+		$body .= "X-Has-Attach: no\r\n";
+		$body .= "X-Mailer: PHP\r\n";
+		$body .= "Mime-Version: 1.0\r\n";
+		$body .= "Content-Type: text/html; charset=utf-8;\r\n";
+		$body .= "\r\n";
 		$body .= "$content";
 		$body .= "\r\n.";
 		if($this->cmd($body) != 250){
@@ -127,6 +147,7 @@ class smtp
 	
 	private function cmd($cmd)
 	{
+		$this->cmd .= "$cmd\r\n";
 		fwrite($this->fp, "$cmd\r\n");
 		return $this->getstatus();
 	}

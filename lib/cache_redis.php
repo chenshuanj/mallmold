@@ -1,7 +1,7 @@
 <?php
 /*
 *	@cache_redis.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
 *	This program is free software; you can redistribute it and/or
@@ -54,7 +54,7 @@ class cache_redis
 		$this->redis = new Redis();
 		$status = true;
 		try{
-			$this->redis->connect($this->host, $this->port, $this->timeout);
+			$status = $this->redis->connect($this->host, $this->port, $this->timeout);
 		}catch(Exception $e){
 			$status = false;
 			$this->error = $e->getMessage();

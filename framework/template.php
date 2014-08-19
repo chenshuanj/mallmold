@@ -1,7 +1,7 @@
 <?php
 /*
 *	@template.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited.
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited.
 *	
 *	This library is free software; you can redistribute it and/or
 *	modify it under the terms of the GNU Lesser General Public

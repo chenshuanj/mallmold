@@ -1,7 +1,7 @@
 <?php
 /*
 *	@core.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited.
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited.
 *	
 *	This library is free software; you can redistribute it and/or
 *	modify it under the terms of the GNU Lesser General Public
@@ -26,10 +26,32 @@ function addslashes_deep($var)
 	}
 }
 
-function error($msg)
+function error($msg = null)
 {
-	exit($msg);
+	if($msg instanceof Exception){
+		$error_msg = $msg->getMessage();
+		$errors = $msg->getTrace();
+	}else{
+		$error_msg = $msg;
+		$errors = debug_backtrace();
+	}
+	
+	if($error_msg){
+		echo "<h2>$error_msg</h2>";
+	}
+	
+	foreach($errors as $num=>$error){
+		$args = $error['args'] ? implode(', ', $error['args']) : '';
+		echo "#$num  [".str_replace(BASE_PATH, '', str_replace('\\', '/', $error['file'])).':'.$error['line'].'] ';
+		echo ($error['class'] ? $error['class'].'->' : '').($error['function'] ? $error['function']."($args)" : '');
+		echo '<br/>';
+	}
+	
+	exit;
 }
+
+set_error_handler('error', E_ERROR);
+set_exception_handler('error');
 
 function error_404($msg)
 {
@@ -41,11 +63,11 @@ function error_404($msg)
 			$run->__404();
 		}else{
 			header("HTTP/1.1 404 Not Found");
-			error($msg);
+			exit($msg);
 		}
 	}else{
 		header("HTTP/1.1 404 Not Found");
-		error($msg);
+		exit($msg);
 	}
 }
 
@@ -53,16 +75,16 @@ function loadclass($class, $path, $args=null)
 {
 	static $_classes = array();
 	
-	if (isset($_classes[$class])){
+	if(isset($_classes[$class])){
 		return $_classes[$class];
 	}else{
 		$script = ($path ? '/'.$path.'/' : '').$class.'.php';
 		if(!file_exists(BASE_PATH .$script)){
-			error('Can not find the file '. BASE_PATH .$script.'.php');
+			error('Can not find the file '. BASE_PATH .$script);
 		}else{
 			require(BASE_PATH .$script);
-			if (class_exists($class) === FALSE){
-				error('Can not find the class '.$class.' in the file '.$script.'.php');
+			if(class_exists($class) === FALSE){
+				error('Can not find the class '.$class.' in the file '.$script);
 			}else{
 				if($args){
 					$_classes[$class] = new $class($args);
@@ -191,16 +213,17 @@ function url($url)
 {
 	$router = &$GLOBALS['router'];
 	$uri = explode('?', $url);
+	$ma = explode('/', $uri[0]);
 	$type = isset($router['type']) ? $router['type'] : 0;
 	
-	$default_rule = isset($router['default']) ? $router['default'] : array();
-	$rule = isset($router[$uri[0]]) ? array_merge($default_rule, $router[$uri[0]]) : $default_rule;
+	$rule = isset($router['*/*']) ? $router['*/*'] : array();
+	$rule = isset($router[$ma[0].'/*']) ? array_merge($rule, $router[$ma[0].'/*']) : $rule;
+	$rule = isset($router[$uri[0]]) ? array_merge($rule, $router[$uri[0]]) : $rule;
 	
 	$url = (!empty($rule['scheme']) ? $rule['scheme'] : 'http').'://';
 	$url .= !empty($rule['host']) ? $rule['host'] : $_SERVER['HTTP_HOST'];
 	
 	if($type == 0){
-		$ma = explode('/', $uri[0]);
 		$url .= $_SERVER['SCRIPT_NAME'].'?c='.$ma[0].'&a='.$ma[1].($uri[1] ? '&'.$uri[1] : '');
 	}else{
 		$url .= ($type == 1 ? $_SERVER['SCRIPT_NAME'] : '').'/';

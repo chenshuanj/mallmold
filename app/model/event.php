@@ -1,7 +1,7 @@
 <?php
 /*
 *	@event.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
 *	This program is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@ class event extends model
 		$setting = &$this->model('common')->setting();
 		$key = md5($id.$setting['smtp_pswd']);
 		$do = "$action-$id-$key";
-		$this->push($do);
+		$this->push($do); //will move to scheduled_event
 		return null;
 	}
 	
@@ -69,6 +69,22 @@ class event extends model
 			fclose($fp);
 		}else{
 			$this->model('report')->add('event', 'fsockopen: '.$errstr, 0);
+		}
+	}
+	
+	/*
+	* Run all event(Immediate tasks)
+	*/
+	public function queue()
+	{
+		$list = $this->db->table('scheduled_event')->where('run_status=0')->getlist();
+		foreach($list as $row){
+			$id = $row['id'];
+			$this->db->table('scheduled_event')->where("id=$id")->update(array('run_time' => date('Y-m-d H:i:s')));
+			
+			$event = explode(':', $row['event']);
+			$method = $event[1];
+			$this->model($event[0])->$method($row['args']);
 		}
 	}
 }

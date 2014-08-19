@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}admin` (
   `salt` char(2) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}article` (
   `article_id` int(10) NOT NULL AUTO_INCREMENT,
   `cate_id` int(4) NOT NULL,
@@ -636,6 +636,35 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}nav` (
   `sort_order` int(4) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `{PREFIX}newsletter` (
+  `newsletter_id` int(10) NOT NULL AUTO_INCREMENT,
+  `sn` varchar(32) NOT NULL,
+  `title_key_` varchar(10) NOT NULL,
+  `content_txtkey_` varchar(10) NOT NULL,
+  `addtime` int(11) NOT NULL,
+  `sent` int(10) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `enable` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`newsletter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `{PREFIX}newsletter_send` (
+  `newsletter_id` int(10) NOT NULL,
+  `subscriber_id` int(10) NOT NULL,
+  `send_status` tinyint(1) NOT NULL DEFAULT '0',
+  `read_status` tinyint(1) NOT NULL DEFAULT '0',
+  KEY `newsletter_id` (`newsletter_id`,`subscriber_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `{PREFIX}newsletter_subscriber` (
+  `subscriber_id` int(10) NOT NULL AUTO_INCREMENT,
+  `email` varchar(64) NOT NULL,
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `addtime` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `total_send` int(10) NOT NULL DEFAULT '0',
+  `total_read` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`subscriber_id`),
+  KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}option` (
   `op_id` int(8) NOT NULL AUTO_INCREMENT,
@@ -42312,6 +42341,28 @@ INSERT INTO `{PREFIX}region_city_us` (`city_id`, `region_id`, `name`, `postcode`
 (41336, 65, 'Thayne', '83127', 0),
 (41337, 65, 'Alpine', '83128', 0),
 (41338, 65, 'Alta', '83414', 0);
+CREATE TABLE IF NOT EXISTS `{PREFIX}scheduled` (
+  `scheduled_id` int(10) NOT NULL AUTO_INCREMENT,
+  `event_model` varchar(64) NOT NULL,
+  `event_method` varchar(64) NOT NULL,
+  `time_type` int(1) NOT NULL DEFAULT '1' COMMENT '1every,2when',
+  `time_unit` int(1) NOT NULL DEFAULT '1' COMMENT '1i,2h,3d,4m,5w',
+  `time_number` int(8) NOT NULL DEFAULT '0',
+  `last_runtime` datetime DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`scheduled_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+INSERT INTO `{PREFIX}scheduled` (`scheduled_id`, `event_model`, `event_method`, `time_type`, `time_unit`, `time_number`, `last_runtime`, `status`) VALUES
+(1, 'event', 'queue', 1, 1, 5, NULL, 1);
+CREATE TABLE IF NOT EXISTS `{PREFIX}scheduled_event` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `event` varchar(64) NOT NULL,
+  `args` varchar(255) DEFAULT NULL,
+  `add_time` datetime NOT NULL,
+  `run_time` datetime DEFAULT NULL,
+  `run_status` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}setting` (
   `name` varchar(32) NOT NULL,
   `val` varchar(128) DEFAULT NULL,

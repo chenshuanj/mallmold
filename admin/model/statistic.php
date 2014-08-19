@@ -1,7 +1,7 @@
 <?php
 /*
 *	@statistic.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
 *	This program is free software; you can redistribute it and/or
@@ -49,15 +49,13 @@ class statistic extends model
 			return false;
 		}
 		
-		$sql = "select g.goods_id,g.title_key_,g.sku,s.$type 
-				from ".$this->db->tbname('goods')." as g
-				left join ".$this->db->tbname('goods_statistic')." as s on s.goods_id=g.goods_id 
-				order by $type desc 
-				limit 5";
-		$query = $this->db->query($sql);
-		$list = array();
-		while($rs = $this->db->fetch($query)){
-			$list[] = $this->model('dict')->getdict($rs);
+		$list = $this->db->table('goods', 'g')->field('g.goods_id,g.title_key_,g.sku')
+					->leftjoin('goods_statistic', 's', 's.goods_id=g.goods_id')->addfield("s.$type")
+					->order("$type desc")
+					->limit(5)
+					->getlist();
+		foreach($list as $k=>$row){
+			$list[$k] = $this->model('dict')->getdict($row);
 		}
 		return $list;
 	}

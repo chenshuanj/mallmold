@@ -1,7 +1,7 @@
 <?php
 /*
 *	@moneybookers.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
 *	This program is free software; you can redistribute it and/or

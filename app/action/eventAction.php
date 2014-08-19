@@ -1,7 +1,7 @@
 <?php
 /*
 *	@eventAction.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited. 
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 *	http://www.mallmold.com/
 *	
 *	This program is free software; you can redistribute it and/or
@@ -152,6 +152,12 @@ class eventAction extends action
 		}
 		$this->model('cart')->clear();
 		$this->model('checkout')->clear_checkout();
+		return null;
+	}
+	
+	public function scheduled()
+	{
+		$this->model('scheduled')->run();
 		return null;
 	}
 }

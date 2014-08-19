@@ -1,6 +1,14 @@
 <div id="footer" class="mtop2">
 	<div class="box footline helplist">
+		<div class="fleft">
 		{$foot_article}
+		</div>
+		<div class="fleft" style="margin-left:16px;">
+			<form action="{:url('newsletter/subscribe')}" method="post" target="_blank">
+				<input type="text" value="" name="email">
+				<input class="abutton" type="submit" value="{L:Subscribe}">
+			</form>
+		</div>
 		<div class="clear"></div>
 	</div>
 	<div class="box">

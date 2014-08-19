@@ -1,7 +1,7 @@
 <?php
 /*
 *	@db.php
-*	Copyright (c)2013 Mallmold Ecommerce(HK) Limited.
+*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited.
 *	
 *	This library is free software; you can redistribute it and/or
 *	modify it under the terms of the GNU Lesser General Public
@@ -19,7 +19,9 @@ class db
 	public $conn;
 	public $prefix = '';
 	protected $table = '';
+	protected $as = '';
 	protected $fields = '*';
+	protected $join = '';
 	protected $where = '';
 	protected $group = '';
 	protected $order = '';
@@ -27,7 +29,7 @@ class db
 	
 	public function connect($host, $user, $pwd, $charset = 'utf8')
 	{
-		$this->conn = mysql_connect($host, $user, $pwd) or error("Can't Connect MySQL Server");
+		$this->conn = mysql_connect($host, $user, $pwd) or exit("Can't connect to MySQL Server");
 		mysql_query("set names '$charset'");
 	}
 	
@@ -46,7 +48,7 @@ class db
 	{
 		$query = mysql_query($sql, $this->conn);
 		if(!$query){
-			exit($sql.'<br/>'.$this->error());
+			error($this->error());
 		}
 		return $query;
 	}
@@ -76,14 +78,16 @@ class db
         return mysql_num_fields($query);
     }
 	
-	public function table($name)
+	public function table($name, $as = null)
     {
         if(!$name){
 			$this->table = '';
 		}else{
 			$this->table = $this->prefix.$name;
+			$this->as = $as ? $as : '';
 			$this->fields = '*';
 			$this->where = '';
+			$this->join = '';
 			$this->group = '';
 			$this->order = '';
 			$this->limit = '';
@@ -99,6 +103,14 @@ class db
 	public function field($fields)
     {
         $this->fields = $fields;
+		return $this;
+    }
+	
+	public function addfield($fields)
+    {
+        if($fields){
+			$this->fields .= ($this->fields ? ',' : '').$fields;
+		}
 		return $this;
     }
 	
@@ -145,12 +157,13 @@ class db
         return mysql_real_escape_string($str);
     }
 	
-	protected function getsql()
+	public function getsql()
     {
 		$this->check();
 		
 		$sql = 'select '.($this->fields ? $this->fields : '*')
-				.' from `'.$this->table.'`'
+				.' from `'.$this->table.'`'.($this->as ? ' as '.$this->as : '')
+				.($this->join ? ' '.$this->join.' ' : '')
 				.($this->where ? ' where '.$this->where : '')
 				.($this->group ? ' group by '.$this->group : '')
 				.($this->order ? ' order by '.$this->order : '')
@@ -172,8 +185,6 @@ class db
 	
 	public function count()
     {
-		//$query = $this->query($this->getsql());
-		//return $this->num_rows($query);
 		$rs = $this->field('count(*) as count_num')->get();
 		return $rs['count_num'];
     }
@@ -207,7 +218,7 @@ class db
 	public function update($data)
     {
 		$this->check();
-		if(!$data || !is_array($data)){
+		if(!$data){
 			return 0;
 		}
 		
@@ -257,6 +268,27 @@ class db
 		return mysql_affected_rows($this->conn);
 	}
 	
+	public function join($tyle, $table, $as, $on)
+    {
+        $this->join .= " $tyle join ".$this->tbname($table).($as ? " as $as " : "")." on $on";
+		return $this;
+    }
+	
+	public function leftjoin($table, $as, $on)
+    {
+		return $this->join('left', $table, $as, $on);
+	}
+	
+	public function rightjoin($table, $as, $on)
+    {
+		return $this->join('right', $table, $as, $on);
+	}
+	
+	public function innerjoin($table, $as, $on)
+    {
+		return $this->join('inner', $table, $as, $on);
+	}
+	
 	public function close()
     {
         return mysql_close($this->conn);
@@ -264,7 +296,15 @@ class db
 	
 	public function error()
     {
-        return mysql_error($this->conn);
+        return 'Mysql error: '.mysql_error($this->conn);
+    }
+	
+	public function _new()
+    {
+        $new_db = new self();
+		$new_db->conn = $this->conn;
+		$new_db->prefix = $this->prefix;
+		return $new_db;
     }
 }
 ?>

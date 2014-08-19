@@ -1,3 +1,8 @@
+==V2.3 release==
+Add newsletter
+Add scheduled
+Improved framework
+
 ==V2.2 release==
 Improved image features
 Improved search features
