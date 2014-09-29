@@ -1,5 +1,4 @@
-                    Mallmold Ecommerce Software
-                     Version 2.3, August 2014
+                  Mallmold Ecommerce Software
 
       Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
 

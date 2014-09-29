@@ -54,6 +54,11 @@ class comment extends model
 		return $score;
 	}
 	
+	public function get_comments_num($goods_id)
+	{
+		return $this->db->table('comments')->where("goods_id=$goods_id and status=1")->count();
+	}
+	
 	public function get_comments($goods_id, $limit=0)
 	{
 		if(!$limit){

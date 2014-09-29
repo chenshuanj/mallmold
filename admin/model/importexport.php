@@ -304,7 +304,7 @@ class importexport extends model
 	{
 		$lang_code = cookie('admin_lang');
 		$str = $this->load('lib/csv')->put($file_data);
-		$name = $name.'_'.$lang_code.'.csv';
+		$name = str_replace(' ', '_', $name).'_'.$lang_code.'.csv'; //repalce space to _ for linux
 		
 		header('Content-Description: File Transfer');
 		header('Content-Type: application/octet-stream');

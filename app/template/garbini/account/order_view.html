@@ -1,0 +1,99 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		{include account/sidebar.html}
+		<div class="col-sm-9">
+			<h2>{$html_title} #{$order['order_sn']} ({$order_status[$order['status']]})</h2>
+			<table width="100%" class="table table-bordered table-condensed">
+			<tr>
+				<th width="25%">{L:OrderID}:</th><td>{$order['order_sn']}</td>
+				<th width="25%">{L:Add time}:</th><td>{$order['time']}</td>
+			</tr>
+			<tr>
+				<th>{L:Goods amount}:</th><td>{$order['symbol']}{$order['goods_amount']}</td>
+				<th>{L:Tax}:</th><td>{$order['symbol']}{$order['tax_fee']}</td>
+			</tr>
+			<tr>
+				<th>{L:Shipping}:</th><td>{$order['symbol']}{$order['shipping_fee']}</td>
+				<th>{L:Total}:</th><td>{$order['symbol']}{$order['total_amount']}</td>
+			</tr>
+			<tr>
+				<th>{L:Shipping method}:</th><td>{$order['shipping_method']}</td>
+				<th>{L:Payment method}:</th><td>{$order['payment_method']}</td>
+			</tr>
+			</table>
+			<table width="100%" class="table table-bordered table-condensed">
+			<tr>
+				<td width="50%">
+					<h3>{L:Shipping address}:</h3>
+					<div class="address_details">
+						{$order['shipping_address']['firstname']} {$order['shipping_address']['lastname']}<br/>
+						{$order['shipping_address']['phone']}<br/>
+						{$order['shipping_address']['address']}<br/>
+						{if $order['shipping_address']['address2']}{$order['shipping_address']['address2']}<br/>{/if}
+						{$order['shipping_address']['postcode']} {$order['shipping_address']['state']} {$order['shipping_address']['country']}
+					</div>
+				</td>
+				<td width="50%">
+					<h3>{L:Billing address}:</h3>
+					<div class="address_details">
+						{$order['billing_address']['firstname']} {$order['billing_address']['lastname']}<br/>
+						{$order['billing_address']['phone']}<br/>
+						{$order['billing_address']['address']}<br/>
+						{if $order['billing_address']['address2']}{$order['billing_address']['address2']}<br/>{/if}
+						{$order['billing_address']['postcode']} {$order['billing_address']['state']} {$order['billing_address']['country']}
+					</div>
+				</td>
+			</tr>
+			</table>
+			<h3>{L:Goods}:</h3>
+			<table width="100%" class="table table-bordered table-condensed">
+			<tr>
+				<th>{L:Goods name}</th>
+				<th>{L:Price}</th>
+				<th>{L:Quantity}</th>
+				<th>{L:Subtotal}</th>
+				<th>{L:Shipping number}</th>
+			</tr>
+			{foreach $order['goods'] as $v}
+			<tr>
+				<td>
+					<a target="_blank" href="{:url('goods/index?goods_id='.$v['goods_id'])}">{$v['goods_name']}</a>
+					{eval $options = json_decode($v['options'], true);}
+					{if $options}
+						{foreach $options as $op}
+						<div>{$op['name']}:{$op['value']}</div>
+						{/foreach}
+					{/if}
+				</td>
+				<td>{$order['symbol']}{$v['price']}</td>
+				<td>{$v['quantity']}</td>
+				<td>{$order['symbol']}{$v['subtotal']}</td>
+				<td>{$v['shipping']}</td>
+			</tr>
+			{/foreach}
+			</table>
+			<h3>{L:Order status}:</h3>
+			<table width="100%" class="table table-bordered table-condensed">
+			<tr>
+				<th>{L:Status}</th>
+				<th>{L:Remark}</th>
+				<th>{L:Time}</th>
+			</tr>
+			{foreach $order['status_list'] as $v}
+			<tr>
+				<td>{$order_status[$v['status']]}</td>
+				<td>{$v['remark']}</td>
+				<td>{$v['time']}</td>
+			</tr>
+			{/foreach}
+			</table>
+			
+			<a href="{:url('account/order')}" class="btn btn-primary">{L:Back}</a>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

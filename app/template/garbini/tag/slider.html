@@ -1,0 +1,22 @@
+{if $tag_slider}
+<section id="slider">
+	<div id="bs-carousel" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators">
+			<li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+			<li data-target="#bs-carousel" data-slide-to="1"></li>
+			<li data-target="#bs-carousel" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner">
+			{foreach $tag_slider as $n=>$item}
+			<div class="item{if $n==0} active{/if}"><a href="#"><img src="{$item['src']['origin']}" alt=""></a></div>
+			{/foreach}
+		</div>
+		<a class="left carousel-control" href="#bs-carousel" data-slide="prev">
+			<i class="fa fa-angle-left"></i>
+		</a>
+		<a class="right carousel-control" href="#bs-carousel" data-slide="next">
+			<i class="fa fa-angle-right"></i>
+		</a>
+	</div>
+</section>
+{/if}

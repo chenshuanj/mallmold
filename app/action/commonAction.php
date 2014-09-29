@@ -86,7 +86,7 @@ class commonAction extends action
 		if($this->model('user')->is_login()){
 			$is_login = 1;
 			$user = $this->model('user')->get($_SESSION['user_id']);
-			$this->view['user_name'] = $user['firstname'].' '.$user['lastname'];
+			$this->view['user_name'] = $user['firstname'];
 		}
 		$this->view['is_login'] = $is_login;
 		

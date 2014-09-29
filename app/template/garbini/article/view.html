@@ -1,0 +1,23 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		<div class="col-sm-9">
+			<h1>{$article['title']}</h1>
+			{$article['content']}
+		</div>
+		<div class="col-sm-3 sidebar">
+			<aside class="widget widget_categories">
+				<h3 class="widget-title">{L:Category}</h3>
+				<ul class="submenu">
+					{foreach $cates_list as $v}
+					<li><a href="{:url($v['url'])}">{$v['name']}</a></li>
+					{/foreach}
+				</ul>
+			</aside>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

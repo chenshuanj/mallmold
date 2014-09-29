@@ -5,6 +5,7 @@
   <tr>
 	<th>{L:Email}</th>
 	<th>{L:subscribe time}</th>
+	<th>{L:lang}</th>
 	<th>{L:total send}</th>
 	<th>{L:total read}</th>
 	<th>{L:status}</th>
@@ -14,6 +15,7 @@
   <tr>
 	<td>{$val['email']}</td>
 	<td>{:date('Y-m-d H:i:s', $val['addtime'])}</td>
+	<td>{$val['language']}</td>
 	<td>{$val['total_send']}</td>
 	<td>{$val['total_read']}</td>
 	<td>{if $val['status']==0}{L:unsubscribed}{else}{L:subscribed}{/if}</td>

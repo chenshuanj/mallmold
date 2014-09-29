@@ -45,7 +45,7 @@ class goodsAction extends commonAction
 		
 		//comment
 		$this->view['comments'] = $this->model('comment')->get_comments($goods_id);
-		$this->view['comments_num'] = count($this->view['comments']);
+		$this->view['comments_num'] = $this->model('comment')->get_comments_num($goods_id);
 		$this->view['summarys'] = $this->model('comment')->get_summarys($goods['group_id']);
 		$this->view['goods'] = $goods;
 		$this->view['catelist'] = $this->model('catalog')->get_catelist(0);

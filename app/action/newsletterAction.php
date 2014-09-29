@@ -16,6 +16,12 @@
 
 class newsletterAction extends action
 {
+	public function __construct()
+    {
+		parent::__construct();
+		require(APP_PATH .'model/functions.php');
+	}
+	
 	public function subscribe()
 	{
 		$email = trim($_POST['email']);
@@ -40,10 +46,7 @@ class newsletterAction extends action
 	{
 		//create a image
 		header('Content-type:image/gif');
-		$img = imagecreatetruecolor(1, 1);
-		$background = imagecolorallocate($img, 255, 255, 255);
-		imagefill($img, 0, 0, $background);
-		imagegif($img);
+		echo base64_decode('R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 		
 		$sn = trim($_GET['sn']);
 		$email = trim($_GET['ue']);

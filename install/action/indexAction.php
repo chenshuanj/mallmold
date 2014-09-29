@@ -43,13 +43,17 @@ class indexAction extends action
 			return;
 		}
 		
-		$this->db->connect("$host:$port", $user, $pswd);
-		$status = $this->db->select_db($dbname);
-		if(!$status){
-			echo "Can't select Database: $dbname";
-			echo '<br/><input type="button" onclick="history.go(-1);" value="Back">';
-			return;
+		//mysql or pdo_mysql
+		if(extension_loaded('pdo_mysql')){
+			$db_driver = 'pdo_mysql';
+		}elseif(extension_loaded('mysqli')){
+			$db_driver = 'mysqli';
+		}else{
+			$db_driver = 'mysql';
 		}
+		
+		$this->db->set_driver($db_driver);
+		$this->db->setting("$host:$port", $user, $pswd, $dbname);
 		
 		$config = array(
 			//base
@@ -64,6 +68,7 @@ class indexAction extends action
 			'DB_USER' => $user,
 			'DB_PSWD' => $pswd,
 			'DB_PREFIX' => $prefix,
+			'DB_DRIVER' => $db_driver,
 			
 			//control
 			'TPL_NAME' => 'default',

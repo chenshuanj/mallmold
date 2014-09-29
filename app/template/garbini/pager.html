@@ -1,0 +1,17 @@
+{if $pager}
+	<ul class="pagination">
+		{if $pager['pre']}
+		<li><a href="{$pager['url']}{$pager['pre']}">&laquo;</a></li>
+		{/if}
+		{if $pager['pages']>1}<li>{$pager['page']}</li>{/if}
+		{if $pager['list']}
+			{foreach $pager['list'] as $p}
+			<li><a href="{$pager['url']}{$p}">{$p}</a></li>
+			{/foreach}
+		{/if}
+		{if $pager['next']}
+		<li><a href="{$pager['url']}{$pager['next']}">&raquo;</a></li>
+		{/if}
+		<li>{L:Total %d Records, $pager[total]}</li>
+	</ul>
+{/if}

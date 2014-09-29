@@ -165,6 +165,16 @@ class paymentAction extends commonAction
 		$setting['signature'] = trim($_POST['signature']);
 		$this->db->table('payment_paypal_express')->update($setting);
 	}
+	
+	private function save_alipay()
+	{
+		$setting = $this->db->table('payment_alipay')->get();
+		$setting['test_mode'] = intval($_POST['test_mode']);
+		$setting['seller_email'] = trim($_POST['seller_email']);
+		$setting['partner'] = trim($_POST['partner']);
+		$setting['key'] = trim($_POST['key']);
+		$this->db->table('payment_alipay')->update($setting);
+	}
 }
 
 ?>

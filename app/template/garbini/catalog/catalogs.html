@@ -1,0 +1,17 @@
+<aside class="widget widget_product_categories">
+	<h3 class="widget-title">{L:Category}</h3>
+	<ul>
+		{foreach $catalogs as $cat}
+		<li>
+			<a href="{:url($cat['url'])}"{if $cat['id']==$id} class="hover"{/if}>{$cat['name']}</a>
+			{if $cat['childnum']>0}
+				<ul>
+					{foreach $cat['child'] as $val}
+					<li><a href="{:url($val['url'])}" class="child {if $val['id']==$id} hover{/if}">{$val['name']}</a></li>
+					{/foreach}
+				</ul>
+			{/if}
+		</li>
+		{/foreach}
+	</ul>
+</aside>

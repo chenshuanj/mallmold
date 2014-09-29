@@ -1,0 +1,77 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<h1>{$html_title}</h1>
+	<div class="row">
+		<div class="col-sm-6">
+			<form method="post" action="{:url('helpdesk/post')}" role="form">
+			<input type="hidden" name="back_url" value="{$back_url}">
+			<div class="form-group">
+				<input type="text" name="firstname" value="{$firstname}" class="form-control input-lg" placeholder="{L:First Name} *">
+			</div>
+			<div class="form-group">
+				<input type="text" name="lastname" value="{$lastname}" class="form-control input-lg" placeholder="{L:Last Name} *">
+			</div>
+			<div class="form-group">
+				<input type="text" name="email" value="{$email}" class="form-control input-lg" placeholder="{L:Email} *">
+			</div>
+			<div class="form-group">
+				<input type="text" name="phone" class="form-control input-lg" placeholder="{L:Phone}">
+			</div>
+			<div class="form-group">
+				<select name="department_id" class="form-control input-lg">
+					<option value="0">{L:Department} *</option>
+					{foreach $departments as $v}
+					<option value="{$v['id']}">{$v['name']}</option>
+					{/foreach}
+				</select>
+			</div>
+			<div class="form-group">
+				<select name="priority" class="form-control input-lg">
+					<option value="0">{L:Priority} *</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<input type="text" name="title" class="form-control input-lg" placeholder="{L:Title} *">
+			</div>
+			<div class="form-group">
+				<textarea name="message" class="form-control input-lg" cols="30" rows="5" placeholder="{L:Message}"></textarea>
+			</div>
+			<div class="form-group">
+				<input type="text" style="width:156px;display:inline-block;" name="captcha" class="form-control input-lg" placeholder="{L:Captcha} *">
+				<a href="javascript:;"><img id="captcha" align="absmiddle" src="{:url('captcha/index')}"/></a>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#captcha').click(function(){
+							$(this).attr('src', "{:url('captcha/index?update=')}" + Math.random());
+						});
+					});
+				</script>
+			</div>
+			
+			<button type="submit" class="btn btn-primary btn-lg">{L:Submit}</button>
+			</form>
+			<div class="gap-30"></div>
+		</div>
+		<div class="col-sm-2">
+		
+		</div>
+		<div class="col-sm-3">
+			<h3>Contact Info</h3>
+			<p>
+				Mallmold Service<br>
+				Mallmold Ecommerce(HK) Limited
+			</p>
+			<p>
+				Email: <a href="mailto:service@mallmold.com">service@mallmold.com</a><br>
+				Web: <a href="http://www.mallmold.com/">www.mallmold.com</a>
+			</p>
+      </div>
+	</div>
+	</div>
+</section>
+{include footer.html}

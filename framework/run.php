@@ -74,19 +74,16 @@ define('ACTION', $_uri['action']);
 
 require(CORE_PATH .'/db.php');
 $db = new db();
-if(isset($config['DB_HOST']) && isset($config['DB_USER']) && isset($config['DB_PSWD']))
+if(isset($config['DB_DRIVER']))
 {
-	$db_host = $config['DB_HOST'].(isset($config['DB_PORT']) ? ':'.$config['DB_PORT'] : '');
-	$db->connect($db_host, $config['DB_USER'], $config['DB_PSWD']);
-	if(isset($config['DB_NAME']))
-	{
-		$db->select_db($config['DB_NAME']);
-	}
-	if(isset($config['DB_PREFIX']))
-	{
-		$db->prefix($config['DB_PREFIX']);
-	}
+	$db->set_driver($config['DB_DRIVER']);
 }
+if(isset($config['DB_PREFIX']))
+{
+	$db->prefix($config['DB_PREFIX']);
+}
+$db_host = $config['DB_HOST'].(isset($config['DB_PORT']) ? ':'.$config['DB_PORT'] : '');
+$db->setting($db_host, $config['DB_USER'], $config['DB_PSWD'], $config['DB_NAME']);
 
 $script = APP_PATH .'action/'.MODULE.'Action.php';
 if(!file_exists($script))

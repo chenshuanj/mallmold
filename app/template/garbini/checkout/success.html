@@ -1,0 +1,14 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		<h1 class="page-title">{$html_title}</h1>
+		<div class="col-sm-6">
+			<p>Your orderId is: <a href="">{$order['order_sn']}</a></p>
+			<a class="btn btn-primary btn-lg" href="{:url('account/orderview?order_id='.$order['order_id'])}">{L:View order}</a>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

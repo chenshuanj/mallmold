@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="{$current_lang}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{$html_title}</title>
+	<meta name="description" content="{$meta_description}" />
+	<meta name="keywords" content="{$meta_keywords}" />
+	<link href="{TPL_PATH}css/bootstrap.min.css" rel="stylesheet">
+	<link href="{TPL_PATH}css/owl.carousel.css" rel="stylesheet">
+	<link href="{TPL_PATH}css/owl.theme.css" rel="stylesheet">
+	<link href="{TPL_PATH}css/owl.transitions.css" rel="stylesheet">
+	<link href="{TPL_PATH}css/style.css" rel="stylesheet">
+	<link href="{TPL_PATH}css/config.css" rel="stylesheet">
+	<script type="text/javascript" src="{TPL_PATH}js/jquery.min.js"></script>
+	<script type="text/javascript" src="{TPL_PATH}js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{TPL_PATH}js/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="{TPL_PATH}js/jquery.jpanelmenu.min.js"></script>
+	<script type="text/javascript" src="{TPL_PATH}js/main.js"></script>
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<![endif]-->
+	{include $headers}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#select_lang').find('a').each(function(){
+				if($(this).attr('select') == '1'){
+					$('#current_lang').text($(this).text());
+					return;
+				}
+			});
+			$('#select_cur').find('a').each(function(){
+				if($(this).attr('select') == '1'){
+					$('#current_cur').text($(this).text());
+					return;
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+<header id="header">
+	<div id="top-bar">
+		<div class="container">
+			<nav id="language-selector">
+				<ul class="nav nav-pills">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="current_lang">{L:Language}</span> <b class="caret"></b></a>
+						<ul role="menu" class="dropdown-menu" id="select_lang">
+							{foreach $languages as $lang}
+							<li><a href="{$current_url_lang}{$lang['code']}"{if $lang['code']==$current_lang} select="1"{/if}>{$lang['name']}</a></li>
+							{/foreach}
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="current_cur">{L:Currency}</span> <b class="caret"></b></a>
+						<ul role="menu" class="dropdown-menu" id="select_cur">
+							{foreach $currencies as $cur}
+							<li><a href="{$current_url_cur}{$cur['code']}"{if $cur['code']==$current_cur} select="1"{/if}>{$cur['code']}</a></li>
+							{/foreach}
+						</ul>
+					</li>
+					{if $top_tel}
+					<li>
+						{$top_tel}
+					</li>
+					{/if}
+				</ul>
+			</nav>
+			
+			<nav id="shopping-cart">
+				<a href="#">
+					<i class="fa fa-shopping-cart fa-lg"></i> {L:Cart}
+					<span class="fa-stack">
+						<i class="fa fa-circle fa-stack-2x"></i>
+						<i class="fa fa-stack-1x fa-inverse">{$cart_num}</i>
+					</span>
+				</a>
+			</nav>
+			
+			<nav id="top-nav" role="navigation" class="navbar">
+				<div class="navbar-header">
+					<button data-target=".top-nav" data-toggle="collapse" class="navbar-toggle" type="button">
+						<span class="sr-only">Navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse top-nav">
+					<ul class="nav navbar-nav">
+						{if $is_login}
+						<li>{L:Welcome},<b>{$user_name}</b></li>
+						<li><a href="{:url('account/index')}">{L:My account}</a></li>
+						<li><a href="{:url('user/Logout')}">{L:Logout}</a></li>
+						{else}
+						<li><a href="{:url('user/login')}">{L:Login}</a></li>
+						<li><a href="{:url('user/register')}">{L:Register}</a></li>
+						{/if}
+						{foreach $top_nav as $nav}
+						<li><a href="{$nav['url']}">{$nav['title']}</a></li>
+						{/foreach}
+						<li><a href="{:url('helpdesk/form')}">{L:Contact Us}</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	
+	<nav id="main-nav">
+		<div class="navbar">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-nav">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/"><img src="{$web_logo}" class="img-responsive"></a>
+				</div>
+				<div class="navbar-collapse collapse main-nav">
+					<ul class="nav navbar-nav navbar-right">
+						{if $is_home==0}
+						<li><a href="/">{L:Home}</a></li>
+						{else}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{L:Categories} <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								{foreach $catalogs as $cat}
+								<li><a href="{:url($cat['url'])}">{$cat['name']}</a></li>
+								{/foreach}
+							</ul>
+						</li>
+						{/if}
+						{foreach $main_nav as $nav}
+						<li><a href="{$nav['url']}">{$nav['title']}</a></li>
+						{/foreach}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+</header>

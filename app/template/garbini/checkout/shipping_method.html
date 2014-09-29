@@ -1,0 +1,9 @@
+{if $shipping_list}
+	{foreach $shipping_list as $v}
+	<div class="radio">
+		<label><input type="radio" class="shipping_id" name="shipping_id" value="{$v['shipping_id']}" {if $address_tmp['shipping_id']==$v['shipping_id']}checked{/if}> {$v['name']}</label>
+	</div>
+	{/foreach}
+{else}
+	{L:None shipping method}
+{/if}

@@ -1,0 +1,19 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		{include account/sidebar.html}
+		<div class="col-sm-9">
+			<h1>{$html_title}</h1>
+			<h3>{$user['firstname']} {$user['lastname']}</h3>
+			<p>{L:Email}: {$user['email']}</p>
+			{if $group}
+			<p>{L:User group}: {$group['name']}</p>
+			{/if}
+			<p><a href="{:url('account/chang_pswd')}" class="btn btn-primary">{L:Change password}</a></p>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

@@ -163,6 +163,20 @@ class orderAction extends commonAction
 		return;
 	}
 	
+	private function alipay($order)
+	{
+		$status = $this->model('alipay')->set_pay_params($order);
+		if(!$status){
+			$this->model('payment')->error_log($order['order_id'], 'alipay');
+			$this->error($this->model('payment')->error_msg);
+			return;
+		}
+		
+		$this->view['data'] = $this->model('alipay')->get_form();
+		$this->view['html_title'] = 'Redirect to Alipay';
+		$this->view('checkout/alipay.html');
+	}
+	
 	public function success()
 	{
 		$order_id = intval($_GET['order_id']);

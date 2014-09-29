@@ -1,0 +1,31 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		{include account/sidebar.html}
+		<div class="col-sm-9">
+			<h1>{$html_title}</h1>
+			{if $address_list}
+				{foreach $address_list as $v}
+					<div class="address_list">
+						<div class="address_details">
+						{$v['firstname']} {$v['lastname']}<br/>
+						{$v['phone']}<br/>
+						{$v['address']}<br/>
+						{if $v['address2']}{$v['address2']}<br/>{/if}
+						{$v['postcode']} {$v['state']} {$v['country']}
+						</div>
+						<div class="address_action">
+							<a href="{:url('account/add_address?id='.$v['id'])}">{L:Edit}</a>
+							<a href="{:url('account/del_address?id='.$v['id'])}" onclick="return confirm('{L:Are you sure want to delete?}')">{L:Delete}</a>
+						</div>
+					</div>
+				{/foreach}
+			{/if}
+			<a href="{:url('account/add_address')}" class="btn btn-primary btn-lg">{L:New address}</a>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

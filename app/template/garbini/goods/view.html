@@ -1,0 +1,205 @@
+{include header.html}
+<section id="content" class="single-product">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		<div class="col-sm-5">
+			<div id="product-large" class="owl-carousel">
+				{foreach $goods['img_more'] as $v}
+				<div class="item"><img src="{$v['image'][$show_sign_big]}"></div>
+				{/foreach}
+			</div>
+			<div id="product-thumb" class="owl-carousel">
+				{foreach $goods['img_more'] as $v}
+				<div class="item"><img src="{$v['image'][$show_sign]}"></div>
+				{/foreach}
+			</div>
+		</div>
+		<div class="col-sm-7 summary entry-summary">
+			<h1 class="product_title">{$goods['title']}</h1>
+			<p class="price">
+				<sup>{$current_symbol}</sup><span class="amount" id="price">{$goods['price']}</span>
+			</p>
+			{if $goods['brief']}
+			<h3>{L:Short Description}</h3>
+			<p>{$goods['brief']}</p>
+			{/if}
+			<hr>
+			<form id="cart_form" method="post" action="{:url('cart/add')}">
+			<input type="hidden" name="goods_id" value="{$goods['goods_id']}">
+			{if $goods['option']}
+			<h3>{L:Please Choose}:</h3>
+			<div class="variations">
+				<div class="row">
+					{foreach $goods['option'] as $v}
+					<div class="col-sm-6 option">
+						<select class="form-control col-sm-6 option_id" name="option[{$v['op_id']}]" id="option_{$v['op_id']}">
+							<option value="0">{$v['name']}</option>
+							{foreach $v['option'] as $o}
+							<option price="{$o['price']}" value="{$o['id']}">
+								{$o['name']} {if $o['price']>0}(+{$o['price']}){elseif $o['price']<0}({$o['price']}){/if}
+							</option>
+							{/foreach}
+						</select>
+					</div>
+					{/foreach}
+				</div>
+			</div>
+			{/if}
+			<div class="quantity buttons_added">
+				<button type="button" class="minus" id="reduce-qty"><i class="fa fa-minus"></i></button>
+				<input type="number" size="4" class="qty text form-control" title="Qty" value="1" name="quantity" id="qty" step="1">
+				<button type="button" class="plus" id="add-qty"><i class="fa fa-plus"></i></button>
+			</div>
+			<input type="submit" class="btn btn-primary btn-lg" id="add-to-cart" value="{L:Add to Cart}">
+			</form>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$('.option_id').change(function(){
+					var price = {$goods['price']};
+					var add = 0;
+					$('.option').find('select').each(function(){
+						add = parseFloat($(this).find("option:selected").attr('price'));
+						price += add;
+					});
+					price = Math.round(price*100)/100;
+					$('#price').html(price);
+				});
+				$('#add-to-cart').click(function(e){
+					e.preventDefault();
+					var check = 1;
+					$('.option').find('select').each(function(){
+						s = parseInt($(this).find("option:selected").attr('value'));
+						if(s == 0){
+							check = 0;
+							$(this).addClass('required');
+						}
+					});
+					if(check == 1){
+						$('#cart_form').submit();
+					}
+				});
+				$('#add-qty').click(function(){
+					var qty = $('#qty').val();
+					qty++;
+					$('#qty').val(qty);
+				});
+				$('#reduce-qty').click(function(){
+					var qty = $('#qty').val();
+					qty--;
+					if(qty < 1){
+						qty = 1;
+					}
+					$('#qty').val(qty);
+				});
+			});
+			</script>
+		</div>
+	</div>
+	
+	<ul class="nav nav-tabs product-tabs">
+		<li class="active"><a href="#description" data-toggle="tab">{L:Description}</a></li>
+		<li><a href="#reviews" data-toggle="tab">{L:Reviews} ({$comments_num})</a></li>
+    </ul>
+	
+	<div class="tab-content">
+		<div class="tab-pane active" id="description">
+			{$goods['description']}
+		</div>
+		<div class="tab-pane" id="reviews">
+			{include goods/comments.html}
+			{if $comments_num > 9}
+				<div id="more_comments" style="text-align:right;"><input type="button" class="btn btn-primary" id="ajax_comments" value="{L:More}"/></div>
+				<script type="text/javascript">
+					var comments_page = 2;
+					$(document).ready(function(){
+						$('#ajax_comments').click(function(){
+							$.ajax({
+								url:"{:url('goods/ajax_get_comment')}",   
+								type:"POST",
+								dataType:"html",
+								data:{goods_id:{$goods['goods_id']}, page:comments_page},
+								success:function(res)
+								{
+									if(res == 0){
+										alert('{L:No more reviews}');
+										$("#more_comments").remove();
+									}else{
+										$(res).insertBefore("#more_comments");
+										comments_page++;
+									}
+								}
+							});
+							
+						});
+					});
+				</script>
+			{/if}
+			<div id="review_form">
+				<h3 id="reply-title" class="comment-reply-title">{L:Add a Review}</h3>
+				{if $is_login}
+				<form action="{:url('goods/comment?goods_id='.$goods['goods_id'])}" method="post" id="commentform" class="comment-form">
+					<div class="row">
+						<p class="comment-form-author col-sm-4"><input type="text" name="username" placeholder="{L:Fullname} *" class="form-control"></p>
+					</div>
+					<div class="row">
+						<p class="comment-form-email col-sm-4"><input type="email" name="email" placeholder="{L:Email} *" class="form-control"></p>
+					</div>
+					<div class="row">
+						<p class="comment-form-author col-sm-4">{L:Your Rating}:</p>
+					</div>
+					<div class="row">
+						{foreach $summarys as $sum}
+						<p class="comment-form-rating col-sm-4">
+							<select class="form-control" name="score[{$sum['id']}]">
+								<option value="0">-- {$sum['name']} --</option>
+								<option value="5">5 - Perfect</option>
+								<option value="4">4 - Good</option>
+								<option value="3">3 - Average</option>
+								<option value="2">2 - Not That Bad</option>
+								<option value="1">1 - Very Poor</option>
+							</select>
+						</p>
+						{/foreach}
+					</div>
+					<p class="comment-form-comment">
+						<textarea name="content" id="review" class="form-control" cols="30" rows="5" placeholder="{L:Your Review}"></textarea>
+					</p>
+					<p class="form-submit"><input type="submit" class="btn btn-primary btn-lg" name="proceed" value="{L:Submit}"></p>
+				</form>
+				{else}
+					{L:Login to submit a review}, <a href="{:url('user/login')}">{L:Login}</a> / <a href="{:url('user/register')}">{L:Register}</a>
+				{/if}
+			</div>
+		</div>
+	</div>
+	{if $cross_sell}
+	<div class="related">
+		<h2>{L:You May Also Like}</h2>
+		<ul class="products row">
+			{foreach $cross_sell as $v}
+			<li class="col-sm-3 first">
+				<div class="product">
+					<div class="thumbnail">
+						<a href="{:url($v['url'])}"><img src="{$v['image'][$img_sign]}" alt=""></a>
+						<a href="{:url($v['url'])}" class="add-to-cart" title="Add to Cart">
+						<span class="fa-stack fa-2x">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-shopping-cart  fa-stack-1x fa-inverse"></i>
+						</span>
+						</a>
+					</div>
+					<hr>
+					<div class="title">
+						<h3><a href="{:url($v['url'])}">{$v['title']}</a></h3>
+					</div>
+					<span class="price">{$v['price']}</span>
+				</div>
+			</li>
+			{/foreach}
+		</ul>
+    </div>
+	{/if}
+	</div>
+</section>
+{include footer.html}

@@ -70,7 +70,7 @@ class cart extends model
 			$goods = $this->model('mdata')->table('goods')->where("goods_id=$goods_id")->get();
 			$goods['url'] = $this->model('urlkey')->geturl('goods_id', $goods['goods_id'], $goods['urlkey']);
 			$list[$k]['goods'] = $goods;
-			$list[$k]['price'] = $goods['price'];
+			$list[$k]['price'] = $this->model('common')->current_price($goods['price'], 0);
 			$options = $v['options'];
 			if($options){
 				$options_list = $this->model('goods')->get_price_option($goods_id);
@@ -86,8 +86,6 @@ class cart extends model
 				}
 				$list[$k]['options_name'] = $options_name;
 			}
-			
-			$list[$k]['price'] = $this->model('common')->current_price($list[$k]['price'], 0);
 		}
 		
 		return $list;
@@ -140,7 +138,8 @@ class cart extends model
 	
 	public function count_subtotal($goods_id, $quantity, $option=array())
 	{
-		$base_price = $this->db->table('goods')->where("goods_id=$goods_id")->getval('price');
+		$price = $this->db->table('goods')->where("goods_id=$goods_id")->getval('price');
+		$base_price = $this->model('common')->current_price($price, 0);
 		if($option){
 			$price_option = $this->model('goods')->get_price_option($goods_id);
 			foreach($option as $k=>$v){
@@ -149,7 +148,7 @@ class cart extends model
 				$base_price += $price_option[$k]['option'][$v]['price'];
 			}
 		}
-		return $this->model('common')->current_price($base_price*$quantity, 0);
+		return $base_price*$quantity;
 	}
 	
 	//run after login/register

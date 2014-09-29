@@ -1,0 +1,30 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		{include account/sidebar.html}
+		<div class="col-sm-6">
+			<h1>{$html_title}</h1>
+			{if $have_change==1}
+			<p style="color:green">{L:Your password has been changed}</p>
+			{/if}
+			<form action="{:url('account/chang_pswd')}" method="post" role="form">
+			<div class="form-group">
+				{$user['email']}
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control input-lg" name="password" placeholder="{L:Password}">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control input-lg" name="repassword" placeholder="{L:Confirm password}">
+			</div>
+			<div class="pull-right">
+				<button type="submit" name="submit" value="1" class="btn btn-primary btn-lg">{L:Submit}</button>
+			</div>
+			</form>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

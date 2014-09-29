@@ -167,7 +167,7 @@ class visitor extends model
 			}
 			
 			$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
-			$keyswords = explode('|', $setting['mobile_mode']);
+			$keyswords = explode('|', $setting['mobile_ua']);
 			foreach($keyswords as $code){
 				if(strpos($ua, strtolower($code)) !== false){
 					$is_mobile = true;

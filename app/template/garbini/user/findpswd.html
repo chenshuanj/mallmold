@@ -1,0 +1,27 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		<div class="col-sm-3">
+		</div>
+		<div class="col-sm-6">
+			<h3>{$html_title}</h3>
+			<div class="gap-10"></div>
+			{if !$message}
+				<form method="post" action="{:url('user/findpswd')}" role="form">
+				<div class="form-group">
+					<input type="email" class="form-control input-lg" name="email" placeholder="{L:Your Email}">
+				</div>
+				<div class="pull-right">
+					<button type="submit" name="submit" value="1" class="btn btn-primary btn-lg">{L:Submit}</button>
+				</div>
+				</form>
+			{else}
+				{L:A temporary password has been sent to your mailbox}
+			{/if}
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

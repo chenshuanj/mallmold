@@ -5,7 +5,7 @@
 		<form id="checkout" action="{:url('checkout/place_order')}" method="post">
 		<div class="fleft shipping">
 			<div class="address" id="address_form">
-			<h3>{L:Shipping Address}</h3>
+			<h3>{L:Shipping address}</h3>
 			{if $address_list}
 				<table>
 				{foreach $address_list as $v}
@@ -96,7 +96,7 @@
 				</tr>
 				<tbody id="billtosame_html" {if !isset($address_tmp['billtosame']) || $address_tmp['billtosame']==1} style="display:none"{/if}>
 				<tr>
-					<td><h3>{L:Billing Address}</h3></td><td></td>
+					<td><h3>{L:Billing address}</h3></td><td></td>
 				</tr>
 				<tr>
 					<th>{L:First Name}:</th><td><input type="text" id="bill_firstname" name="bill_firstname" value="{$address_tmp['bill_firstname']}"></td>

@@ -16,8 +16,16 @@
 
 class db
 {
-	public $conn;
+	public $conn = null;
+	public $driver = 'mysql';
 	public $prefix = '';
+	
+	protected $host;
+	protected $user;
+	protected $pwd;
+	protected $dbname;
+	protected $charset;
+	
 	protected $table = '';
 	protected $as = '';
 	protected $fields = '*';
@@ -27,15 +35,42 @@ class db
 	protected $order = '';
 	protected $limit = '';
 	
-	public function connect($host, $user, $pwd, $charset = 'utf8')
+	public function set_driver($driver)
 	{
-		$this->conn = mysql_connect($host, $user, $pwd) or exit("Can't connect to MySQL Server");
-		mysql_query("set names '$charset'");
+		if($driver){
+			if($driver == 'mysqli'){
+				$driver = 'mysql_mysqli';
+			}
+			$this->driver = $driver;
+		}
 	}
 	
-	public function select_db($dbname)
+	public function setting($host, $user, $pwd, $dbname, $charset = 'utf8')
 	{
-		return mysql_select_db($dbname);
+		$this->host = $host;
+		$this->user = $user;
+		$this->pwd = $pwd;
+		$this->dbname = $dbname;
+		$this->charset = $charset;
+	}
+	
+	public function connect()
+	{
+		$script = CORE_PATH .'/db/'.$this->driver.'.php';
+		if(!file_exists($script)){
+			error("Can not find the driver: $script");
+		}else{
+			require_once($script);
+			$this->conn = new $this->driver;
+			return $this->conn->connect($this->host, $this->user, $this->pwd, $this->dbname, $this->charset);
+		}
+	}
+	
+	protected function check_connect()
+	{
+		if($this->conn == null){
+			$this->connect();
+		}
 	}
 	
 	public function prefix($prefix)
@@ -46,36 +81,18 @@ class db
 	
 	public function query($sql)
 	{
-		$query = mysql_query($sql, $this->conn);
-		if(!$query){
-			error($this->error());
-		}
-		return $query;
+		$this->check_connect();
+		return $this->conn->query($sql);
 	}
 	
 	public function fetch($query)
     {
-        return mysql_fetch_assoc($query);
-    }
-
-    public function fetch_fields($query)
-    {
-        return mysql_fetch_field($query);
-    }
-	
-	public function num_rows($query)
-    {
-        return mysql_num_rows($query);
+        return $this->conn->fetch($query);
     }
 	
 	public function insert_id()
     {
-        return mysql_insert_id($this->conn);
-    }
-	
-	public function num_fields($query)
-    {
-        return mysql_num_fields($query);
+        return $this->conn->insert_id();
     }
 	
 	public function table($name, $as = null)
@@ -191,12 +208,8 @@ class db
 	
 	public function getlist()
     {
-        $list = array();
-		$query = $this->query($this->getsql());
-		while($rs = $this->fetch($query)){
-			$list[] = $rs;
-		}
-		return $list;
+        $query = $this->query($this->getsql());
+		return $this->conn->fetch_all($query);
     }
 	
 	public function insert($data)
@@ -232,8 +245,8 @@ class db
 		}
 		
 		$sql = 'update `'.$this->table."` set $str".($this->where ? ' where '.$this->where : '');
-		$this->query($sql);
-		return mysql_affected_rows($this->conn);
+		$query = $this->query($sql);
+		return $this->conn->affected_rows($query);
 	}
 	
 	public function addnum($field, $num)
@@ -253,8 +266,8 @@ class db
 		$sql .= ($this->where ? ' where '.$this->where : '');
 		$sql .= ($this->limit ? ' limit '.$this->limit : '');
 		
-		$this->query($sql);
-		return mysql_affected_rows($this->conn);
+		$query = $this->query($sql);
+		return $this->conn->affected_rows($query);
 	}
 	
 	public function delete()
@@ -264,8 +277,8 @@ class db
 				.($this->group ? ' group by '.$this->group : '')
 				.($this->order ? ' order by '.$this->order : '')
 				.($this->limit ? ' limit '.$this->limit : '');
-		$this->query($sql);
-		return mysql_affected_rows($this->conn);
+		$query = $this->query($sql);
+		return $this->conn->affected_rows($query);
 	}
 	
 	public function join($tyle, $table, $as, $on)
@@ -291,12 +304,12 @@ class db
 	
 	public function close()
     {
-        return mysql_close($this->conn);
+        return $this->conn->close();
     }
 	
 	public function error()
     {
-        return 'Mysql error: '.mysql_error($this->conn);
+        return $this->conn->error();
     }
 	
 	public function _new()

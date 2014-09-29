@@ -1,0 +1,16 @@
+<ul class="products row">
+	{foreach $tag_list as $k=>$goods}
+	<li class="col-sm-3">
+		<div class="product">
+			<div class="thumbnail">
+				<a href="{:url($goods['url'])}"><img src="{$goods['image']['goods_img']}" alt=""></a>
+			</div>
+			<hr>
+			<div class="title">
+				<h3><a href="{:url($goods['url'])}">{$goods['title']}</a></h3>
+			</div>
+			<span class="price">{$goods['price']}</span>
+		</div>
+	</li>
+	{/foreach}
+</ul>

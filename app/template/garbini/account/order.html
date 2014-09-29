@@ -1,0 +1,38 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		{include account/sidebar.html}
+		<div class="col-sm-9">
+			<h1>{$html_title}</h1>
+			<table width="100%" class="table-striped">
+			<tr>
+				<th>{L:OrderID}</th>
+				<th>{L:Fullname}</th>
+				<th>{L:Money}</th>
+				<th>{L:Add time}</th>
+				<th>{L:Status}</th>
+				<th>{L:Operate}</th>
+			</tr>
+			{foreach $order_list as $v}
+			<tr>
+				<td>{$v['order_sn']}</td>
+				<td>{$v['address']['firstname']}&nbsp;{$v['address']['lastname']}</td>
+				<td>{$symbols[$v['currency']]}{$v['total_amount']}</td>
+				<td>{$v['time']}</td>
+				<td>{$order_status[$v['status']]}</td>
+				<td>
+				<a href="{:url('account/orderview?order_id='.$v['order_id'])}">{L:View}</a> 
+				{if $v['can_repay']==1}
+				<a href="{:url('order/pay?order_id='.$v['order_id'])}">{L:Pay}</a>
+				{/if}
+				</td>
+			</tr>
+			{/foreach}
+			</table>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

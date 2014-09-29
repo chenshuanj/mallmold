@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}admin` (
   `salt` char(2) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `{PREFIX}article` (
   `article_id` int(10) NOT NULL AUTO_INCREMENT,
   `cate_id` int(4) NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}dict` (
   `dict_val_en` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dict_key` (`dict_key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='dictionary' AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='dictionary' AUTO_INCREMENT=25 ;
 INSERT INTO `{PREFIX}dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (1, 'k_1', 'U.S. dollar'),
 (2, 'k_2', 'Goods main image'),
@@ -181,11 +181,12 @@ INSERT INTO `{PREFIX}dict` (`id`, `dict_key`, `dict_val_en`) VALUES
 (20, 'k_30', 'Successful payment, thank patrons'),
 (21, 'k_32', 'You order has been refunded'),
 (22, 'k_34', 'Home'),
-(23, 'k_36', 'Mallmold Ecommerce System');
+(23, 'k_36', 'Mallmold Ecommerce System'),
+(24, 'k_39', 'Slider images');
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_keys` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 INSERT INTO `{PREFIX}dict_keys` (`id`) VALUES
 (1),
 (2),
@@ -224,7 +225,8 @@ INSERT INTO `{PREFIX}dict_keys` (`id`) VALUES
 (35),
 (36),
 (37),
-(38);
+(38),
+(39);
 CREATE TABLE IF NOT EXISTS `{PREFIX}dict_text` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `text_key` char(10) NOT NULL,
@@ -517,14 +519,15 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}image_setting` (
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 INSERT INTO `{PREFIX}image_setting` (`id`, `name_key_`, `sign`, `type`, `thumbnails`, `width`, `height`, `watermark`, `watermark_img`, `watermark_pos`, `watermark_alpha`, `if_sys`, `status`) VALUES
 (1, 'k_2', 'goods_img', 'goods_main_img', 1, 300, 320, 0, '', 1, 0, 1, 1),
 (2, 'k_3', 'goods_img_slider', 'goods_imgs', 1, 300, 320, 0, '', 1, 0, 1, 1),
 (3, 'k_4', 'goods_desc', 'goods_desc', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (4, 'k_5', 'goods_cate', 'goods_cate', 0, 0, 0, 0, '', 1, 0, 1, 1),
 (5, 'k_6', 'article_img', 'article_img', 0, 0, 0, 0, '', 1, 0, 1, 1),
-(6, 'k_7', 'article_desc', 'article_desc', 0, 0, 0, 0, '', 1, 0, 1, 1);
+(6, 'k_7', 'article_desc', 'article_desc', 0, 0, 0, 0, '', 1, 0, 1, 1),
+(7, 'k_39', 'slider_index', 'slider', 1, 180, 62, 0, '', 1, 0, 0, 1);
 CREATE TABLE IF NOT EXISTS `{PREFIX}importexport` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:import,2:export',
@@ -659,6 +662,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}newsletter_subscriber` (
   `subscriber_id` int(10) NOT NULL AUTO_INCREMENT,
   `email` varchar(64) NOT NULL,
   `user_id` int(10) NOT NULL DEFAULT '0',
+  `language` varchar(8) NOT NULL,
   `addtime` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `total_send` int(10) NOT NULL DEFAULT '0',
@@ -796,13 +800,24 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}payment` (
   `bind` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 INSERT INTO `{PREFIX}payment` (`id`, `name`, `description`, `model`, `sort_order`, `bind`, `status`) VALUES
 (1, 'Paypal', 'Paypal Website Payments Standard', 'paypal', 1, 0, 1),
 (2, 'Credit card(Paypal)', 'Paypal Website Payments Pro(Direct Payment)', 'paypal_pro', 2, 0, 1),
 (3, 'Paypal Express Checkout', 'Paypal Express Checkout', 'paypal_express', 3, 0, 1),
 (4, 'Credit card(Authorize.net)', 'Authorize.net(Advanced Integration Method)', 'authorize', 4, 0, 1),
-(5, 'MoneyBookers', 'MoneyBookers(Skrill)', 'moneybookers', 5, 0, 0);
+(5, 'MoneyBookers', 'MoneyBookers(Skrill)', 'moneybookers', 5, 0, 0),
+(6, 'Alipay(支付宝)', '支付宝即时到帐', 'alipay', 0, 0, 1);
+CREATE TABLE IF NOT EXISTS `{PREFIX}payment_alipay` (
+  `id` tinyint(1) NOT NULL AUTO_INCREMENT,
+  `test_mode` tinyint(1) NOT NULL DEFAULT '0',
+  `seller_email` varchar(32) NOT NULL,
+  `partner` varchar(16) DEFAULT NULL,
+  `key` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+INSERT INTO `{PREFIX}payment_alipay` (`id`, `test_mode`, `seller_email`, `partner`, `key`) VALUES
+(1, 0, 'your@email.com', 'yourpid', 'yourkey');
 CREATE TABLE IF NOT EXISTS `{PREFIX}payment_authorize` (
   `id` tinyint(1) NOT NULL AUTO_INCREMENT,
   `test_mode` tinyint(1) NOT NULL DEFAULT '0',
@@ -42423,7 +42438,15 @@ INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('memcache_host', ''),
 ('memcache_port', ''),
 ('web_logo', '/upload/image/201308/17130509_58243.png'),
-('btm_logo', '/upload/image/201308/17130509_58243.png');
+('btm_logo', '/upload/image/201308/17130509_58243.png'),
+('invoice_prefix', ''),
+('mobile_mode', '1'),
+('mobile_ua', 'iphone|ipad|Android|Windows Phone|BlackBerry'),
+('mobile_tpl', 'garbini'),
+('mobile_goods_sid', '1'),
+('mobile_goods_imgs_sid', '2'),
+('admin_helpdesk_notice', '0'),
+('admin_helpdesk_notice_email', '');
 CREATE TABLE IF NOT EXISTS `{PREFIX}shipping` (
   `shipping_id` int(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,

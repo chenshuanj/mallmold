@@ -1,0 +1,157 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	{if $list}
+	<table class="shop_table cart table-striped" width="100%">
+		<thead>
+			<tr>
+				<th class="product-remove">{L:Delete}</th>
+				<th class="product-desc">{L:Goods name}</th>
+				<th class="product-qty">{L:Quantity}</th>
+				<th class="product-price">{L:Price}</th>
+				<th class="product-price">{L:Subtotal}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach $list as $v}
+			<tr class="cart_item">
+				<td class="product-remove"><a href="{:url('cart/delete?id='.$v['id'])}" class="remove"><i class="fa fa-times-circle fa-2x"></i></a></td>
+				<td class="product-desc">
+					<dl>
+						<dt class="hidden-xs"><img src="{$v['goods']['image']}" width="150"/></dt>
+						<dd>
+							<h3>{$v['goods']['title']}</h3>
+							{if $v['options_name']}
+							<p class="hidden-xs">
+							{foreach $v['options_name'] as $option}
+								{$option['name']}: {$option['value']}<br/>
+							{/foreach}
+							</p>
+							{/if}
+						</dd>
+					</dl>
+				</td>
+				<td class="product-qty">
+					<div class="quantity buttons_added">
+						<button class="minus reduce-qty"><i class="fa fa-minus"></i></button>
+						<input type="number" size="4" class="qty text form-control" title="Qty" cart_id="{$v['id']}" value="{$v['quantity']}" name="quantity[]" step="1">
+						<button class="plus add-qty"><i class="fa fa-plus"></i></button>
+					</div>
+				</td>
+				<td class="product-price">
+					<h3>{$current_symbol}{$v['price']}</h3>
+				</td>
+				<td class="product-price">
+					<h3>{$current_symbol}<span class="subtotal" id="subtotal_{$v['id']}">{$v['subtotal']}</span></h3>
+				</td>
+			</tr>
+			{/foreach}
+			<tr>
+				<td class="actions" colspan="5">
+					<div class="coupon">
+						{if !$checkout['coupon']}
+						<form action="{:url('cart/addcoupon')}" method="post">
+							<h3>{L:Have Coupon?}</h3>
+							<input type="text" placeholder="{L:Coupon code}" value="" class="form-control input-lg" name="coupon_code">
+							<button type="submit" name="apply_coupon" class="btn btn-primary btn-lg"><i class="fa fa-refresh"></i></button>
+						</form>
+						{else}
+							<h3>{L:Coupon}: - {$current_symbol}<span id="discount">{$checkout['coupon']}</span></h3>
+						{/if}
+					</div>
+					<input type="button" value="{L:Continue shopping}" onclick="location='{:url('index/index')}';" class="btn btn-default btn-lg">
+					<input type="button" value="{L:Proceed to checkout}" id="checkout" onclick="location='{:url('checkout/index')}';" class="btn btn-primary btn-lg">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="cart-collaterals">
+		<table class="totals">
+			<tbody>
+				<tr class="cart-subtotal" id="total_discount"{if !$checkout['discount']} style="display:none"{/if}>
+					<th>{L:Discount}</th>
+					<td>- {$current_symbol}<span id="discount">{$checkout['discount']}</span></td>
+				</tr>
+				<tr class="order-total">
+					<th>{L:Total}</th>
+					<td>{$current_symbol}<span id="total">{$checkout['total']}</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		var on_update = 0;
+		function update_cart(obj){
+			var cart_id = obj.attr('cart_id');
+			var quantity = obj.val();
+			var if_nan = /^\d+$/.test(quantity);
+			if(!if_nan || quantity<1){
+				quantity = 1;
+				obj.val(1);
+			}
+			
+			on_update = 1;
+			obj.addClass('update');
+			$.ajax({
+				url:"{:url('cart/ajax_update')}",
+				type: 'POST',
+				data:{id:cart_id,quantity:quantity},
+				dataType:"json",
+				success:function(res)
+				{
+					obj.removeClass('update');
+					on_update = 0;
+					if(res == 0){
+						alert('{L:Update failed}');
+						location.reload();
+					}else{
+						$('#subtotal_' + cart_id).html(res.goods_amount);
+						$('#total').html(res.total);
+						if(res.discount > 0){
+							$('#total_discount').show();
+							$('#discount').html(res.discount);
+						}else{
+							$('#total_discount').hide();
+						}
+					}
+				}
+			});
+		}
+		$(document).ready(function(){
+			$('.qty').change(function(){
+				var obj = $(this);
+				update_cart(obj);
+			});
+			$('.add-qty').click(function(){
+				var obj = $(this).prev();
+				var qty = obj.val();
+				qty++;
+				obj.val(qty);
+				update_cart(obj);
+			});
+			$('.reduce-qty').click(function(){
+				var obj = $(this).next();
+				var qty = obj.val();
+				qty--;
+				if(qty < 1){
+					qty = 1;
+				}
+				obj.val(qty);
+				update_cart(obj);
+			});
+			$('#checkout').click(function(e){
+				if(on_update == 1){
+					e.preventDefault();
+				}
+			});
+		});
+		</script>
+	{else}
+	<div class="cart">
+		{L:Shopping cart is empty}
+	</div>
+	{/if}
+	</div>
+</section>
+{include footer.html}

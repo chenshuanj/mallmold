@@ -112,6 +112,55 @@ class notifyAction extends action
 			return 'error';
 		}
 	}
+	
+	//alipay notify
+	public function notify_alipay()
+	{
+		$status = $this->model('alipay')->verify();
+		if(!$status){
+			echo 'fail';
+			return;
+		}
+		
+		$order_id = intval($_POST['out_trade_no']); //order id
+		$order = $this->model('order')->order_get($order_id);
+		if(!$order){
+			echo 'error';
+			return;
+		}
+		
+		if($order['status'] > 0){
+			echo 'TRADE_FINISHED';
+			return;
+		}
+		
+		$trade_status = $_POST['trade_status'];
+		if($trade_status == 'TRADE_SUCCESS' || $trade_status == 'TRADE_FINISHED'){
+			$status = $this->model('payment')->pay_status('processing');
+			$this->model('payment')->status = $status;
+			
+			//pay log
+			$remark = 'payment_status:'.$_POST['trade_status'].'; track_id:'.$_POST['trade_no'];
+			$data = array(
+				'type' => 1,
+				'order_sn' => $order['order_sn'],
+				'model' => 'alipay',
+				'track_id' => $_POST['trade_no'],
+				'money' => $order['total_amount'],
+				'remark' => $remark,
+				'time' => time()
+			);
+			$this->db->table('payment_log')->insert($data);
+			$this->model('payment')->message = 'pay success';
+			$this->model('payment')->pay_success($order);
+			echo 'success';
+			return;
+		}else{
+			$this->model('payment')->error_msg = 'notify error: '.var_export($_POST, true);
+			$this->model('payment')->error_log($order_id, 'alipay');
+			return 'fail';
+		}
+	}
 }
 
 ?>

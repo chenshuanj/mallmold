@@ -1,0 +1,14 @@
+{if is_array($map)}
+<ol class="breadcrumb">
+	<li><a href="{:url('index/index')}">{L:Home}</a></li>
+	{foreach $map as $node}
+	<li>
+		{if $node['url']}
+		<a href="{:url($node['url'])}">{$node['title']}</a>
+		{else}
+		{$node['title']}
+		{/if}
+	</li>
+	{/foreach}
+</ol>
+{/if}

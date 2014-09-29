@@ -50,11 +50,15 @@ class dictionary extends model
 		}
 	}
 	
-	private function getval($type, $sign)
+	private function getval($type, $sign, $language = '')
 	{
+		if(!$language){
+			$language = $this->current_lang;
+		}
+		
 		//read from cache
 		if($this->model('cache')->enable == true){
-			$value = $this->model('cache')->get($this->current_lang, $sign);
+			$value = $this->model('cache')->get($language, $sign);
 			if($value !== false){
 				return $value;
 			}
@@ -62,18 +66,18 @@ class dictionary extends model
 		
 		if($type == '_key_')
 		{
-			$field = 'dict_val_'.$this->current_lang;
+			$field = 'dict_val_'.$language;
 			$value = $this->db->table('dict')->where("dict_key='$sign'")->getval($field);
-			if(!$value && $this->current_lang != $this->main_lang){
+			if(!$value && $language != $this->main_lang){
 				$field = 'dict_val_'.$this->main_lang;
 				$value = $this->db->table('dict')->where("dict_key='$sign'")->getval($field);
 			}
 		}
 		elseif($type == '_txtkey_')
 		{
-			$table = 'dict_text_'.$this->current_lang;
+			$table = 'dict_text_'.$language;
 			$value = $this->db->table($table)->where("text_key='$sign'")->getval('content');
-			if(!$value && $this->current_lang != $this->main_lang){
+			if(!$value && $language != $this->main_lang){
 				$table = 'dict_text_'.$this->main_lang;
 				$value = $this->db->table($table)->where("text_key='$sign'")->getval('content');
 			}
@@ -81,13 +85,13 @@ class dictionary extends model
 		
 		//write to cache
 		if($this->model('cache')->enable == true){
-			$this->model('cache')->set($this->current_lang, $sign, $value);
+			$this->model('cache')->set($language, $sign, $value);
 		}
 		
 		return $value;
 	}
 	
-	public function getdict($data = array())
+	public function getdict($data = array(), $language = '')
 	{
 		if(!is_array($data)){
 			return null;
@@ -98,7 +102,7 @@ class dictionary extends model
 				$keytype = $this->checkkey($key);
 				if($keytype){
 					$newkey = str_replace($keytype, '', $key);
-					$data[$newkey] = $this->getval($keytype, $val);
+					$data[$newkey] = $this->getval($keytype, $val, $language);
 				}
 			}else{
 				$data[$key] = $this->getdict($val);

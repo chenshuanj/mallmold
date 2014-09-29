@@ -1,0 +1,44 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		<div class="col-sm-6">
+			<h3>{$html_title}</h3>
+			<div class="gap-10"></div>
+			<form method="post" action="{:url('user/dologin')}" role="form">
+			<div class="form-group">
+				<input type="email" class="form-control input-lg" name="email" placeholder="{L:Email}">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control input-lg" name="password" placeholder="{L:Password}">
+			</div>
+			{if $login_verify==1}
+			<div class="form-group">
+				<input type="email" class="form-control input-lg" style="width:156px;display:inline-block;" name="captcha" placeholder="{L:Captcha}">
+				<a href="javascript:;"><img id="captcha" align="absmiddle" src="{:url('captcha/index')}"/></a>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#captcha').click(function(){
+							$(this).attr('src', "{:url('captcha/index?update=')}" + Math.random());
+						});
+					});
+				</script>
+			</div>
+			{/if}
+			<a href="{:url('user/findpswd')}" class="pull-left">{L:Forgot your password?}</a>
+			<div class="pull-right">
+				<button type="submit" class="btn btn-primary btn-lg">{L:Login}</button>
+			</div>
+			</form>
+			<div class="gap-30"></div>
+		</div>
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-4">
+			<p>{L:No account yet?} <a href="{:url('user/register')}">{L:Go to register}</a></p>
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}

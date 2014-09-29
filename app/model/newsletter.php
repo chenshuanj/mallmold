@@ -16,9 +16,18 @@
 
 class newsletter extends model
 {
-	public function get($newsletter_id)
+	public function get_detail($newsletter_id, $lang)
 	{
-		return $this->model('mdata')->table('newsletter')->where("newsletter_id=$newsletter_id")->get();
+		static $details = array();
+		if(!isset($details[$newsletter_id][$lang])){
+			$details[$newsletter_id][$lang] = $this->model('mdata')
+													->table('newsletter')
+													->field('title_key_,content_txtkey_')
+													->where("newsletter_id=$newsletter_id")
+													->get($lang);
+		}
+		
+		return $details[$newsletter_id][$lang];
 	}
 	
 	public function unsubscribe_html($email)
@@ -28,20 +37,21 @@ class newsletter extends model
 	
 	public function send($newsletter_id)
 	{
-		$newsletter = $this->get($newsletter_id);
+		$newsletter = $this->db->table('newsletter')->where("newsletter_id=$newsletter_id")->get();
 		if($newsletter['enable'] == 1 && $newsletter['status'] < 2){
 			$this->db->table('newsletter')->where("newsletter_id=$newsletter_id")->update('status=1');
 			
 			$where = "subscriber_id not in (
 						".$this->db->table('newsletter_send')->field('subscriber_id')->where("newsletter_id=$newsletter_id")->getsql()."
 					) and status=1";
-			$subscribers = $this->db->table('newsletter_subscriber')->field('subscriber_id,email')->where($where)->getlist();
+			$subscribers = $this->db->table('newsletter_subscriber')->field('subscriber_id,email,language')->where($where)->getlist();
 			$num = 0;
 			foreach($subscribers as $subscriber){
+				$detail = $this->get_detail($newsletter_id, $subscriber['language']);
 				$statistics_url = 'newsletter/statistics?sn='.$newsletter['sn'].'&ue='.$subscriber['email'];
-				$newsletter['content'] .= '<br/><img src="'.url($statistics_url).'" width="1" height="1">';
-				$newsletter['content'] .= '<br/>'.$this->unsubscribe_html($subscriber['email']);
-				$res = $this->model('notice')->mail($subscriber['email'], $newsletter['title'], $newsletter['content']);
+				$detail['content'] .= '<br/><img src="'.url($statistics_url).'" width="1" height="1">';
+				$detail['content'] .= '<br/>'.$this->unsubscribe_html($subscriber['email']);
+				$res = $this->model('notice')->mail($subscriber['email'], $detail['title'], $detail['content']);
 				
 				$data = array(
 					'newsletter_id' => $newsletter_id,
@@ -68,11 +78,12 @@ class newsletter extends model
 			return false;
 		}
 		
-		$subscriber_id = $this->db->table('newsletter_subscriber')->where("email='$email'")->get('subscriber_id');
+		$subscriber_id = $this->db->table('newsletter_subscriber')->where("email='$email'")->getval('subscriber_id');
 		if(!$subscriber_id){
 			$data = array(
 				'email' => $email,
 				'user_id' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0,
+				'language' => cookie('lang'),
 				'addtime' => time(),
 				'status' => 1
 			);

@@ -1,0 +1,30 @@
+{if $comments}
+	<div id="reviews">
+		<ol class="commentlist">
+			{foreach $comments as $com}
+			<li class="comment">
+				<div class="comment_container row">
+					<div class="col-sm-9">
+						<h5 class="meta">{$com['username']} <span>&mdash; {$com['time']}</span></h5>                
+						<p>{$com['content']}</p>
+					</div>
+					<div class="start-rating col-sm-3">
+						{foreach $com['scores'] as $score}
+							<div class="row">
+								<div class="rating-name">{$score['name']}: </div>
+								<div class="rating-score">
+									<div class="start-rating">
+										<?php for($n=1;$n<=$score['score'];$n++){ ?>
+										<span class="glyphicon glyphicon-star"></span>
+										<?php } ?>
+									</div>
+								</div>
+							</div>
+						{/foreach}
+					</div>
+				</div>
+            </li>
+			{/foreach}
+		</ol>
+	</div>
+{/if}

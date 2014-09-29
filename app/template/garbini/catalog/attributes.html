@@ -1,0 +1,12 @@
+{foreach $attributes as $v}
+	{if $v['can_filter']==1}
+		<aside class="widget widget_product_color">
+          <h3 class="widget-title">{$v['name']}:</h3>
+          <ul>
+            {foreach $v['values'] as $val}
+			<li><a rel="nofollow" href="{:url('catalog/search?'.$v['code'].'='.$val['av_id'])}">{$val['title']}</a></li>
+            {/foreach}
+          </ul>
+        </aside>
+	{/if}
+{/foreach}

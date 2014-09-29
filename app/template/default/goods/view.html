@@ -85,6 +85,8 @@
 					price_origin += add;
 					price += add;
 				});
+				price = Math.round(price*100)/100;
+				price_origin = Math.round(price_origin*100)/100;
 				$('#price_origin').html(price_origin);
 				$('#price').html(price);
 			});
@@ -121,7 +123,7 @@
 				<div style="display:none;">
 					{include goods/comments.html}
 					{if $comments_num > 9}
-					<div id="more_comments"><input type="button" class="abutton" id="ajax_comments" value="More"/></div>
+					<div id="more_comments"><input type="button" class="abutton" id="ajax_comments" value="{L:More}"/></div>
 					<script type="text/javascript">
 					var comments_page = 2;
 					$(document).ready(function(){
@@ -185,7 +187,7 @@
 			</div>
 		</div>
 		<div class="cross_sell">
-			<div class="cross_sell_title">You may like</div>
+			<div class="cross_sell_title">{L:You May Also Like}</div>
 			<ul class="cross_sell_list">
 			{foreach $cross_sell as $v}
 				<li>

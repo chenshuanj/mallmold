@@ -54,7 +54,7 @@ class mdata extends model
 		return $this;
 	}
 	
-	public function getlist()
+	public function getlist($language = '')
 	{
 		if(!$this->table){
 			return null;
@@ -67,12 +67,12 @@ class mdata extends model
 						->limit($this->limit)
 						->getlist();
 		foreach($list as $key=>$val){
-			$list[$key] = $this->model('dictionary')->getdict($val);
+			$list[$key] = $this->model('dictionary')->getdict($val, $language);
 		}
 		return $list;
 	}
 	
-	public function get()
+	public function get($language = '')
 	{
 		if(!$this->table){
 			return null;
@@ -80,7 +80,7 @@ class mdata extends model
 		
 		$data = $this->db->table($this->table)->field($this->field)->where($this->where)->get();
 		if($data){
-			$data = $this->model('dictionary')->getdict($data);
+			$data = $this->model('dictionary')->getdict($data, $language);
 		}
 		return $data;
 	}

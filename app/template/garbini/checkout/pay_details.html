@@ -1,0 +1,38 @@
+<table class="totals">
+	<tr>
+		<th>{L:Subtotal}:</th><td>{$current_symbol}{$checkout['subtotal']}</td>
+	</tr>
+	{if $checkout['discount']}
+	<tr>
+		<th>Discount:</th><td>-{$current_symbol}{$checkout['discount']}</td>
+	</tr>
+	{/if}
+	{if $checkout['shipping']}
+	<tr>
+		<th>{L:Shipping}:</th><td>{$current_symbol}{$checkout['shipping']}</td>
+	</tr>
+	{/if}
+	{if $checkout['tax']}
+	<tr>
+		<th>{L:Tax}:</th><td>{$current_symbol}{$checkout['tax']}</td>
+	</tr>
+	{/if}
+	{if $checkout['coupon']}
+	<tr>
+		<th>{L:Coupon}:</th><td>-{$current_symbol}{$checkout['coupon']}</td>
+	</tr>
+	{/if}
+	<tr>
+		<th>{L:Total}:</th>
+		<td>
+			<b>{$current_symbol}{$checkout['total']}</b>
+			{if $checkout['gift']}
+			<i title="gift:{$checkout['gift']}">[gift]</i>
+			{/if}
+		</td>
+	</tr>
+	<tr class="line">
+		<th></th>
+		<td><br/><input type="submit" class="btn btn-primary btn-lg" id="place_order" value="{L:Place order}"></td>
+	</tr>
+</table>

@@ -1,3 +1,12 @@
+==V2.4 release==
+Improved framework
+Improved newsletter
+Add cross-screen template(garbini)
+Add alipay payment
+Fixed reviews number bug
+Fixed option price bug
+Fixed check mobile UA bug
+
 ==V2.3 release==
 Add newsletter
 Add scheduled

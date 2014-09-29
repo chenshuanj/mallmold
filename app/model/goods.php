@@ -195,6 +195,7 @@ class goods extends model
 				if(!$options[$op_id]){
 					$options[$op_id] = $options_list[$op_id];
 				}
+				$v['price'] = $this->model('common')->current_price($v['price'], 0);
 				$options[$op_id]['option'][$id] = $v;
 			}
 		}

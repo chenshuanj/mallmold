@@ -1,0 +1,32 @@
+{include header.html}
+<section id="content">
+	<div class="container">
+	{include map.html}
+	<div class="row">
+		<div class="col-sm-3 sidebar">
+			{include catalog/attributes.html}
+			{include catalog/catalogs.html}
+		</div>
+		<div class="col-sm-9">
+        <ul class="products row">
+			{foreach $list as $goods}
+			<li class="col-sm-4">
+				<div class="product">
+					<div class="thumbnail">
+						<a href="{:url($goods['url'])}"><img src="{$goods['image'][$img_sign]}" alt=""></a>
+					</div>
+					<hr>
+					<div class="title">
+						<h3><a href="{:url($goods['url'])}">{$goods['title']}</a></h3>
+					</div>
+					<span class="price">{$goods['price']}</span>
+				</div>
+			</li>
+			{/foreach}
+		</ul>
+		{include pager.html}
+		</div>
+	</div>
+	</div>
+</section>
+{include footer.html}
