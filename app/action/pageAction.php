@@ -52,7 +52,7 @@ class pageAction extends commonAction
 	*/
 	private function parse($str)
 	{
-		$str = preg_replace("/\{tag\s+(.+?)\}/ies", "\$this->build('\\1');", $str);
+		$str = preg_replace_callback("/\{tag\s+(.+?)\}/is", function($r){return $this->build($r[1]);}, $str);
 		return $str;
 	}
 	

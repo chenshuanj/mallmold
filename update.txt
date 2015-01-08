@@ -1,3 +1,7 @@
+==V2.5 release==
+Add php5.5 support
+Fixed error model bug
+
 ==V2.4 release==
 Improved framework
 Improved newsletter

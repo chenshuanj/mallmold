@@ -14,7 +14,7 @@
 *	additional services, please send an email to <service@mallmold.com>.
 */
 
-require Action('common');
+require_once(Action('common'));
 
 class errorAction extends commonAction
 {

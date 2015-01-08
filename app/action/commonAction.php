@@ -29,7 +29,7 @@ class commonAction extends action
 	
 	private function init()
 	{
-		require(APP_PATH .'model/functions.php');
+		require_once(APP_PATH .'model/functions.php');
 		$this->setting = &$this->model('common')->setting();
 		
 		//set lang

@@ -1,6 +1,6 @@
                   Mallmold Ecommerce Software
 
-      Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited. 
+      Copyright (c)2013-2015 Mallmold Ecommerce(HK) Limited. 
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

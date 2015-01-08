@@ -26,7 +26,7 @@ class template
 	public function parse($str)
 	{
 		$str = str_replace('{TPL_PATH}', $this->tpl_path, $str);
-		$str = preg_replace("/\{include\s+(.+?)\}/ies", "\$this->build('\\1');", $str);
+		$str = preg_replace_callback("/\{include\s+(.+?)\}/is", function($r){return $this->build($r[1]);}, $str);
 		$str = preg_replace("/\{if\s+(.+?)\}/is", "<?php if(\\1) { ?>", $str);
 		$str = preg_replace("/\{elseif\s+(.+?)\}/is", "<?php } elseif(\\1) { ?>", $str);
 		$str = preg_replace("/\{else\}/i", "<?php } else { ?>", $str);
