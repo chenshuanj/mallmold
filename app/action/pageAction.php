@@ -52,8 +52,13 @@ class pageAction extends commonAction
 	*/
 	private function parse($str)
 	{
-		$str = preg_replace_callback("/\{tag\s+(.+?)\}/is", function($r){return $this->build($r[1]);}, $str);
+		$str = preg_replace_callback("/\{tag\s+(.+?)\}/is", 'self::callback', $str);
 		return $str;
+	}
+	
+	private function callback($matches)
+	{
+		return $this->build($matches[1]);
 	}
 	
 	private function build($tag)
