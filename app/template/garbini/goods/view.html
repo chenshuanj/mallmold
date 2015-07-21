@@ -34,7 +34,7 @@
 					{foreach $goods['option'] as $v}
 					<div class="col-sm-6 option">
 						<select class="form-control col-sm-6 option_id" name="option[{$v['op_id']}]" id="option_{$v['op_id']}">
-							<option value="0">{$v['name']}</option>
+							<option value="0" price="0">{$v['name']}</option>
 							{foreach $v['option'] as $o}
 							<option price="{$o['price']}" value="{$o['id']}">
 								{$o['name']} {if $o['price']>0}(+{$o['price']}){elseif $o['price']<0}({$o['price']}){/if}

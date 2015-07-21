@@ -582,7 +582,7 @@ ul.products .product {
 	top: -8px;
 }
 
-.single-product .option .required{
+.single-product .option .required, #checkout .required{
 	border: 1px dashed red;
 }
 

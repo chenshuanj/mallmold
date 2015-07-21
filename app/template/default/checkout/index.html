@@ -252,6 +252,7 @@
 						data: data,
 						dataType:"json",
 						success:function(res){
+							$('#payment_method').html(res.payment_method);
 							$('#pay_details').html(res.pay_details);
 						}
 					});
@@ -388,7 +389,7 @@
 					e.preventDefault();
 					var address_id = 0;
 					{if $address_list}
-					$('#address_form').find('input[name="address_id"]').each(function(){
+					$('#checkout').find('input[name="address_id"]').each(function(){
 						if($(this).attr('checked')){
 							address_id = $(this).val();
 						}

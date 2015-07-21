@@ -1,3 +1,9 @@
+==V2.5.2==
+Fixed template build bug
+Fixed image path bug
+Fixed error page bug
+Fixed some js bug
+
 ==V2.5 release==
 Add php5.5 support
 Fixed error model bug

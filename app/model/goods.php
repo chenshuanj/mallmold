@@ -16,7 +16,7 @@
 
 class goods extends model
 {
-	public $list_field = 'goods_id,title_key_,urlkey,sku,price_origin,price,brief_txtkey_,image,addtime';
+	public $list_field = 'goods_id,title_key_,urlkey,sku,price_origin,price,stock,brief_txtkey_,image,addtime';
 	
 	public function base_condition()
 	{
@@ -195,7 +195,6 @@ class goods extends model
 				if(!$options[$op_id]){
 					$options[$op_id] = $options_list[$op_id];
 				}
-				$v['price'] = $this->model('common')->current_price($v['price'], 0);
 				$options[$op_id]['option'][$id] = $v;
 			}
 		}

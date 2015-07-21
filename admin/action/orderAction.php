@@ -238,7 +238,7 @@ class orderAction extends commonAction
 				if($quantity[$key] > 0){
 					$this->db->table('order_goods')
 						->where("id=$key")
-						->update(array('shipping' => $quantity[$key]+$v['quantity']));
+						->update(array('shipping' => $quantity[$key]+$v['shipping']));
 				}
 			}
 			

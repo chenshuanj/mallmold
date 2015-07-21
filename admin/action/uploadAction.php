@@ -119,7 +119,7 @@ class uploadAction extends commonAction
 	protected function upload()
 	{
 		$save_dir = BASE_PATH .'/'.$this->save_dir;
-		$save_url = PHP_PATH .$this->save_dir;
+		$save_url = '/'.$this->save_dir;
 		
 		if(!empty($_FILES[$this->fkey]['error'])){
 			$this->upload_error($_FILES[$this->fkey]['error']);

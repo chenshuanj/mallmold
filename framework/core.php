@@ -59,15 +59,17 @@ function error_404($msg)
 	if(file_exists($script)){
 		require($script);
 		$run = new errorAction();
-		if(method_exists($run, '__404')){
-			$run->__404();
+		if(is_callable(array($run, '__404'))){
+			$run->__404($msg);
 		}else{
 			header("HTTP/1.1 404 Not Found");
-			exit($msg);
+			echo $msg;
+			exit;
 		}
 	}else{
 		header("HTTP/1.1 404 Not Found");
-		exit($msg);
+		echo $msg;
+		exit;
 	}
 }
 

@@ -161,7 +161,7 @@
 				function makedata(country_id, region_id, shipping_id){
 					var payment_id = 0;
 					$('.payment_id').each(function(){
-						if($(this).attr("checked")){
+						if($(this).prop("checked")){
 							payment_id = $(this).val();
 						}
 					});
@@ -221,6 +221,7 @@
 						data: data,
 						dataType:"json",
 						success:function(res){
+							$('#payment_method').html(res.payment_method);
 							$('#pay_details').html(res.pay_details);
 						}
 					});
@@ -229,7 +230,7 @@
 					var country_id = $('#country_id').val();
 					var shipping_id = 0;
 					$('.shipping_id').each(function(){
-						if($(this).attr("checked")){
+						if($(this).prop("checked")){
 							shipping_id = $(this).val();
 						}
 					});
@@ -254,7 +255,7 @@
 					var region_id = $('#region_id').val();
 					region_change(region_id);
 				});
-				$('.shipping_id').on('click', function(){
+				$(document).on('click', '.shipping_id', function(){
 					var country_id = 0;
 					var region_id = 0;
 					var shipping_id = $(this).val();
@@ -336,25 +337,25 @@
 					});
 				});
 				$('#newaccount').click(function(){
-					if($(this).attr('checked')){
+					if($(this).prop('checked')){
 						$('#showaccount').show();
 					}else{
 						$('#showaccount').hide();
 					}
 				});
-				$('.payment_id').on('click', function(){
+				$(document).on('click', '.payment_id', function(){
 					var option = $(this).parent().next();
 					$('#payment_method').find('.payment_option').each(function(){
 						$(this).hide();
 					});
 					option.show();
 				});
-				$('#place_order').on('click', function(e){
+				$(document).on('click', '#place_order', function(e){
 					e.preventDefault();
 					var address_id = 0;
 					{if $address_list}
-					$('#address_form').find('input[name="address_id"]').each(function(){
-						if($(this).attr('checked')){
+					$('#checkout').find('input[name="address_id"]').each(function(){
+						if($(this).prop('checked')){
 							address_id = $(this).val();
 						}
 					});
@@ -416,61 +417,62 @@
 						}else{
 							$('#region_id').removeClass('required');
 						}
-					}
-					if(!$('#billtosame').attr('checked')){
-						if($('#bill_firstname').val() == ''){
-							$('#bill_firstname').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_firstname').removeClass('required');
-						}
-						if($('#bill_lastname').val() == ''){
-							$('#bill_lastname').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_lastname').removeClass('required');
-						}
-						if($('#bill_phone').val() == ''){
-							$('#bill_phone').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_phone').removeClass('required');
-						}
-						if($('#bill_country_id').val() == 0){
-							$('#bill_country_id').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_country_id').removeClass('required');
-						}
-						if($('#bill_postcode').val() == ''){
-							$('#bill_postcode').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_postcode').removeClass('required');
-						}
-						if($('#bill_address').val() == ''){
-							$('#bill_address').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_address').removeClass('required');
-						}
-						if($('#bill_city').val() == ''){
-							$('#bill_city').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_city').removeClass('required');
-						}
-						if($('#bill_region_id').val() == 0){
-							$('#bill_region_id').addClass('required');
-							status = 0;
-						}else{
-							$('#bill_region_id').removeClass('required');
+						
+						if(!$('#billtosame').prop('checked')){
+							if($('#bill_firstname').val() == ''){
+								$('#bill_firstname').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_firstname').removeClass('required');
+							}
+							if($('#bill_lastname').val() == ''){
+								$('#bill_lastname').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_lastname').removeClass('required');
+							}
+							if($('#bill_phone').val() == ''){
+								$('#bill_phone').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_phone').removeClass('required');
+							}
+							if($('#bill_country_id').val() == 0){
+								$('#bill_country_id').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_country_id').removeClass('required');
+							}
+							if($('#bill_postcode').val() == ''){
+								$('#bill_postcode').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_postcode').removeClass('required');
+							}
+							if($('#bill_address').val() == ''){
+								$('#bill_address').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_address').removeClass('required');
+							}
+							if($('#bill_city').val() == ''){
+								$('#bill_city').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_city').removeClass('required');
+							}
+							if($('#bill_region_id').val() == 0){
+								$('#bill_region_id').addClass('required');
+								status = 0;
+							}else{
+								$('#bill_region_id').removeClass('required');
+							}
 						}
 					}
 					
 					var shipping_id = 0;
 					$('#shipping_method').find('input[name="shipping_id"]').each(function(){
-						if($(this).attr('checked')){
+						if($(this).prop('checked')){
 							shipping_id = $(this).val();
 						}
 					});
@@ -483,7 +485,7 @@
 					
 					var payment_id = 0;
 					$('#payment_method').find('input[name="payment_id"]').each(function(){
-						if($(this).attr('checked')){
+						if($(this).prop('checked')){
 							payment_id = $(this).val();
 						}
 					});

@@ -98,7 +98,7 @@ else
 	if($method != $class)
 	{
 		$run = new $class();
-		if(method_exists($run, $method)){
+		if(is_callable(array($run, $method))){
 			$run->$method();
 		}else{
 			error_404("Call to undefined method($method) in the class($class)");

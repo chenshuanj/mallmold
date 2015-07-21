@@ -56,7 +56,7 @@ class image extends model
 			return $src;
 		}
 		
-		$image = $src;
+		$image = PHP_PATH .ltrim($src, '/');
 		if($type != 'other'){
 			//basename
 			$node = explode('/', $src);
@@ -89,7 +89,7 @@ class image extends model
 				}
 				
 				if($v['if_sys'] == 1){
-					$image = $path;
+					$image = PHP_PATH. ltrim($path, '/');
 				}
 			}
 		}

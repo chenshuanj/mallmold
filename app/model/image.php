@@ -118,7 +118,7 @@ class image extends model
 		if(!$path)
 			return $images;
 			
-		$filename = str_replace($this->upload_path, '', $path);
+		$filename = str_replace(PHP_PATH .ltrim($this->upload_path, '/'), '', $path);
 		$signs = $this->getsign($ids);
 		foreach($signs as $v){
 			if($v == 'origin'){
@@ -130,7 +130,7 @@ class image extends model
 					$this->makeimg($v, $filename);
 				}
 			}
-			$images[$v] = $img;
+			$images[$v] = PHP_PATH .ltrim($img, '/');
 		}
 		return $images;
 	}
@@ -142,22 +142,24 @@ class image extends model
 			return $images;
 		if($type == 'other')
 			return $path;
-		$info = explode('/', $path, 4);
-		$filename = $info[3];
+		
+		$path = preg_replace('/^'.str_replace('/', '\/', PHP_PATH).'/i', '', $path);
+		$info = explode('/', $path, 3);
+		$filename = $info[2];
 		$settings = $this->getlistbytype($type);
 		foreach($settings as $v){
 			$sign = $v['sign'];
-			if($sign == $info[2]){
-				$images[$sign] = $path;
+			if($sign == $info[1]){
+				$images[$sign] = PHP_PATH .$path;
 			}else{
 				$img = $this->img_path.'/'.$sign.'/'.$filename;
 				if(!file_exists(BASE_PATH .$img)){
 					$this->makeimg($sign, $filename);
 				}
-				$images[$sign] = $img;
+				$images[$sign] = PHP_PATH .ltrim($img, '/');
 			}
 		}
-		$images['origin'] = $img = $this->upload_path.'/'.$filename;
+		$images['origin'] = $img = PHP_PATH .ltrim($this->upload_path, '/').'/'.$filename;
 		return $images;
 	}
 	
