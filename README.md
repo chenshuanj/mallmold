@@ -1,4 +1,4 @@
-# mallmold
+# Mallmold (v2.6)
 Mallmold ecommerce system is an open source php mall system, powerful and high performance, is the ideal choice for SMEs shop system and maximize savings for the enterprise.
 
 Requirements:
