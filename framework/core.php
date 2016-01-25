@@ -1,7 +1,7 @@
 <?php
 /*
 *	@core.php
-*	Copyright (c)2013-2014 Mallmold Ecommerce(HK) Limited.
+*	Copyright (c)2013-2016 Mallmold.com
 *	
 *	This library is free software; you can redistribute it and/or
 *	modify it under the terms of the GNU Lesser General Public
@@ -151,7 +151,7 @@ function router($router)
 				$path = $uri[0];
 				if($uri[1]){
 					parse_str($uri[1], $para);
-					$_GET = array_merge($_GET, $para);
+					$_GET = array_merge($_GET, addslashes_deep($para));
 				}
 			}
 			if($path){
@@ -162,7 +162,7 @@ function router($router)
 				$_GET['c'] = $request[0];
 				$_GET['a'] = $request[1];
 				for($i=2; $i<count($request); $i++){
-					$_GET[$request[$i]] = $request[++$i];
+					$_GET[$request[$i]] = addslashes_deep($request[++$i]);
 				}
 			}
 		}

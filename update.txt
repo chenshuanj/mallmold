@@ -1,3 +1,7 @@
+==V2.6==
+Fixed framework url filter bug
+Remove online upgrade
+
 ==V2.5.2==
 Fixed template build bug
 Fixed image path bug

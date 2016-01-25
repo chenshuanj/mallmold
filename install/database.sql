@@ -42387,7 +42387,7 @@ INSERT INTO `{PREFIX}setting` (`name`, `val`) VALUES
 ('web_name_key_', 'k_9'),
 ('default_host', '127.0.01'),
 ('frontend', 'app'),
-('default_tpl', 'default'),
+('default_tpl', 'garbini'),
 ('default_country', '1'),
 ('default_timezone', '-8'),
 ('default_lang', 'en'),
